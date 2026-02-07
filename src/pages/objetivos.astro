@@ -1,0 +1,116 @@
+﻿---
+import { CheckCircle, Target } from "lucide-react";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { PageHeader } from "@/components/ui/PageHeader";
+import ObjetivosTabs from "@/components/islands/ObjetivosTabs";
+import PlanEstudiosTabs from "@/components/islands/PlanEstudiosTabs";
+import { planOptativas, planPorArea, planPorSemestre } from "@/data/planEstudios";
+
+const objetivosParticulares = [
+  "Diagnosticar de forma critica la situacion operativa, financiera y estrategica de organizaciones publicas y privadas.",
+  "Aplicar modelos avanzados de direccion y gestion para mejorar la eficiencia y la toma de decisiones en contextos complejos.",
+  "Desarrollar investigacion aplicada con intervencion social para impulsar emprendimiento sostenible y empleo digno en la region.",
+  "Vincular proyectos de titulacion con sectores productivos e instituciones publicas para generar soluciones transferibles.",
+];
+
+const metas = [
+  "Conseguir en 2026 el reconocimiento en el Sistema Nacional de Posgrados (SNP) como programa elegible para becas.",
+  "Actualizar en 2028 el plan de estudios con base en evaluacion del SNP y seguimiento de egresadas y egresados.",
+  "Consolidar el nucleo academico: 60% con experiencia profesional destacable (2027), 100% con Perfil Deseable PRODEP (2027) y 80% con distincion SNII (2028).",
+  "Sostener productividad anual del nucleo academico: 90% en eventos de investigacion LIES y al menos una publicacion arbitrada o en libro reconocido por integrante.",
+  "Alcanzar 70% de eficiencia terminal al cierre de 2026 y garantizar en 2026 movilidad academica o profesional para todo el estudiantado.",
+  "Fortalecer en 2027 la infraestructura tecnologica y el acceso a recursos cientificos y herramientas digitales para aprendizaje e investigacion.",
+];
+
+const perfilIngreso = [
+  "Egresadas y egresados de licenciaturas afines (administracion, economia, contaduria, mercadotecnia, turismo y areas relacionadas).",
+  "Conocimientos basicos en administracion, finanzas, economia, informatica y estadistica descriptiva.",
+  "Habilidades de comunicacion oral y escrita, trabajo colaborativo y gestion de informacion en entornos virtuales.",
+  "Pensamiento analitico y orientacion a la solucion de problemas organizacionales.",
+  "Interes por la investigacion aplicada, la innovacion y el uso de nuevas tecnologias.",
+  "Comprension lectora de textos academicos en ingles.",
+  "Sentido etico, responsabilidad social y disposicion para contribuir a la inclusion y equidad.",
+];
+
+const perfilEgreso = [
+  "Disenar, implementar y evaluar modelos de gestion e intervencion para mejorar el desempeno organizacional.",
+  "Dirigir organizaciones con pensamiento estrategico, liderazgo y enfoque etico.",
+  "Desarrollar investigacion aplicada y consultoria para resolver problemas complejos con impacto economico y social.",
+  "Formular y evaluar proyectos de inversion y estrategias de crecimiento en distintos sectores.",
+  "Integrar tecnologias de informacion e inteligencia artificial en procesos de decision y gestion.",
+  "Conformar y liderar equipos de alto desempeno en contextos multidisciplinarios.",
+  "Impulsar emprendimiento sostenible, desarrollo regional y generacion de empleo digno.",
+  "Actuar con responsabilidad social, sentido critico y compromiso con los valores universitarios.",
+];
+---
+
+<BaseLayout title="MDO UAGro | Objetivos" description="Objetivos, metas y perfiles de ingreso y egreso del programa MDO UAGro.">
+  <PageHeader
+    title="Objetivos del Programa"
+    subtitle="Formando lideres con capacidades directivas y de investigacion de alto nivel"
+    badge="MDO UAGro"
+  />
+
+  <section class="py-16">
+    <div class="max-w-4xl mx-auto px-4">
+      <PlanEstudiosTabs areas={planPorArea} semestres={planPorSemestre} optativas={planOptativas} client:load />
+
+      <div class="bg-card rounded-2xl p-8 shadow-sm border border-border mb-12">
+        <div class="flex items-start gap-4">
+          <div class="p-3 bg-primary/10 rounded-xl">
+            <Target className="h-6 w-6 text-primary" />
+          </div>
+          <div>
+            <h2 class="font-display text-2xl font-semibold text-foreground mb-4">Objetivo General</h2>
+            <p class="text-muted-foreground leading-relaxed text-lg">
+              Formar personas con capacidades directivas y de investigacion de alto nivel, competentes en el diseno,
+              implementacion y evaluacion de modelos de gestion e intervencion que optimicen el desempeno de las
+              organizaciones publicas, privadas o no lucrativas, orientando resultados hacia la creacion sostenible con
+              impacto social en la region.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="mb-12">
+        <h2 class="font-display text-2xl font-semibold text-foreground mb-6 flex items-center gap-3">
+          <CheckCircle className="h-6 w-6 text-primary" />
+          Objetivos Particulares
+        </h2>
+        <div class="space-y-4">
+          {
+            objetivosParticulares.map((objetivo, index) => (
+              <div class="flex items-start gap-4 bg-card rounded-xl p-4 border border-border">
+                <span class="flex-shrink-0 w-8 h-8 bg-primary/10 text-primary rounded-lg flex items-center justify-center font-semibold text-sm">
+                  {index + 1}
+                </span>
+                <p class="text-foreground/90 leading-relaxed">{objetivo}</p>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+
+      <div class="mb-12">
+        <h2 class="font-display text-2xl font-semibold text-foreground mb-6 flex items-center gap-3">
+          <CheckCircle className="h-6 w-6 text-primary" />
+          Metas del Programa
+        </h2>
+        <div class="space-y-4">
+          {
+            metas.map((meta, index) => (
+              <div class="flex items-start gap-4 bg-card rounded-xl p-4 border border-border">
+                <span class="flex-shrink-0 w-8 h-8 bg-primary/10 text-primary rounded-lg flex items-center justify-center font-semibold text-sm">
+                  {index + 1}
+                </span>
+                <p class="text-foreground/90 leading-relaxed">{meta}</p>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+
+      <ObjetivosTabs perfilIngreso={perfilIngreso} perfilEgreso={perfilEgreso} client:load />
+    </div>
+  </section>
+</BaseLayout>
