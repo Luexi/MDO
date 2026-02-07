@@ -1,0 +1,59 @@
+﻿---
+import { Building } from "lucide-react";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { PageHeader } from "@/components/ui/PageHeader";
+import { InstalacionCard } from "@/components/cards/InstalacionCard";
+import { instalaciones } from "@/data/instalaciones";
+---
+
+<BaseLayout title="MDO UAGro | Instalaciones" description="Infraestructura fisica y tecnologica disponible para estudiantes de la MDO UAGro.">
+  <PageHeader
+    title="Instalaciones"
+    subtitle="Conoce la infraestructura fisica y tecnologica disponible para nuestros estudiantes"
+    badge="Infraestructura"
+  />
+
+  <section class="py-16">
+    <div class="max-w-6xl mx-auto px-4">
+      <div class="bg-card rounded-2xl p-8 shadow-sm border border-border mb-12">
+        <div class="flex items-start gap-4">
+          <div class="p-3 bg-primary/10 rounded-xl">
+            <Building className="h-6 w-6 text-primary" />
+          </div>
+          <div>
+            <h2 class="font-display text-xl font-semibold text-foreground mb-3">Facultad de Contaduria y Administracion</h2>
+            <p class="text-muted-foreground leading-relaxed">
+              El programa de Maestria en Direccion de Organizaciones dispone de la infraestructura fisica y tecnologica de la Facultad de Contaduria y Administracion de la Universidad Autonoma de Guerrero. Nuestras instalaciones estan equipadas con tecnologia de punta para garantizar una experiencia educativa de calidad, incluyendo aulas multimedia, laboratorios de computo, bibliotecas especializadas y espacios de convivencia.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {instalaciones.map((instalacion) => <InstalacionCard instalacion={instalacion} />)}
+      </div>
+
+      <div class="mt-12 bg-muted/50 rounded-2xl p-8">
+        <h3 class="font-display text-lg font-semibold text-foreground mb-4 text-center">Servicios Adicionales</h3>
+        <div class="grid sm:grid-cols-2 md:grid-cols-4 gap-4 text-center">
+          <div class="p-4 bg-card rounded-xl border border-border">
+            <p class="font-medium text-foreground">WiFi de Alta Velocidad</p>
+            <p class="text-sm text-muted-foreground">En todo el campus</p>
+          </div>
+          <div class="p-4 bg-card rounded-xl border border-border">
+            <p class="font-medium text-foreground">Estacionamiento</p>
+            <p class="text-sm text-muted-foreground">Amplio y seguro</p>
+          </div>
+          <div class="p-4 bg-card rounded-xl border border-border">
+            <p class="font-medium text-foreground">Accesibilidad</p>
+            <p class="text-sm text-muted-foreground">Rampas y elevadores</p>
+          </div>
+          <div class="p-4 bg-card rounded-xl border border-border">
+            <p class="font-medium text-foreground">Seguridad 24/7</p>
+            <p class="text-sm text-muted-foreground">Vigilancia permanente</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

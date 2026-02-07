@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+﻿import type { ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
 interface PageHeaderProps {
@@ -35,3 +35,4 @@ export function PageHeader({ title, subtitle, badge, children, className }: Page
     </section>
   );
 }
+

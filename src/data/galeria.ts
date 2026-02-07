@@ -1,4 +1,4 @@
-export interface ImagenGaleria {
+﻿export interface ImagenGaleria {
   id: string;
   src: string;
   alt: string;
@@ -9,37 +9,37 @@ export interface ImagenGaleria {
 export const imagenesGaleria: ImagenGaleria[] = [
   {
     id: "1",
-    src: "/assets/galeria/evento-1.jpg",
-    alt: "Evento académico MDO",
-    titulo: "Jornada Académica 2025",
-    descripcion: "Ceremonia de apertura de la jornada académica del programa"
+    src: "/assets/galeria/evento-1.jpg.jpeg",
+    alt: "Galeria MDO - imagen 1",
+    titulo: "Galeria MDO",
+    descripcion: "Actividad academica del programa",
   },
   {
     id: "2",
-    src: "/assets/galeria/evento-2.png",
-    alt: "Actividades del programa",
-    titulo: "Actividades Estudiantiles",
-    descripcion: "Participación de estudiantes en actividades del programa"
+    src: "/assets/galeria/evento-2.jpg.jpeg",
+    alt: "Galeria MDO - imagen 2",
+    titulo: "Galeria MDO",
+    descripcion: "Actividad academica del programa",
   },
   {
     id: "3",
-    src: "/placeholder.svg",
-    alt: "Graduación MDO",
-    titulo: "Ceremonia de Graduación",
-    descripcion: "Generación 2023-2025"
+    src: "/assets/galeria/evento-3.jpg.jpeg",
+    alt: "Galeria MDO - imagen 3",
+    titulo: "Galeria MDO",
+    descripcion: "Actividad academica del programa",
   },
   {
     id: "4",
-    src: "/placeholder.svg",
-    alt: "Conferencia magistral",
-    titulo: "Conferencia Magistral",
-    descripcion: "Expositores invitados nacionales e internacionales"
+    src: "/assets/galeria/evento-4.jpg.jpeg",
+    alt: "Galeria MDO - imagen 4",
+    titulo: "Galeria MDO",
+    descripcion: "Actividad academica del programa",
   },
   {
     id: "5",
-    src: "/placeholder.svg",
-    alt: "Instalaciones FCA",
-    titulo: "Instalaciones",
-    descripcion: "Facultad de Contaduría y Administración"
-  }
+    src: "/assets/galeria/evento-5.jpg.jpeg",
+    alt: "Galeria MDO - imagen 5",
+    titulo: "Galeria MDO",
+    descripcion: "Actividad academica del programa",
+  },
 ];

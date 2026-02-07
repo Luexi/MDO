@@ -1,4 +1,4 @@
-import { Documento } from "@/data/documentos";
+import type { Documento } from "@/data/documentos";
 import { FileText, BookOpen, FileCheck, FilePlus, FileSpreadsheet, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 

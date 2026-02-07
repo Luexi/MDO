@@ -1,0 +1,48 @@
+﻿---
+import Navbar from "@/components/layout/Navbar";
+import Footer from "@/components/layout/Footer.astro";
+import "@/styles/global.css";
+
+interface Props {
+  title?: string;
+  description?: string;
+  noFooter?: boolean;
+}
+
+const {
+  title = "MDO UAGro | Maestria en Direccion de Organizaciones",
+  description = "Sitio oficial de la Maestria en Direccion de Organizaciones de la UAGro.",
+  noFooter = false,
+} = Astro.props;
+
+const currentPath = Astro.url.pathname;
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <meta name="author" content="MDO UAGro" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="/assets/logos/logo-mdo.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content="/assets/logos/logo-mdo.png" />
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <title>{title}</title>
+  </head>
+  <body>
+    <div class="min-h-screen flex flex-col bg-background">
+      <Navbar currentPath={currentPath} client:load />
+      <main class="flex-1 pt-24">
+        <slot />
+      </main>
+      {!noFooter && <Footer />}
+    </div>
+  </body>
+</html>

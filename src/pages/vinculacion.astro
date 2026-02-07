@@ -1,0 +1,99 @@
+﻿---
+import { ArrowRight, Briefcase, Building2, Globe, GraduationCap, Handshake } from "lucide-react";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { PageHeader } from "@/components/ui/PageHeader";
+import { institucionesConvenio, mecanismosVinculacion } from "@/data/vinculacion";
+
+const iconMap = {
+  universidad: GraduationCap,
+  gobierno: Building2,
+  empresa: Briefcase,
+  organismo: Globe,
+};
+---
+
+<BaseLayout title="MDO UAGro | Vinculacion" description="Mecanismos de vinculacion y convenios de colaboracion del programa MDO UAGro.">
+  <PageHeader
+    title="Vinculacion"
+    subtitle="Conoce nuestros mecanismos de vinculacion y convenios con instituciones nacionales e internacionales"
+    badge="Colaboracion"
+  />
+
+  <section class="py-16">
+    <div class="max-w-6xl mx-auto px-4">
+      <div class="bg-card rounded-2xl p-8 shadow-sm border border-border mb-12">
+        <div class="flex items-start gap-4">
+          <div class="p-3 bg-primary/10 rounded-xl">
+            <Handshake className="h-6 w-6 text-primary" />
+          </div>
+          <div>
+            <h2 class="font-display text-xl font-semibold text-foreground mb-3">Vinculacion Institucional</h2>
+            <p class="text-muted-foreground leading-relaxed">
+              La Maestria en Direccion de Organizaciones mantiene vinculos activos con instituciones educativas, organismos gubernamentales y empresas a nivel nacional e internacional. Estos convenios permiten el intercambio academico, la investigacion conjunta, estancias profesionales y la realizacion de proyectos de colaboracion que enriquecen la formacion de nuestros estudiantes.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="mb-12">
+        <h2 class="font-display text-2xl font-semibold text-foreground mb-6">Mecanismos de Vinculacion</h2>
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {
+            mecanismosVinculacion.map((mecanismo) => (
+              <div class="bg-card rounded-2xl p-6 border border-border hover:shadow-md transition-shadow group">
+                <div class="flex items-center gap-2 text-primary mb-3">
+                  <ArrowRight className="h-4 w-4" />
+                  <h3 class="font-semibold">{mecanismo.titulo}</h3>
+                </div>
+                <p class="text-sm text-muted-foreground leading-relaxed">{mecanismo.descripcion}</p>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+
+      <div>
+        <h2 class="font-display text-2xl font-semibold text-foreground mb-6">Instituciones con Convenio</h2>
+        {
+          (["universidad", "gobierno", "organismo"] as const).map((tipo) => {
+            const instituciones = institucionesConvenio.filter((item) => item.tipo === tipo);
+            if (instituciones.length === 0) return null;
+
+            const IconComponent = iconMap[tipo];
+            const tituloTipo = {
+              universidad: "Universidades",
+              gobierno: "Gobierno",
+              empresa: "Empresas",
+              organismo: "Organismos",
+            }[tipo];
+
+            return (
+              <div class="mb-8 last:mb-0">
+                <h3 class="font-semibold text-foreground mb-4 flex items-center gap-2">
+                  <IconComponent className="h-5 w-5 text-accent" />
+                  {tituloTipo}
+                </h3>
+                <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                  {
+                    instituciones.map((inst) => (
+                      <div class="p-4 bg-muted/50 rounded-xl text-sm">
+                        <p class="font-medium text-foreground">{inst.nombre}</p>
+                        {inst.pais && <p class="text-xs text-muted-foreground mt-1">{inst.pais}</p>}
+                      </div>
+                    ))
+                  }
+                </div>
+              </div>
+            );
+          })
+        }
+
+        <div class="mt-8 p-4 bg-accent/10 rounded-xl text-center">
+          <p class="text-sm text-accent">
+            Esta lista representa una muestra de nuestros convenios activos. Para mas informacion, contacta a la coordinacion del programa.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

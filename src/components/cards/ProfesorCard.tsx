@@ -1,5 +1,4 @@
-import { Link } from "react-router-dom";
-import { Profesor } from "@/data/profesores";
+﻿import type { Profesor } from "@/data/profesores";
 import { User } from "lucide-react";
 
 interface ProfesorCardProps {
@@ -8,8 +7,8 @@ interface ProfesorCardProps {
 
 export function ProfesorCard({ profesor }: ProfesorCardProps) {
   return (
-    <Link
-      to={`/profesores/${profesor.slug}`}
+    <a
+      href={`/profesores/${profesor.slug}`}
       className="group block bg-card rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 border border-border"
     >
       <div className="relative aspect-[4/5] overflow-hidden bg-muted">
@@ -27,18 +26,11 @@ export function ProfesorCard({ profesor }: ProfesorCardProps) {
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
       </div>
       <div className="p-4">
-        <p className="text-xs font-medium text-accent uppercase tracking-wider mb-1">
-          {profesor.grado}
-        </p>
-        <h3 className="font-display text-lg font-semibold text-foreground leading-tight mb-1">
-          {profesor.nombre}
+        <h3 className="font-display text-lg font-semibold text-foreground leading-tight">
+          {profesor.grado} {profesor.nombre}
         </h3>
-        {profesor.area && (
-          <p className="text-sm text-muted-foreground line-clamp-1">
-            {profesor.area}
-          </p>
-        )}
       </div>
-    </Link>
+    </a>
   );
 }
+

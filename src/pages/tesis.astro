@@ -1,0 +1,20 @@
+﻿---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { PageHeader } from "@/components/ui/PageHeader";
+import TesisFiltro from "@/components/islands/TesisFiltro";
+import { generaciones, tesis } from "@/data/tesis";
+---
+
+<BaseLayout title="MDO UAGro | Tesis" description="Consulta los trabajos de investigacion de los egresados de la MDO UAGro.">
+  <PageHeader
+    title="Repositorio de Tesis"
+    subtitle="Consulta los trabajos de investigacion de nuestros egresados"
+    badge="Trabajos de Grado"
+  />
+
+  <section class="py-16">
+    <div class="max-w-6xl mx-auto px-4">
+      <TesisFiltro generaciones={generaciones} tesis={tesis} client:idle />
+    </div>
+  </section>
+</BaseLayout>

@@ -1,4 +1,4 @@
-export interface Profesor {
+﻿export interface Profesor {
   id: string;
   slug: string;
   nombre: string;
@@ -12,290 +12,406 @@ export interface Profesor {
   historialAcademico?: string[];
   publicaciones?: {
     titulo: string;
-    año: string;
+    anio: string;
     tipo: string;
   }[];
 }
 
 export const profesores: Profesor[] = [
-  {
+{
     id: "1",
     slug: "ruben-hernandez-chavarria",
-    nombre: "Rubén Hernández Chavarría",
+    nombre: "Ruben Hernandez Chavarria",
     grado: "Dr.",
-    nombreCompleto: "Dr. Rubén Hernández Chavarría",
-    area: "Dirección Estratégica",
-    linea: "Gestión y desarrollo empresarial",
+    nombreCompleto: "Dr. Ruben Hernandez Chavarria",
+    area: "UAGro-CA-229",
+    linea: "Gestion y comportamiento organizacional",
     email: "rhernandez@uagro.mx",
-    semblanza: "Doctor en Ciencias de la Administración con amplia experiencia en investigación y docencia en el área de dirección de organizaciones. Ha participado en proyectos de consultoría para empresas del sector público y privado.",
+    foto: "/assets/profesores/ruben-hernandez-chavarria.jpeg",
+    semblanza:
+      "Doctor en administracion publica por el Instituto Internacional del Derecho y del Estado. Miembro SNI candidato y coordinador de la Red de Educacion para el Desarrollo Regional y Sostenibilidad de la UAGro.",
     historialAcademico: [
-      "Doctorado en Ciencias de la Administración - UNAM",
-      "Maestría en Administración - UAGro",
-      "Licenciatura en Administración de Empresas - UAGro"
+      "Ultimo grado (PDF NA): Doctor en administracion publica - Instituto Internacional del Derecho y del Estado",
+      "Cuerpo academico (PDF NA): UAGro-CA-229 Gestion y comportamiento organizacional",
+      "Red de colaboracion (PDF NA): Red de Educacion para el Desarrollo Regional y Sostenibilidad de la UAGro",
     ],
     publicaciones: [
-      { titulo: "Estrategias de gestión para PYMES en Guerrero", año: "2024", tipo: "Artículo" },
-      { titulo: "Innovación organizacional en contextos emergentes", año: "2023", tipo: "Capítulo de libro" }
-    ]
+      {
+        titulo:
+          "El perfil del emprendedor universitario y su influencia para el desarrollo economico regional en Guerrero",
+        anio: "2024",
+        tipo: "Articulo",
+      },
+    ],
   },
-  {
+{
     id: "2",
     slug: "david-antonio-reyes-pena",
-    nombre: "David Antonio Reyes Peña",
+    nombre: "David Antonio Reyes Pena",
     grado: "Dr.",
-    nombreCompleto: "Dr. David Antonio Reyes Peña",
-    area: "Finanzas Corporativas",
-    linea: "Gestión y desarrollo empresarial",
-    semblanza: "Especialista en finanzas corporativas y análisis financiero. Ha desarrollado investigaciones sobre el impacto financiero en organizaciones regionales.",
+    nombreCompleto: "Dr. David Antonio Reyes Pena",
+    area: "UAGro-CA-252",
+    linea: "Innovacion y responsabilidad social en las organizaciones",
+    foto: "/assets/profesores/david-antonio-reyes-pena.jpg",
+    semblanza:
+      "Doctor en administracion por la UAGro. Integrante del SNI nivel 1 e integrante de la Red Mexicana de Investigadores en Estudios Organizacionales.",
     historialAcademico: [
-      "Doctorado en Ciencias Administrativas - IPN",
-      "Maestría en Finanzas - ITESM",
-      "Licenciatura en Contaduría Pública - UAGro"
+      "Ultimo grado (PDF NA): Doctor en administracion - UAGro",
+      "Cuerpo academico (PDF NA): UAGro-CA-252 Innovacion y responsabilidad social en las organizaciones",
+      "Red de colaboracion (PDF NA): Red Mexicana de Investigadores en Estudios Organizacionales",
     ],
     publicaciones: [
-      { titulo: "Análisis financiero en empresas guerrerenses", año: "2024", tipo: "Artículo" }
-    ]
-  },
-  {
-    id: "3",
-    slug: "jose-luis-susano-garcia",
-    nombre: "José Luis Susano García",
-    grado: "Dr.",
-    nombreCompleto: "Dr. José Luis Susano García",
-    area: "Gestión Pública",
-    linea: "Procesos de gestión y calidad en organizaciones",
-    semblanza: "Investigador en el área de gestión pública y políticas organizacionales. Cuenta con experiencia en el sector gubernamental.",
-    historialAcademico: [
-      "Doctorado en Administración Pública - INAP",
-      "Maestría en Gestión Pública - CIDE",
-      "Licenciatura en Ciencias Políticas - UNAM"
+      {
+        titulo:
+          "El trabajo colaborativo, eje fundamental para el fortalecimiento de los cuerpos academicos",
+        anio: "2023",
+        tipo: "Articulo",
+      },
     ],
-    publicaciones: []
   },
-  {
+{
     id: "4",
     slug: "irma-amalia-mendez-castrejon",
-    nombre: "Irma Amalia Méndez Castrejón",
+    nombre: "Irma Amalia Mendez Castrejon",
     grado: "Dra.",
-    nombreCompleto: "Dra. Irma Amalia Méndez Castrejón",
-    area: "Recursos Humanos",
-    linea: "Gestión y desarrollo empresarial",
-    semblanza: "Doctora con especialización en gestión del talento humano y desarrollo organizacional. Ha liderado proyectos de capacitación en diversas instituciones.",
+    nombreCompleto: "Dra. Irma Amalia Mendez Castrejon",
+    area: "UAGro-CA-252",
+    linea: "Innovacion y responsabilidad social en las organizaciones",
+    foto: "/assets/profesores/irma-amalia-mendez-castrejon.jpg",
+    semblanza:
+      "Doctora en ciencias de la educacion por el Colegio Mayor de San Carlos. SNI candidata e integrante de la Red Nacional de Productividad, Innovacion y Competitividad Empresarial.",
     historialAcademico: [
-      "Doctorado en Ciencias Administrativas - UNAM",
-      "Maestría en Desarrollo Organizacional - UVM",
-      "Licenciatura en Psicología Organizacional - UAGro"
+      "Ultimo grado (PDF NA): Doctora en ciencias de la educacion - Colegio Mayor de San Carlos",
+      "Cuerpo academico (PDF NA): UAGro-CA-252 Innovacion y responsabilidad social en las organizaciones",
+      "Red de colaboracion (PDF NA): Red Nacional de Productividad, Innovacion y Competitividad Empresarial",
     ],
     publicaciones: [
-      { titulo: "Gestión del talento en organizaciones educativas", año: "2023", tipo: "Artículo" }
-    ]
+      {
+        titulo: "El comercio electronico como estrategia para la permanencia de MiPyMes",
+        anio: "2023",
+        tipo: "Capitulo de libro",
+      },
+    ],
   },
-  {
+{
     id: "5",
     slug: "evelyn-janet-zavaleta-carbajal",
     nombre: "Evelyn Janet Zavaleta Carbajal",
     grado: "Dra.",
     nombreCompleto: "Dra. Evelyn Janet Zavaleta Carbajal",
-    area: "Mercadotecnia Estratégica",
-    linea: "Gestión y desarrollo empresarial",
-    semblanza: "Especialista en estrategias de mercadotecnia y comportamiento del consumidor. Investigadora activa en temas de innovación comercial.",
+    area: "UAGro-CA-227",
+    linea: "Educacion virtual y responsabilidad social",
+    foto: "/assets/profesores/evelyn-janet-zavaleta-carbajal.jpeg",
+    semblanza:
+      "Doctora en administracion publica por el Instituto Internacional del Derecho y del Estado. Integrante SNI candidata, Perfil PRODEP y coordinadora del cuerpo academico UAGro-CA-227.",
     historialAcademico: [
-      "Doctorado en Ciencias de la Administración - UAGro",
-      "Maestría en Mercadotecnia - ITESM",
-      "Licenciatura en Mercadotecnia - UAGro"
+      "Ultimo grado (PDF NA): Doctora en administracion publica - Instituto Internacional del Derecho y del Estado",
+      "Cuerpo academico (PDF NA): UAGro-CA-227 Educacion virtual y responsabilidad social",
+      "Red de colaboracion (PDF NA): Red de Educacion para el Desarrollo Regional y Sostenibilidad de la UAGro",
     ],
-    publicaciones: []
+    publicaciones: [
+      {
+        titulo: "El comercio electronico como estrategia para la permanencia de MiPyMes",
+        anio: "2023",
+        tipo: "Capitulo de libro",
+      },
+    ],
   },
-  {
+{
     id: "6",
     slug: "yanira-gallardo-moreno",
     nombre: "Yanira Gallardo Moreno",
     grado: "Dra.",
     nombreCompleto: "Dra. Yanira Gallardo Moreno",
-    area: "Administración de Operaciones",
-    linea: "Procesos de gestión y calidad en organizaciones",
-    semblanza: "Doctora en Ciencias Administrativas con enfoque en optimización de procesos y gestión de la calidad en organizaciones.",
+    area: "UAGro-CA-252",
+    linea: "Innovacion y responsabilidad social en las organizaciones",
+    foto: "/assets/profesores/yanira-gallardo-moreno.jpg",
+    semblanza:
+      "Doctora en administracion por la Universidad Americana de Acapulco. SNI candidata, Perfil PRODEP e integrante de la Red de Educacion para el Desarrollo Regional y Sostenibilidad de la UAGro.",
     historialAcademico: [
-      "Doctorado en Ciencias Administrativas - IPN",
-      "Maestría en Ingeniería Industrial - UNAM",
-      "Licenciatura en Ingeniería Industrial - UAGro"
+      "Ultimo grado (PDF NA): Doctora en administracion - Universidad Americana de Acapulco",
+      "Cuerpo academico (PDF NA): UAGro-CA-252 Innovacion y responsabilidad social en las organizaciones",
+      "Red de colaboracion (PDF NA): Red de Educacion para el Desarrollo Regional y Sostenibilidad de la UAGro",
     ],
     publicaciones: [
-      { titulo: "Mejora continua en PYMES manufactureras", año: "2024", tipo: "Artículo" }
-    ]
-  },
-  {
-    id: "7",
-    slug: "adriana-miranda-esteban",
-    nombre: "Adriana Miranda Esteban",
-    grado: "Dra.",
-    nombreCompleto: "Dra. Adriana Miranda Esteban",
-    area: "Comportamiento Organizacional",
-    linea: "Gestión y desarrollo empresarial",
-    semblanza: "Investigadora en comportamiento organizacional y liderazgo. Ha colaborado en proyectos de transformación cultural en instituciones públicas.",
-    historialAcademico: [
-      "Doctorado en Psicología Organizacional - UNAM",
-      "Maestría en Desarrollo Humano - UIA",
-      "Licenciatura en Psicología - UAGro"
+      {
+        titulo: "El comercio electronico como estrategia para la permanencia de MiPyMes",
+        anio: "2023",
+        tipo: "Capitulo de libro",
+      },
     ],
-    publicaciones: []
   },
-  {
-    id: "8",
-    slug: "tania-de-jesus-adame-zambrano",
-    nombre: "Tania de Jesús Adame Zambrano",
-    grado: "Dra.",
-    nombreCompleto: "Dra. Tania de Jesús Adame Zambrano",
-    area: "Gestión de la Innovación",
-    linea: "Gestión y desarrollo empresarial",
-    semblanza: "Especialista en gestión de la innovación y emprendimiento. Ha asesorado startups y proyectos de base tecnológica.",
-    historialAcademico: [
-      "Doctorado en Ciencias de la Administración - UAGro",
-      "Maestría en Innovación Empresarial - ITESM",
-      "Licenciatura en Administración - UAGro"
-    ],
-    publicaciones: [
-      { titulo: "Ecosistemas de innovación en regiones emergentes", año: "2023", tipo: "Capítulo de libro" }
-    ]
-  },
-  {
-    id: "9",
-    slug: "justino-arziga-castanon",
-    nombre: "Justino Arziga Castañón",
-    grado: "Dr.",
-    nombreCompleto: "Dr. Justino Arziga Castañón",
-    area: "Economía y Finanzas",
-    linea: "Gestión y desarrollo empresarial",
-    semblanza: "Doctor en Economía con experiencia en análisis macroeconómico y su impacto en las organizaciones empresariales.",
-    historialAcademico: [
-      "Doctorado en Economía - UNAM",
-      "Maestría en Economía Aplicada - COLMEX",
-      "Licenciatura en Economía - UAGro"
-    ],
-    publicaciones: []
-  },
-  {
-    id: "10",
-    slug: "jose-hugo-vazquez-mendoza",
-    nombre: "José Hugo Vázquez Mendoza",
-    grado: "Dr.",
-    nombreCompleto: "Dr. José Hugo Vázquez Mendoza",
-    area: "Sistemas de Información",
-    linea: "Procesos de gestión y calidad en organizaciones",
-    semblanza: "Investigador en sistemas de información gerencial y transformación digital de las organizaciones.",
-    historialAcademico: [
-      "Doctorado en Sistemas Computacionales - IPN",
-      "Maestría en Tecnologías de la Información - ITESM",
-      "Licenciatura en Informática - UAGro"
-    ],
-    publicaciones: [
-      { titulo: "Transformación digital en el sector público", año: "2024", tipo: "Artículo" }
-    ]
-  },
-  {
-    id: "11",
-    slug: "nallely-vazquez-martinez",
-    nombre: "Nallely Vázquez Martínez",
-    grado: "Dra.",
-    nombreCompleto: "Dra. Nallely Vázquez Martínez",
-    area: "Contabilidad y Auditoría",
-    linea: "Procesos de gestión y calidad en organizaciones",
-    semblanza: "Especialista en contabilidad gerencial y auditoría. Ha participado en proyectos de mejora de controles internos.",
-    historialAcademico: [
-      "Doctorado en Ciencias Contables - UNAM",
-      "Maestría en Auditoría - IPN",
-      "Licenciatura en Contaduría - UAGro"
-    ],
-    publicaciones: []
-  },
-  {
+{
     id: "12",
     slug: "gabriela-del-carmen-rivero-solana",
     nombre: "Gabriela del Carmen Rivero Solana",
     grado: "Dra.",
     nombreCompleto: "Dra. Gabriela del Carmen Rivero Solana",
-    area: "Desarrollo Sustentable",
-    linea: "Gestión y desarrollo empresarial",
-    semblanza: "Investigadora en sustentabilidad organizacional y responsabilidad social empresarial. Ha liderado proyectos de impacto ambiental.",
+    area: "UAGro-CA-229",
+    linea: "Gestion y comportamiento organizacional",
+    foto: "/assets/profesores/gabriela-del-carmen-rivero-solana.jpg",
+    semblanza:
+      "Doctora en administracion publica por el Instituto Internacional del Derecho y del Estado. Perfil PRODEP e integrante de la Red de Educacion para el Desarrollo Regional y Sostenibilidad de la UAGro.",
     historialAcademico: [
-      "Doctorado en Desarrollo Sustentable - UNAM",
-      "Maestría en Gestión Ambiental - UAGro",
-      "Licenciatura en Biología - UAGro"
+      "Ultimo grado (PDF NA): Doctora en administracion publica - Instituto Internacional del Derecho y del Estado",
+      "Cuerpo academico (PDF NA): UAGro-CA-229 Gestion y comportamiento organizacional",
+      "Red de colaboracion (PDF NA): Red de Educacion para el Desarrollo Regional y Sostenibilidad de la UAGro",
     ],
     publicaciones: [
-      { titulo: "RSE en empresas turísticas de Guerrero", año: "2023", tipo: "Artículo" }
-    ]
-  },
-  {
-    id: "13",
-    slug: "rosa-alejandra-vazquez-martinez",
-    nombre: "Rosa Alejandra Vázquez Martínez",
-    grado: "Dra.",
-    nombreCompleto: "Dra. Rosa Alejandra Vázquez Martínez",
-    area: "Derecho Empresarial",
-    linea: "Procesos de gestión y calidad en organizaciones",
-    semblanza: "Doctora con especialización en derecho empresarial y normatividad organizacional. Asesora legal de empresas y organismos públicos.",
-    historialAcademico: [
-      "Doctorado en Derecho - UNAM",
-      "Maestría en Derecho Corporativo - UP",
-      "Licenciatura en Derecho - UAGro"
+      {
+        titulo:
+          "El perfil del emprendedor universitario y su influencia para el desarrollo economico regional en Guerrero",
+        anio: "2024",
+        tipo: "Articulo",
+      },
     ],
-    publicaciones: []
   },
-  {
+{
     id: "14",
     slug: "citlalli-arroyo-rosas",
     nombre: "Citlalli Arroyo Rosas",
     grado: "Dra.",
     nombreCompleto: "Dra. Citlalli Arroyo Rosas",
-    area: "Metodología de Investigación",
-    linea: "Gestión y desarrollo empresarial",
-    semblanza: "Especialista en metodología de investigación y análisis cuantitativo. Ha dirigido múltiples tesis de maestría y doctorado.",
+    area: "UAGro-CA-229",
+    linea: "Gestion y comportamiento organizacional",
+    foto: "/assets/profesores/citlalli-arroyo-rosas.jpg",
+    semblanza:
+      "Doctora en administracion publica por el Instituto Internacional del Derecho y del Estado. Perfil PRODEP e integrante de la Red de Educacion para el Desarrollo Regional y Sostenibilidad de la UAGro.",
     historialAcademico: [
-      "Doctorado en Ciencias Sociales - UAGro",
-      "Maestría en Metodología de la Ciencia - IPN",
-      "Licenciatura en Sociología - UNAM"
+      "Ultimo grado (PDF NA): Doctora en administracion publica - Instituto Internacional del Derecho y del Estado",
+      "Cuerpo academico (PDF NA): UAGro-CA-229 Gestion y comportamiento organizacional",
+      "Red de colaboracion (PDF NA): Red de Educacion para el Desarrollo Regional y Sostenibilidad de la UAGro",
     ],
     publicaciones: [
-      { titulo: "Métodos mixtos en investigación organizacional", año: "2024", tipo: "Libro" }
-    ]
+      {
+        titulo:
+          "El perfil del emprendedor universitario y su influencia para el desarrollo economico regional en Guerrero",
+        anio: "2024",
+        tipo: "Articulo",
+      },
+    ],
   },
-  {
+{
+    id: "16",
+    slug: "remigio-marin-ibarra",
+    nombre: "Remigio Marin Ibarra",
+    grado: "Dr.",
+    nombreCompleto: "Dr. Remigio Marin Ibarra",
+    area: "UAGro-CA-210",
+    linea: "Gestion, desarrollo y aspectos financieros de las empresas",
+    foto: "/assets/profesores/remigio-marin-ibarra.jpg",
+    semblanza:
+      "Doctor en administracion por Atlantic International University (Honolulu, Hawaii). Integrante del cuerpo academico UAGro-CA-210 y de la Red de Educacion para el Desarrollo Regional y Sostenibilidad de la UAGro.",
+    historialAcademico: [
+      "Ultimo grado (PDF NA): Doctor en administracion - Atlantic International University",
+      "Cuerpo academico (PDF NA): UAGro-CA-210 Gestion, desarrollo y aspectos financieros de las empresas",
+      "Red de colaboracion (PDF NA): Red de Educacion para el Desarrollo Regional y Sostenibilidad de la UAGro",
+    ],
+    publicaciones: [
+      {
+        titulo:
+          "Importancia de que los futuros contadores conozcan las IA utiles en su formacion profesional",
+        anio: "2023",
+        tipo: "Memoria de congreso",
+      },
+    ],
+  },
+{
     id: "15",
     slug: "liliana-galeana-camacho",
     nombre: "Liliana Galeana Camacho",
     grado: "Dra.",
     nombreCompleto: "Dra. Liliana Galeana Camacho",
-    area: "Gestión del Conocimiento",
-    linea: "Procesos de gestión y calidad en organizaciones",
-    semblanza: "Investigadora en gestión del conocimiento y aprendizaje organizacional. Ha implementado sistemas de gestión en instituciones educativas.",
+    area: "UAGro-CA-227",
+    linea: "Educacion virtual y responsabilidad social",
+    foto: "/assets/profesores/liliana-galeana-camacho.jpg",
+    semblanza:
+      "Doctora en administracion publica por el Instituto Internacional del Derecho y del Estado. Perfil PRODEP e integrante del cuerpo academico UAGro-CA-227.",
     historialAcademico: [
-      "Doctorado en Ciencias de la Educación - UAGro",
-      "Maestría en Gestión Educativa - UPN",
-      "Licenciatura en Pedagogía - UNAM"
-    ],
-    publicaciones: []
-  },
-  {
-    id: "16",
-    slug: "remigio-marin-ibarra",
-    nombre: "Remigio Marín Ibarra",
-    grado: "Dr.",
-    nombreCompleto: "Dr. Remigio Marín Ibarra",
-    area: "Planeación Estratégica",
-    linea: "Gestión y desarrollo empresarial",
-    semblanza: "Doctor con amplia experiencia en planeación estratégica y desarrollo organizacional. Consultor en proyectos de transformación institucional.",
-    historialAcademico: [
-      "Doctorado en Ciencias Administrativas - UNAM",
-      "Maestría en Alta Dirección - IPADE",
-      "Licenciatura en Administración - UAGro"
+      "Ultimo grado (PDF NA): Doctora en administracion publica - Instituto Internacional del Derecho y del Estado",
+      "Cuerpo academico (PDF NA): UAGro-CA-227 Educacion virtual y responsabilidad social",
+      "Red de colaboracion (PDF NA): Red de Educacion para el Desarrollo Regional y Sostenibilidad de la UAGro",
     ],
     publicaciones: [
-      { titulo: "Planeación estratégica en instituciones públicas", año: "2024", tipo: "Artículo" }
-    ]
+      {
+        titulo: "Factores asociados a la retribucion social de estudiantes de posgrado",
+        anio: "2025",
+        tipo: "Capitulo de libro (en prensa)",
+      },
+    ],
+  },
+{
+    id: "3",
+    slug: "jose-luis-susano-garcia",
+    nombre: "Jose Luis Susano Garcia",
+    grado: "Dr.",
+    nombreCompleto: "Dr. Jose Luis Susano Garcia",
+    area: "UAGro-CA-209",
+    linea: "Responsabilidad social y gestion de las organizaciones",
+    foto: "/assets/profesores/jose-luis-susano-garcia.jpeg",
+    semblanza:
+      "Doctor en administracion y gestion empresarial por la Universidad del Centro del Bajio. Integrante del SNI nivel 1 y presidente de la Red Academica de Gestion de Mercadotecnia del Consorcio de Universidades Mexicanas.",
+    historialAcademico: [
+      "Ultimo grado (PDF NA): Doctor en administracion y gestion empresarial - Universidad del Centro del Bajio",
+      "Cuerpo academico (PDF NA): UAGro-CA-209 Responsabilidad social y gestion de las organizaciones",
+      "Red de colaboracion (PDF NA): Red Academica de Gestion de Mercadotecnia (CUMex)",
+    ],
+    publicaciones: [
+      {
+        titulo: "Estilo de vida de consumidores generacionales en la ciudad de Chilpancingo",
+        anio: "2024",
+        tipo: "Capitulo de libro",
+      },
+    ],
+  },
+{
+    id: "13",
+    slug: "rosa-alejandra-vazquez-martinez",
+    nombre: "Rosa Alejandra Vazquez Martinez",
+    grado: "Dra.",
+    nombreCompleto: "Dra. Rosa Alejandra Vazquez Martinez",
+    area: "UAGro-CA-227",
+    linea: "Educacion virtual y responsabilidad social",
+    foto: "/assets/profesores/rosa-alejandra-vazquez-martinez.jpeg",
+    semblanza:
+      "Doctora en administracion por la Universidad IEXPRO. Perfil PRODEP e integrante de la Red de Educacion para el Desarrollo Regional y Sostenibilidad de la UAGro.",
+    historialAcademico: [
+      "Ultimo grado (PDF NA): Doctora en administracion - Universidad IEXPRO",
+      "Cuerpo academico (PDF NA): UAGro-CA-227 Educacion virtual y responsabilidad social",
+      "Red de colaboracion (PDF NA): Red de Educacion para el Desarrollo Regional y Sostenibilidad de la UAGro",
+    ],
+    publicaciones: [
+      {
+        titulo: "Linea de publicaciones sobre responsabilidad social y emprendimiento universitario",
+        anio: "2024",
+        tipo: "Publicacion conjunta",
+      },
+    ],
+  },
+{
+    id: "9",
+    slug: "justino-arziga-castanon",
+    nombre: "Justino Arziga Castanon",
+    grado: "Dr.",
+    nombreCompleto: "Dr. Justino Arziga Castanon",
+    area: "UAGro-CA-14",
+    linea: "Turismo sustentable",
+    foto: "/assets/profesores/justino-arziga-castanon.jpg",
+    semblanza:
+      "Doctor en ciencias del desarrollo regional por la UAGro. De acuerdo con el PDF del Nucleo Academico, figura como candidato SNI a partir de 2026.",
+    historialAcademico: [
+      "Ultimo grado (PDF NA): Doctor en ciencias del desarrollo regional - UAGro",
+      "Cuerpo academico (PDF NA): UAGro-CA-14 Turismo sustentable",
+      "Red de colaboracion (PDF NA): Red Latinoamericana de Estudios Subnacionales de la UAGro",
+      "Nota: informacion individual no actualizada por el profesor.",
+    ],
+    publicaciones: [
+      {
+        titulo: "Educacion para el desarrollo regional",
+        anio: "En prensa",
+        tipo: "Capitulo de libro",
+      },
+    ],
+  },
+{
+    id: "8",
+    slug: "tania-de-jesus-adame-zambrano",
+    nombre: "Tania de Jesus Adame Zambrano",
+    grado: "Dra.",
+    nombreCompleto: "Dra. Tania de Jesus Adame Zambrano",
+    area: "UAGro-224",
+    linea: "Biotecnologia y econometria de los sistemas agroalimentarios",
+    email: "17021@uagro.mx",
+    foto: "/assets/profesores/tania-de-jesus-adame-zambrano.png",
+    semblanza:
+      "Doctora en Direccion de Organizaciones por la Universidad del Distrito Federal. SNI candidata e integrante de redes de difusion y divulgacion en ciencias y humanidades.",
+    historialAcademico: [
+      "Ultimo grado (PDF NA): Doctora en Direccion de Organizaciones - Universidad del Distrito Federal",
+      "Cuerpo academico (PDF NA): UAGro-224 Biotecnologia y econometria de los sistemas agroalimentarios",
+      "Red de colaboracion (PDF NA): Red de Difusion y Divulgacion de Investigaciones en Ciencias y Humanidades",
+    ],
+    publicaciones: [
+      {
+        titulo: "Educacion para el desarrollo regional",
+        anio: "En prensa",
+        tipo: "Capitulo de libro",
+      },
+    ],
+  },
+{
+    id: "7",
+    slug: "adriana-miranda-esteban",
+    nombre: "Adriana Miranda Esteban",
+    grado: "Dra.",
+    nombreCompleto: "Dra. Adriana Miranda Esteban",
+    area: "UAGro-CA-185",
+    linea: "Educacion y sustentabilidad",
+    foto: "/assets/profesores/adriana-miranda-esteban.jpg",
+    semblanza:
+      "Doctora en ciencias ambientales por la UAGro. SNI candidata e integrante del cuerpo academico UAGro-CA-185 Educacion y sustentabilidad.",
+    historialAcademico: [
+      "Ultimo grado (PDF NA): Doctora en ciencias ambientales - UAGro",
+      "Cuerpo academico (PDF NA): UAGro-CA-185 Educacion y sustentabilidad",
+      "Red de colaboracion (PDF NA): Red de Educacion para el Desarrollo Regional y Sostenibilidad de la UAGro",
+    ],
+    publicaciones: [
+      {
+        titulo: "Educacion para el desarrollo regional: estudio de caso en estudiantes de posgrado",
+        anio: "En prensa",
+        tipo: "Capitulo de libro",
+      },
+    ],
+  },
+{
+    id: "10",
+    slug: "jose-hugo-vazquez-mendoza",
+    nombre: "Jose Hugo Vazquez Mendoza",
+    grado: "Dr.",
+    nombreCompleto: "Dr. Jose Hugo Vazquez Mendoza",
+    area: "UAGro-CA-227",
+    linea: "Educacion virtual y responsabilidad social",
+    foto: "/assets/profesores/jose-hugo-vazquez-mendoza.jpeg",
+    semblanza:
+      "Doctor en administracion por la UAGro (candidato SNI a partir de 2026). Integrante del cuerpo academico UAGro-CA-227.",
+    historialAcademico: [
+      "Ultimo grado (PDF NA): Doctor en administracion - UAGro",
+      "Cuerpo academico (PDF NA): UAGro-CA-227 Educacion virtual y responsabilidad social",
+      "Red de colaboracion (PDF NA): Red de Educacion para el Desarrollo Regional y Sostenibilidad de la UAGro",
+    ],
+    publicaciones: [
+      {
+        titulo: "Responsabilidad social corporativa: un motor para el emprendimiento universitario en Guerrero",
+        anio: "2024",
+        tipo: "Capitulo",
+      },
+    ],
+  },
+{
+    id: "11",
+    slug: "nallely-vazquez-martinez",
+    nombre: "Nallely Vazquez Martinez",
+    grado: "Dra.",
+    nombreCompleto: "Dra. Nallely Vazquez Martinez",
+    area: "UAGro-CA-227",
+    linea: "Educacion virtual y responsabilidad social",
+    foto: "/assets/profesores/nallely-vazquez-martinez.jpg",
+    semblanza:
+      "Doctora en Direccion de Organizaciones por la UPAEP. Perfil PRODEP e integrante del cuerpo academico UAGro-CA-227.",
+    historialAcademico: [
+      "Ultimo grado (PDF NA): Doctora en direccion de organizaciones - UPAEP",
+      "Cuerpo academico (PDF NA): UAGro-CA-227 Educacion virtual y responsabilidad social",
+      "Red de colaboracion (PDF NA): Red Nacional de Productividad, Innovacion y Competitividad Empresarial",
+    ],
+    publicaciones: [
+      {
+        titulo: "Linea de publicacion sobre responsabilidad social corporativa y emprendimiento universitario",
+        anio: "2024",
+        tipo: "Publicacion conjunta",
+      },
+    ],
   }
 ];
 
 export const getProfesorBySlug = (slug: string): Profesor | undefined => {
-  return profesores.find(p => p.slug === slug);
+  return profesores.find((p) => p.slug === slug);
 };

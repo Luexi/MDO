@@ -1,4 +1,4 @@
-import { Instalacion } from "@/data/instalaciones";
+import type { Instalacion } from "@/data/instalaciones";
 import { Building2, Monitor, Users, Presentation, Video, Library, Coffee, Bath, Trees } from "lucide-react";
 
 const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {

@@ -1,5 +1,3 @@
-import { Building2, Monitor, Users, Presentation, Video, Library, Coffee, Bath, Trees } from "lucide-react";
-
 export interface Instalacion {
   id: string;
   nombre: string;

@@ -1,4 +1,4 @@
-import { Tesis } from "@/data/tesis";
+﻿import type { Tesis } from "@/data/tesis";
 import { FileText, ExternalLink, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -52,3 +52,4 @@ export function TesisCard({ tesis }: TesisCardProps) {
     </div>
   );
 }
+

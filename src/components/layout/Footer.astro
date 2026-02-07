@@ -1,0 +1,84 @@
+﻿---
+import { Mail, Phone, MapPin, Facebook, Twitter, Linkedin } from "lucide-react";
+---
+
+<footer class="bg-primary text-primary-foreground">
+  <div class="max-w-7xl mx-auto px-4 py-12">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+      <div class="lg:col-span-1">
+        <div class="flex items-center gap-3 mb-4">
+          <img src="/assets/logos/logo-uagro.png" alt="UAGro" class="h-12 w-auto brightness-0 invert" />
+          <img src="/assets/logos/logo-fca.PNG" alt="FCA" class="h-12 w-auto brightness-0 invert" />
+          <img src="/assets/logos/logo-mdo.png" alt="MDO" class="h-12 w-auto brightness-0 invert" />
+        </div>
+        <p class="text-primary-foreground/80 text-sm leading-relaxed">
+          Maestria en Direccion de Organizaciones. Formando lideres con vision estrategica para la transformacion organizacional.
+        </p>
+      </div>
+
+      <div>
+        <h4 class="font-display text-lg font-semibold mb-4">Enlaces Rapidos</h4>
+        <ul class="space-y-2">
+          <li><a href="/objetivos" class="text-primary-foreground/80 hover:text-primary-foreground text-sm transition-colors">Objetivos del Programa</a></li>
+          <li><a href="/nucleo-academico" class="text-primary-foreground/80 hover:text-primary-foreground text-sm transition-colors">Nucleo Academico</a></li>
+          <li><a href="/repositorio" class="text-primary-foreground/80 hover:text-primary-foreground text-sm transition-colors">Documentos</a></li>
+          <li><a href="/tesis" class="text-primary-foreground/80 hover:text-primary-foreground text-sm transition-colors">Repositorio de Tesis</a></li>
+          <li><a href="/convocatoria" class="text-primary-foreground/80 hover:text-primary-foreground text-sm transition-colors">Convocatoria</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 class="font-display text-lg font-semibold mb-4">Contacto</h4>
+        <ul class="space-y-3">
+          <li class="flex items-start gap-2">
+            <MapPin className="h-5 w-5 mt-0.5 flex-shrink-0" />
+            <span class="text-sm text-primary-foreground/80">
+              Facultad de Contaduria y Administracion, Ciudad Universitaria, Chilpancingo, Gro.
+            </span>
+          </li>
+          <li class="flex items-center gap-2">
+            <Phone className="h-5 w-5 flex-shrink-0" />
+            <span class="text-sm text-primary-foreground/80">(747) 472-5678</span>
+          </li>
+          <li class="flex items-center gap-2">
+            <Mail className="h-5 w-5 flex-shrink-0" />
+            <a href="mailto:mdo@uagro.mx" class="text-sm text-primary-foreground/80 hover:text-primary-foreground transition-colors">
+              mdo@uagro.mx
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 class="font-display text-lg font-semibold mb-4">Siguenos</h4>
+        <div class="flex gap-3">
+          <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" class="p-2 bg-primary-foreground/10 rounded-lg hover:bg-primary-foreground/20 transition-colors" aria-label="Facebook">
+            <Facebook className="h-5 w-5" />
+          </a>
+          <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" class="p-2 bg-primary-foreground/10 rounded-lg hover:bg-primary-foreground/20 transition-colors" aria-label="Twitter">
+            <Twitter className="h-5 w-5" />
+          </a>
+          <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" class="p-2 bg-primary-foreground/10 rounded-lg hover:bg-primary-foreground/20 transition-colors" aria-label="LinkedIn">
+            <Linkedin className="h-5 w-5" />
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-12 pt-8 border-t border-primary-foreground/20">
+      <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+        <p class="text-sm text-primary-foreground/60">
+          &copy; {new Date().getFullYear()} Universidad Autonoma de Guerrero. Todos los derechos reservados.
+        </p>
+        <div class="flex gap-6">
+          <a href="#" class="text-sm text-primary-foreground/60 hover:text-primary-foreground transition-colors">
+            Aviso de Privacidad
+          </a>
+          <a href="#" class="text-sm text-primary-foreground/60 hover:text-primary-foreground transition-colors">
+            Terminos de Uso
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>

@@ -1,5 +1,3 @@
-import { FileText, BookOpen, FileCheck, FilePlus, FileSpreadsheet } from "lucide-react";
-
 export interface Documento {
   id: string;
   titulo: string;

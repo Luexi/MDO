@@ -1,0 +1,41 @@
+﻿---
+import { FolderOpen } from "lucide-react";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { PageHeader } from "@/components/ui/PageHeader";
+import { DocumentoCard } from "@/components/cards/DocumentoCard";
+import { documentos } from "@/data/documentos";
+
+const categorias = [...new Set(documentos.map((documento) => documento.categoria))];
+---
+
+<BaseLayout title="MDO UAGro | Repositorio" description="Repositorio de documentos oficiales, formatos y recursos del programa.">
+  <PageHeader
+    title="Repositorio de Documentos"
+    subtitle="Accede a los documentos oficiales, formatos y recursos del programa"
+    badge="Documentos"
+  />
+
+  <section class="py-16">
+    <div class="max-w-6xl mx-auto px-4">
+      {
+        categorias.map((categoria) => (
+          <div class="mb-12 last:mb-0">
+            <h2 class="font-display text-2xl font-semibold text-foreground mb-6 flex items-center gap-3">
+              <FolderOpen className="h-6 w-6 text-primary" />
+              {categoria}
+            </h2>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {documentos.filter((item) => item.categoria === categoria).map((documento) => <DocumentoCard documento={documento} />)}
+            </div>
+          </div>
+        ))
+      }
+
+      <div class="mt-12 p-6 bg-muted/50 rounded-2xl border border-border">
+        <p class="text-sm text-muted-foreground text-center">
+          <strong>Nota:</strong> Todos los documentos se abren en Google Drive. Para descargar, haz clic en el icono de descarga dentro de Drive.
+        </p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

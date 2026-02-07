@@ -1,0 +1,25 @@
+﻿---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { PageHeader } from "@/components/ui/PageHeader";
+import { ProfesorCard } from "@/components/cards/ProfesorCard";
+import { profesores } from "@/data/profesores";
+---
+
+<BaseLayout
+  title="MDO UAGro | Nucleo Academico"
+  description="Conoce al cuerpo docente de excelencia que conforma la Maestria en Direccion de Organizaciones."
+>
+  <PageHeader
+    title="Nucleo Academico"
+    subtitle="Conoce al cuerpo docente de excelencia que conforma nuestra maestria"
+    badge="Claustro Docente"
+  />
+
+  <section class="py-16">
+    <div class="max-w-7xl mx-auto px-4">
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        {profesores.map((profesor) => <ProfesorCard profesor={profesor} />)}
+      </div>
+    </div>
+  </section>
+</BaseLayout>
