@@ -16,6 +16,7 @@ export function ProfesorCard({ profesor }: ProfesorCardProps) {
           <img
             src={profesor.foto}
             alt={profesor.nombreCompleto}
+            loading="lazy"
             className="w-full h-full object-cover transition-all duration-500 group-hover:grayscale group-hover:scale-105"
           />
         ) : (
