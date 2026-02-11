@@ -21,11 +21,10 @@ Migrar el sitio MDO desde una SPA en React + Vite a una arquitectura **Astro + i
 - Ruteo por archivos en `src/pages/*.astro`.
 - Ruta dinamica de profesores con `src/pages/profesores/[slug].astro` + `getStaticPaths()`.
 - Layout global en `src/layouts/BaseLayout.astro`.
-- Interactividad acotada a islas React:
-  - Navbar movil
-  - Tabs de Objetivos
-  - Filtro por generacion en Tesis
-  - Carrusel de Galeria
+- Componentes Astro puros (0 JS): Navbar, ObjetivosTabs, PlanEstudiosTabs.
+- Islas React solo donde es estrictamente necesario:
+  - Filtro por generacion en Tesis (`client:idle`)
+  - Carrusel de Galeria (`client:idle`)
 
 ## Cambios tecnicos clave
 
@@ -50,8 +49,10 @@ Migrar el sitio MDO desde una SPA en React + Vite a una arquitectura **Astro + i
   - `/convocatoria`
 
 3. UI y componentes
-- Se conservaron componentes utiles (`button`, `tabs`, tarjetas, header, carrusel).
-- Se eliminaron componentes UI no referenciados tras la migracion.
+
+- Se conservaron componentes utiles (`button`, tarjetas, header, carrusel).
+- Se convirtieron Navbar y tabs de Objetivos de React a Astro puro (CSS-only tabs con radio buttons).
+- Se elimino `@radix-ui/react-tabs` y componentes UI no referenciados.
 
 4. Estilos
 - `src/index.css` se movio a `src/styles/global.css`.
@@ -60,6 +61,33 @@ Migrar el sitio MDO desde una SPA en React + Vite a una arquitectura **Astro + i
 5. Metadata
 - Se reemplazo metadata generica previa por metadata institucional MDO/UAGro en `BaseLayout.astro`.
 
+## Fase de optimizacion de peso y rendimiento
+
+Posterior a la migracion, se realizo una fase de optimizacion:
+
+### Reduccion de peso (5.5MB → 2.3MB, -58%)
+
+- Imagenes comprimidas con sharp (4.2MB → 1.1MB, -75%)
+- Logos PNG convertidos a WebP
+- Fotos de profesores redimensionadas a 400px max
+- Google Fonts cargadas async (no render-blocking)
+- Navbar convertido de React a Astro puro (elimina React+ReactDOM ~136KB de todas las paginas)
+- Tabs de Objetivos convertidos de Radix UI React a CSS-only (radio buttons + `peer-checked`)
+- Se elimino `@radix-ui/react-tabs`
+
+### Reduccion de edge requests
+
+- `vercel.json` con `cleanUrls: true` y cache inmutable para `_astro/` y `assets/`
+- `loading="lazy"` en imagenes de profesores, galeria y footer
+- Convocatoria convertida de JPEG a WebP
+
+### Archivos eliminados en optimizacion
+
+- `src/components/layout/Navbar.tsx` (reemplazado por `Navbar.astro`)
+- `src/components/islands/ObjetivosTabs.tsx` (reemplazado por `ObjetivosTabs.astro`)
+- `src/components/islands/PlanEstudiosTabs.tsx` (reemplazado por `PlanEstudiosTabs.astro`)
+- `src/components/ui/tabs.tsx` (ya no se usa sin Radix UI)
+
 ## Inventario de limpieza
 
 - Removidos:
@@ -67,6 +95,7 @@ Migrar el sitio MDO desde una SPA en React + Vite a una arquitectura **Astro + i
   - `lovable-tagger`
   - `react-router-dom`
   - `@tanstack/react-query`
+  - `@radix-ui/react-tabs`
   - `src/App.tsx`, `src/main.tsx`, `index.html`, `vite.config.ts`
   - componentes y hooks no usados
 

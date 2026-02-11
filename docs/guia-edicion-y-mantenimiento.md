@@ -102,13 +102,14 @@ Archivo: `src/data/vinculacion.ts`
 Carpeta: `public/assets/logos/`
 
 Referencias actuales:
-- Navbar: `src/components/layout/Navbar.tsx`
+
+- Navbar: `src/components/layout/Navbar.astro`
 - Footer: `src/components/layout/Footer.astro`
 
 ## 4. Cambios visuales (layout/estilo)
 
 - Layout global: `src/layouts/BaseLayout.astro`
-- Navbar: `src/components/layout/Navbar.tsx`
+- Navbar: `src/components/layout/Navbar.astro` (componente Astro puro)
 - Footer: `src/components/layout/Footer.astro`
 - Variables/tema: `src/styles/global.css`
 - Config Tailwind: `tailwind.config.ts`
@@ -119,19 +120,34 @@ Paginas en `src/pages/`.
 
 Si agregas una pagina nueva:
 1. Crear archivo `.astro` en `src/pages/`
-2. Agregar enlace en `Navbar.tsx` y/o footer
+2. Agregar enlace en `Navbar.astro` y/o footer
 3. Probar navegacion
 
-## 6. Interactividad nueva (React islands)
+## 6. Interactividad nueva
 
-Si una seccion necesita estado/handlers:
-1. Crear componente en `src/components/islands/`
+### Opcion 1: Componente Astro puro (preferido)
+
+Si la interactividad se puede resolver con CSS o un `<script>` inline:
+
+1. Crear componente `.astro` en `src/components/`
+2. Usar tecnicas CSS-only (`peer-checked`, `:target`, etc.) o un `<script>` vanilla
+3. Importarlo directamente en la pagina
+
+Ejemplos existentes: Navbar (script inline), ObjetivosTabs (radio buttons + `peer-checked`).
+
+### Opcion 2: Isla React (solo si es necesario)
+
+Si la seccion necesita estado complejo o handlers de React:
+
+1. Crear componente `.tsx` en `src/components/islands/`
 2. Importarlo en la pagina `.astro`
 3. Hidratar con `client:idle` o `client:load`
 
 Recomendacion:
+
 - `client:idle` por defecto
 - `client:load` solo si debe estar disponible inmediatamente
+- Preferir Astro puro cuando sea posible para reducir JS en el cliente
 
 ## 7. Flujo seguro para cambios
 
@@ -146,8 +162,9 @@ Recomendacion:
 ### La imagen no aparece
 
 - Revisa nombre exacto (mayusculas/minusculas)
-- Revisa extension real (`.jpg`, `.jpeg`, `.png`)
+- Revisa extension real (`.jpg`, `.webp`) — los logos usan `.webp`, las fotos `.jpg` o `.webp`
 - Revisa ruta en `src/data/galeria.ts`
+- Si agregas imagenes nuevas, optimizalas antes (WebP para logos, JPEG comprimido para fotos)
 
 ### Cambie data pero no se actualiza
 
