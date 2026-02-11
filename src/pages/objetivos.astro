@@ -1,9 +1,8 @@
 ﻿---
-import { CheckCircle, Target } from "lucide-react";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { PageHeader } from "@/components/ui/PageHeader";
-import ObjetivosTabs from "@/components/islands/ObjetivosTabs";
-import PlanEstudiosTabs from "@/components/islands/PlanEstudiosTabs";
+import ObjetivosTabs from "@/components/ObjetivosTabs.astro";
+import PlanEstudiosTabs from "@/components/PlanEstudiosTabs.astro";
 import { planOptativas, planPorArea, planPorSemestre } from "@/data/planEstudios";
 
 const objetivosParticulares = [
@@ -53,12 +52,12 @@ const perfilEgreso = [
 
   <section class="py-16">
     <div class="max-w-4xl mx-auto px-4">
-      <PlanEstudiosTabs areas={planPorArea} semestres={planPorSemestre} optativas={planOptativas} client:load />
+      <PlanEstudiosTabs areas={planPorArea} semestres={planPorSemestre} optativas={planOptativas} />
 
       <div class="bg-card rounded-2xl p-8 shadow-sm border border-border mb-12">
         <div class="flex items-start gap-4">
           <div class="p-3 bg-primary/10 rounded-xl">
-            <Target className="h-6 w-6 text-primary" />
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6 text-primary"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
           </div>
           <div>
             <h2 class="font-display text-2xl font-semibold text-foreground mb-4">Objetivo General</h2>
@@ -74,7 +73,7 @@ const perfilEgreso = [
 
       <div class="mb-12">
         <h2 class="font-display text-2xl font-semibold text-foreground mb-6 flex items-center gap-3">
-          <CheckCircle className="h-6 w-6 text-primary" />
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6 text-primary"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/></svg>
           Objetivos Particulares
         </h2>
         <div class="space-y-4">
@@ -93,7 +92,7 @@ const perfilEgreso = [
 
       <div class="mb-12">
         <h2 class="font-display text-2xl font-semibold text-foreground mb-6 flex items-center gap-3">
-          <CheckCircle className="h-6 w-6 text-primary" />
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6 text-primary"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/></svg>
           Metas del Programa
         </h2>
         <div class="space-y-4">
@@ -110,7 +109,7 @@ const perfilEgreso = [
         </div>
       </div>
 
-      <ObjetivosTabs perfilIngreso={perfilIngreso} perfilEgreso={perfilEgreso} client:load />
+      <ObjetivosTabs perfilIngreso={perfilIngreso} perfilEgreso={perfilEgreso} />
     </div>
   </section>
 </BaseLayout>

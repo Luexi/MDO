@@ -1,0 +1,112 @@
+---
+interface Props {
+  currentPath: string;
+}
+
+const { currentPath } = Astro.props;
+
+const navItems = [
+  { label: "Inicio", href: "/" },
+  { label: "Objetivos", href: "/objetivos" },
+  { label: "Nucleo Academico", href: "/nucleo-academico" },
+  { label: "LIES", href: "/lies" },
+  { label: "Repositorio", href: "/repositorio" },
+  { label: "Tesis", href: "/tesis" },
+  { label: "Instalaciones", href: "/instalaciones" },
+  { label: "Galeria", href: "/galeria" },
+  { label: "Vinculacion", href: "/vinculacion" },
+];
+
+function isActive(href: string) {
+  if (href === "/") return currentPath === "/";
+  return currentPath === href;
+}
+---
+
+<header class="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[95%] max-w-6xl">
+  <nav class="bg-card/90 backdrop-blur-md rounded-2xl shadow-lg border border-border px-4 py-3">
+    <div class="flex items-center justify-between">
+      <a href="/" class="flex items-center gap-3">
+        <img src="/assets/logos/logo-uagro.webp" alt="UAGro" class="h-10 w-auto" />
+        <img src="/assets/logos/logo-mdo.webp" alt="Logo Maestria MDO" class="h-12 w-auto hidden sm:block" />
+      </a>
+
+      <div class="hidden lg:flex items-center gap-1">
+        {navItems.map((item) => (
+          <a
+            href={item.href}
+            class:list={[
+              "px-3 py-2 rounded-lg text-sm font-medium transition-colors",
+              isActive(item.href)
+                ? "bg-primary text-primary-foreground"
+                : "text-foreground/80 hover:text-foreground hover:bg-muted",
+            ]}
+          >
+            {item.label}
+          </a>
+        ))}
+      </div>
+
+      <div class="flex items-center gap-2">
+        <a href="/convocatoria" class="hidden sm:block">
+          <button class="inline-flex items-center justify-center whitespace-nowrap text-sm font-semibold ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 h-10 px-4 py-2 bg-destructive hover:bg-destructive/90 text-destructive-foreground rounded-xl">
+            Convocatoria
+          </button>
+        </a>
+
+        <button
+          id="menu-toggle"
+          class="lg:hidden p-2 rounded-lg hover:bg-muted transition-colors"
+          aria-label="Toggle menu"
+          type="button"
+        >
+          <svg id="icon-menu" class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="4" x2="20" y1="12" y2="12" />
+            <line x1="4" x2="20" y1="6" y2="6" />
+            <line x1="4" x2="20" y1="18" y2="18" />
+          </svg>
+          <svg id="icon-close" class="h-6 w-6 hidden" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M18 6 6 18" />
+            <path d="m6 6 12 12" />
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <div id="mobile-menu" class="lg:hidden mt-4 pt-4 border-t border-border hidden">
+      <div class="flex flex-col gap-2">
+        {navItems.map((item) => (
+          <a
+            href={item.href}
+            class:list={[
+              "px-4 py-3 rounded-xl text-sm font-medium transition-colors",
+              isActive(item.href)
+                ? "bg-primary text-primary-foreground"
+                : "text-foreground/80 hover:text-foreground hover:bg-muted",
+            ]}
+          >
+            {item.label}
+          </a>
+        ))}
+        <a href="/convocatoria" class="mt-2">
+          <button class="w-full inline-flex items-center justify-center whitespace-nowrap text-sm font-semibold ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 h-10 px-4 py-2 bg-destructive hover:bg-destructive/90 text-destructive-foreground rounded-xl">
+            Convocatoria 2026
+          </button>
+        </a>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<script>
+  const toggle = document.getElementById("menu-toggle");
+  const menu = document.getElementById("mobile-menu");
+  const iconMenu = document.getElementById("icon-menu");
+  const iconClose = document.getElementById("icon-close");
+
+  toggle?.addEventListener("click", () => {
+    menu?.classList.toggle("hidden");
+    iconMenu?.classList.toggle("hidden");
+    iconClose?.classList.toggle("hidden");
+  });
+</script>

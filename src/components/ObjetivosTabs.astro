@@ -1,0 +1,62 @@
+---
+interface Props {
+  perfilIngreso: string[];
+  perfilEgreso: string[];
+}
+
+const { perfilIngreso, perfilEgreso } = Astro.props;
+---
+
+<div class="w-full">
+  <input type="radio" name="objetivos-tab" id="obj-tab-ingreso" class="peer/ingreso hidden" checked />
+  <input type="radio" name="objetivos-tab" id="obj-tab-egreso" class="peer/egreso hidden" />
+
+  <div class="w-full grid grid-cols-2 h-auto p-1 bg-muted rounded-xl">
+    <label for="obj-tab-ingreso" class="cursor-pointer rounded-lg py-3 px-4 font-medium text-sm text-center flex items-center justify-center gap-2 transition-colors peer-checked/ingreso:bg-card peer-checked/ingreso:shadow-sm">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><polyline points="16 11 18 13 22 9"/></svg>
+      Perfil de Ingreso
+    </label>
+    <label for="obj-tab-egreso" class="cursor-pointer rounded-lg py-3 px-4 font-medium text-sm text-center flex items-center justify-center gap-2 transition-colors peer-checked/egreso:bg-card peer-checked/egreso:shadow-sm">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4"><path d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z"/><path d="M22 10v6"/><path d="M6 12.5V16a6 3 0 0 0 12 0v-3.5"/></svg>
+      Perfil de Egreso
+    </label>
+  </div>
+
+  <!-- Ingreso content -->
+  <div class="mt-6 hidden peer-checked/ingreso:block">
+    <div class="bg-card rounded-2xl p-6 border border-border">
+      <h3 class="font-display text-xl font-semibold text-foreground mb-4">
+        Requisitos y Competencias de Ingreso
+      </h3>
+      <p class="text-muted-foreground mb-6">
+        Podran ingresar al programa egresadas y egresados de licenciaturas afines con las siguientes competencias deseables:
+      </p>
+      <ul class="space-y-3">
+        {perfilIngreso.map((item) => (
+          <li class="flex items-start gap-3">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 text-primary flex-shrink-0 mt-0.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/></svg>
+            <span class="text-foreground/90">{item}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+
+  <!-- Egreso content -->
+  <div class="mt-6 hidden peer-checked/egreso:block">
+    <div class="bg-card rounded-2xl p-6 border border-border">
+      <h3 class="font-display text-xl font-semibold text-foreground mb-4">Competencias del Egresado</h3>
+      <p class="text-muted-foreground mb-6">
+        El egresado de la MDO sera un profesional altamente capacitado para liderar, innovar y transformar organizaciones de cualquier sector, contribuyendo al desarrollo sostenible y al bienestar social. Sera capaz de:
+      </p>
+      <ul class="space-y-3">
+        {perfilEgreso.map((item) => (
+          <li class="flex items-start gap-3">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 text-accent flex-shrink-0 mt-0.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/></svg>
+            <span class="text-foreground/90">{item}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+</div>

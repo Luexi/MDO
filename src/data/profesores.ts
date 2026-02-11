@@ -322,7 +322,7 @@ export const profesores: Profesor[] = [
     area: "UAGro-224",
     linea: "Biotecnologia y econometria de los sistemas agroalimentarios",
     email: "17021@uagro.mx",
-    foto: "/assets/profesores/tania-de-jesus-adame-zambrano.png",
+    foto: "/assets/profesores/tania-de-jesus-adame-zambrano.webp",
     semblanza:
       "Doctora en Direccion de Organizaciones por la Universidad del Distrito Federal. SNI candidata e integrante de redes de difusion y divulgacion en ciencias y humanidades.",
     historialAcademico: [

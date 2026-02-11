@@ -1,5 +1,5 @@
 ﻿---
-import Navbar from "@/components/layout/Navbar";
+import Navbar from "@/components/layout/Navbar.astro";
 import Footer from "@/components/layout/Footer.astro";
 import "@/styles/global.css";
 
@@ -28,17 +28,28 @@ const currentPath = Astro.url.pathname;
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
-    <meta property="og:image" content="/assets/logos/logo-mdo.png" />
+    <meta property="og:image" content="/assets/logos/logo-mdo.webp" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
-    <meta name="twitter:image" content="/assets/logos/logo-mdo.png" />
-    <link rel="icon" type="image/png" href="/assets/logos/logo-mdo.png" />
+    <meta name="twitter:image" content="/assets/logos/logo-mdo.webp" />
+    <link rel="icon" type="image/webp" href="/assets/logos/logo-mdo.webp" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap"
+      media="print"
+      onload="this.media='all'"
+    />
+    <noscript>
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" />
+    </noscript>
     <title>{title}</title>
   </head>
   <body>
     <div class="min-h-screen flex flex-col bg-background">
-      <Navbar currentPath={currentPath} client:load />
+      <Navbar currentPath={currentPath} />
       <main class="flex-1 pt-24">
         <slot />
       </main>

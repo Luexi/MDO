@@ -32,9 +32,9 @@ export default function Navbar({ currentPath }: NavbarProps) {
       <nav className="bg-card/90 backdrop-blur-md rounded-2xl shadow-lg border border-border px-4 py-3">
         <div className="flex items-center justify-between">
           <a href="/" className="flex items-center gap-3">
-            <img src="/assets/logos/logo-uagro.png" alt="UAGro" className="h-10 w-auto" />
+            <img src="/assets/logos/logo-uagro.webp" alt="UAGro" className="h-10 w-auto" />
             <img
-              src="/assets/logos/logo-mdo.png"
+              src="/assets/logos/logo-mdo.webp"
               alt="Logo Maestria MDO"
               className="h-12 w-auto hidden sm:block"
             />
