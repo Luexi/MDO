@@ -1,4 +1,4 @@
-﻿---
+---
 import { Briefcase, Target, TrendingUp, Users } from "lucide-react";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { PageHeader } from "@/components/ui/PageHeader";
@@ -6,39 +6,39 @@ import { PageHeader } from "@/components/ui/PageHeader";
 const lineas = [
   {
     id: "1",
-    titulo: "Gestion y Desarrollo Empresarial",
+    titulo: "Gestión y Desarrollo Empresarial",
     descripcion:
-      "Linea de investigacion enfocada en el estudio y mejora de los procesos de gestion en organizaciones empresariales, incluyendo estrategias de crecimiento, innovacion, competitividad y sustentabilidad.",
+      "Línea de investigación enfocada en el estudio y mejora de los procesos de gestión en organizaciones empresariales, incluyendo estrategias de crecimiento, innovación, competitividad y sustentabilidad.",
     areas: [
       "Estrategia empresarial y competitividad",
-      "Innovacion y emprendimiento",
+      "Innovación y emprendimiento",
       "Finanzas corporativas",
-      "Mercadotecnia estrategica",
-      "Gestion del talento humano",
+      "Mercadotecnia estratégica",
+      "Gestión del talento humano",
     ],
     icon: Briefcase,
   },
   {
     id: "2",
-    titulo: "Procesos de Gestion y Calidad en Organizaciones",
+    titulo: "Procesos de Gestión y Calidad en Organizaciones",
     descripcion:
-      "Linea orientada al analisis y optimizacion de los procesos organizacionales, sistemas de calidad, transformacion digital y mejora continua en organizaciones del sector publico, privado y social.",
+      "Línea orientada al análisis y optimización de los procesos organizacionales, sistemas de calidad, transformación digital y mejora continua en organizaciones del sector público, privado y social.",
     areas: [
-      "Sistemas de gestion de calidad",
-      "Transformacion digital",
-      "Administracion publica",
-      "Gestion del conocimiento",
-      "Auditoria y control interno",
+      "Sistemas de gestión de calidad",
+      "Transformación digital",
+      "Administración pública",
+      "Gestión del conocimiento",
+      "Auditoría y control interno",
     ],
     icon: TrendingUp,
   },
 ];
 ---
 
-<BaseLayout title="MDO UAGro | LIES" description="Lineas de investigacion de la Maestria en Direccion de Organizaciones.">
+<BaseLayout title="MDO UAGro | LIES" description="Líneas de investigación de la Maestría en Dirección de Organizaciones.">
   <PageHeader
-    title="Lineas de Investigacion"
-    subtitle="Conoce las lineas de generacion y aplicacion del conocimiento de nuestro programa"
+    title="Líneas de Investigación"
+    subtitle="Conoce las líneas de generación y aplicación del conocimiento de nuestro programa"
     badge="LIES"
   />
 
@@ -59,7 +59,7 @@ const lineas = [
                   <div>
                     <h3 class="font-semibold text-foreground mb-3 flex items-center gap-2">
                       <Target className="h-4 w-4 text-accent" />
-                      Areas de Estudio
+                      Áreas de Estudio
                     </h3>
                     <div class="flex flex-wrap gap-2">
                       {linea.areas.map((area) => <span class="px-3 py-1.5 bg-muted text-sm text-foreground/80 rounded-lg">{area}</span>)}
@@ -74,9 +74,9 @@ const lineas = [
 
       <div class="mt-12 bg-primary/5 rounded-2xl p-8 text-center">
         <Users className="h-12 w-12 text-primary mx-auto mb-4" />
-        <h3 class="font-display text-xl font-semibold text-foreground mb-2">Interesado en investigar con nosotros?</h3>
+        <h3 class="font-display text-xl font-semibold text-foreground mb-2">¿Interesado en investigar con nosotros?</h3>
         <p class="text-muted-foreground max-w-2xl mx-auto">
-          Nuestro nucleo academico esta conformado por investigadores activos que pueden guiar tu proyecto de tesis en estas lineas de investigacion.
+          Nuestro núcleo académico está conformado por investigadores activos que pueden guiar tu proyecto de tesis en estas líneas de investigación.
         </p>
       </div>
     </div>

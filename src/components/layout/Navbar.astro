@@ -8,13 +8,13 @@ const { currentPath } = Astro.props;
 const navItems = [
   { label: "Inicio", href: "/" },
   { label: "Objetivos", href: "/objetivos" },
-  { label: "Nucleo Academico", href: "/nucleo-academico" },
+  { label: "Núcleo Académico", href: "/nucleo-academico" },
   { label: "LIES", href: "/lies" },
   { label: "Repositorio", href: "/repositorio" },
   { label: "Tesis", href: "/tesis" },
   { label: "Instalaciones", href: "/instalaciones" },
-  { label: "Galeria", href: "/galeria" },
-  { label: "Vinculacion", href: "/vinculacion" },
+  { label: "Galería", href: "/galeria" },
+  { label: "Vinculación", href: "/vinculacion" },
 ];
 
 function isActive(href: string) {
@@ -28,7 +28,7 @@ function isActive(href: string) {
     <div class="flex items-center justify-between">
       <a href="/" class="flex items-center gap-3">
         <img src="/assets/logos/logo-uagro.webp" alt="UAGro" class="h-10 w-auto" />
-        <img src="/assets/logos/logo-mdo.webp" alt="Logo Maestria MDO" class="h-12 w-auto hidden sm:block" />
+        <img src="/assets/logos/logo-mdo.webp" alt="Logo Maestría MDO" class="h-12 w-auto hidden sm:block" />
       </a>
 
       <div class="hidden lg:flex items-center gap-1">
@@ -57,7 +57,7 @@ function isActive(href: string) {
         <button
           id="menu-toggle"
           class="lg:hidden p-2 rounded-lg hover:bg-muted transition-colors"
-          aria-label="Toggle menu"
+          aria-label="Abrir o cerrar menú"
           type="button"
         >
           <svg id="icon-menu" class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">

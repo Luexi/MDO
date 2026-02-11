@@ -1,4 +1,4 @@
-﻿---
+---
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { PageHeader } from "@/components/ui/PageHeader";
 import ObjetivosTabs from "@/components/ObjetivosTabs.astro";
@@ -6,47 +6,47 @@ import PlanEstudiosTabs from "@/components/PlanEstudiosTabs.astro";
 import { planOptativas, planPorArea, planPorSemestre } from "@/data/planEstudios";
 
 const objetivosParticulares = [
-  "Diagnosticar de forma critica la situacion operativa, financiera y estrategica de organizaciones publicas y privadas.",
-  "Aplicar modelos avanzados de direccion y gestion para mejorar la eficiencia y la toma de decisiones en contextos complejos.",
-  "Desarrollar investigacion aplicada con intervencion social para impulsar emprendimiento sostenible y empleo digno en la region.",
-  "Vincular proyectos de titulacion con sectores productivos e instituciones publicas para generar soluciones transferibles.",
+  "Diagnosticar de forma crítica la situación operativa, financiera y estratégica de organizaciones públicas y privadas.",
+  "Aplicar modelos avanzados de dirección y gestión para mejorar la eficiencia y la toma de decisiones en contextos complejos.",
+  "Desarrollar investigación aplicada con intervención social para impulsar emprendimiento sostenible y empleo digno en la región.",
+  "Vincular proyectos de titulación con sectores productivos e instituciones públicas para generar soluciones transferibles.",
 ];
 
 const metas = [
   "Conseguir en 2026 el reconocimiento en el Sistema Nacional de Posgrados (SNP) como programa elegible para becas.",
-  "Actualizar en 2028 el plan de estudios con base en evaluacion del SNP y seguimiento de egresadas y egresados.",
-  "Consolidar el nucleo academico: 60% con experiencia profesional destacable (2027), 100% con Perfil Deseable PRODEP (2027) y 80% con distincion SNII (2028).",
-  "Sostener productividad anual del nucleo academico: 90% en eventos de investigacion LIES y al menos una publicacion arbitrada o en libro reconocido por integrante.",
-  "Alcanzar 70% de eficiencia terminal al cierre de 2026 y garantizar en 2026 movilidad academica o profesional para todo el estudiantado.",
-  "Fortalecer en 2027 la infraestructura tecnologica y el acceso a recursos cientificos y herramientas digitales para aprendizaje e investigacion.",
+  "Actualizar en 2028 el plan de estudios con base en evaluación del SNP y seguimiento de egresadas y egresados.",
+  "Consolidar el núcleo académico: 60% con experiencia profesional destacable (2027), 100% con Perfil Deseable PRODEP (2027) y 80% con distinción SNII (2028).",
+  "Sostener productividad anual del núcleo académico: 90% en eventos de investigación LIES y al menos una publicación arbitrada o en libro reconocido por integrante.",
+  "Alcanzar 70% de eficiencia terminal al cierre de 2026 y garantizar en 2026 movilidad académica o profesional para todo el estudiantado.",
+  "Fortalecer en 2027 la infraestructura tecnológica y el acceso a recursos científicos y herramientas digitales para aprendizaje e investigación.",
 ];
 
 const perfilIngreso = [
-  "Egresadas y egresados de licenciaturas afines (administracion, economia, contaduria, mercadotecnia, turismo y areas relacionadas).",
-  "Conocimientos basicos en administracion, finanzas, economia, informatica y estadistica descriptiva.",
-  "Habilidades de comunicacion oral y escrita, trabajo colaborativo y gestion de informacion en entornos virtuales.",
-  "Pensamiento analitico y orientacion a la solucion de problemas organizacionales.",
-  "Interes por la investigacion aplicada, la innovacion y el uso de nuevas tecnologias.",
-  "Comprension lectora de textos academicos en ingles.",
-  "Sentido etico, responsabilidad social y disposicion para contribuir a la inclusion y equidad.",
+  "Egresadas y egresados de licenciaturas afines (administración, economía, contaduría, mercadotecnia, turismo y áreas relacionadas).",
+  "Conocimientos básicos en administración, finanzas, economía, informática y estadística descriptiva.",
+  "Habilidades de comunicación oral y escrita, trabajo colaborativo y gestión de información en entornos virtuales.",
+  "Pensamiento analítico y orientación a la solución de problemas organizacionales.",
+  "Interés por la investigación aplicada, la innovación y el uso de nuevas tecnologías.",
+  "Comprensión lectora de textos académicos en inglés.",
+  "Sentido ético, responsabilidad social y disposición para contribuir a la inclusión y equidad.",
 ];
 
 const perfilEgreso = [
-  "Disenar, implementar y evaluar modelos de gestion e intervencion para mejorar el desempeno organizacional.",
-  "Dirigir organizaciones con pensamiento estrategico, liderazgo y enfoque etico.",
-  "Desarrollar investigacion aplicada y consultoria para resolver problemas complejos con impacto economico y social.",
-  "Formular y evaluar proyectos de inversion y estrategias de crecimiento en distintos sectores.",
-  "Integrar tecnologias de informacion e inteligencia artificial en procesos de decision y gestion.",
-  "Conformar y liderar equipos de alto desempeno en contextos multidisciplinarios.",
-  "Impulsar emprendimiento sostenible, desarrollo regional y generacion de empleo digno.",
-  "Actuar con responsabilidad social, sentido critico y compromiso con los valores universitarios.",
+  "Diseñar, implementar y evaluar modelos de gestión e intervención para mejorar el desempeño organizacional.",
+  "Dirigir organizaciones con pensamiento estratégico, liderazgo y enfoque ético.",
+  "Desarrollar investigación aplicada y consultoría para resolver problemas complejos con impacto económico y social.",
+  "Formular y evaluar proyectos de inversión y estrategias de crecimiento en distintos sectores.",
+  "Integrar tecnologías de información e inteligencia artificial en procesos de decisión y gestión.",
+  "Conformar y liderar equipos de alto desempeño en contextos multidisciplinarios.",
+  "Impulsar emprendimiento sostenible, desarrollo regional y generación de empleo digno.",
+  "Actuar con responsabilidad social, sentido crítico y compromiso con los valores universitarios.",
 ];
 ---
 
 <BaseLayout title="MDO UAGro | Objetivos" description="Objetivos, metas y perfiles de ingreso y egreso del programa MDO UAGro.">
   <PageHeader
     title="Objetivos del Programa"
-    subtitle="Formando lideres con capacidades directivas y de investigacion de alto nivel"
+    subtitle="Formando líderes con capacidades directivas y de investigación de alto nivel"
     badge="MDO UAGro"
   />
 
@@ -62,10 +62,10 @@ const perfilEgreso = [
           <div>
             <h2 class="font-display text-2xl font-semibold text-foreground mb-4">Objetivo General</h2>
             <p class="text-muted-foreground leading-relaxed text-lg">
-              Formar personas con capacidades directivas y de investigacion de alto nivel, competentes en el diseno,
-              implementacion y evaluacion de modelos de gestion e intervencion que optimicen el desempeno de las
-              organizaciones publicas, privadas o no lucrativas, orientando resultados hacia la creacion sostenible con
-              impacto social en la region.
+              Formar personas con capacidades directivas y de investigación de alto nivel, competentes en el diseño,
+              implementación y evaluación de modelos de gestión e intervención que optimicen el desempeño de las
+              organizaciones públicas, privadas o no lucrativas, orientando resultados hacia la creación sostenible con
+              impacto social en la región.
             </p>
           </div>
         </div>

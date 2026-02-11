@@ -1,4 +1,4 @@
-﻿---
+---
 import { AlertCircle, Calendar, CheckCircle, Clock, FileText, Mail, Phone, UserPlus } from "lucide-react";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { PageHeader } from "@/components/ui/PageHeader";
@@ -7,20 +7,20 @@ import { Button } from "@/components/ui/button";
 const fechasClave = [
   {
     fecha: "Enero - Marzo 2026",
-    evento: "Publicacion de Convocatoria y Registro de Aspirantes",
-    descripcion: "Apertura del proceso de admision y recepcion de documentos.",
+    evento: "Publicación de Convocatoria y Registro de Aspirantes",
+    descripcion: "Apertura del proceso de admisión y recepción de documentos.",
     activo: true,
   },
   {
     fecha: "Abril 2026",
     evento: "Examen EXANI-III (CENEVAL)",
-    descripcion: "Aplicacion del examen de admision nacional.",
+    descripcion: "Aplicación del examen de admisión nacional.",
     activo: false,
   },
   {
     fecha: "Mayo 2026",
-    evento: "Publicacion de Resultados",
-    descripcion: "Difusion de la lista de aspirantes aceptados.",
+    evento: "Publicación de Resultados",
+    descripcion: "Difusión de la lista de aspirantes aceptados.",
     activo: false,
   },
   {
@@ -32,20 +32,20 @@ const fechasClave = [
 ];
 
 const requisitos = [
-  "Titulo de licenciatura en areas afines (original y copia)",
-  "Certificado de calificaciones con promedio minimo de 8.0",
+  "Título de licenciatura en áreas afines (original y copia)",
+  "Certificado de calificaciones con promedio mínimo de 8.0",
   "Acta de nacimiento (original y copia)",
   "CURP ampliada",
-  "Carta de exposicion de motivos",
+  "Carta de exposición de motivos",
   "Curriculum vitae actualizado",
-  "2 cartas de recomendacion academica",
-  "Fotografias tamano infantil (4 a color)",
+  "2 cartas de recomendación académica",
+  "Fotografías tamaño infantil (4 a color)",
   "Comprobante de pago de derechos",
 ];
 ---
 
 <BaseLayout title="MDO UAGro | Convocatoria 2026" description="Convocatoria 2026: fechas, requisitos y proceso de pre-registro para la MDO UAGro.">
-  <PageHeader title="Convocatoria 2026" subtitle="Unete a la proxima generacion de lideres organizacionales" badge="Admision Abierta" />
+  <PageHeader title="Convocatoria 2026" subtitle="Únete a la próxima generación de líderes organizacionales" badge="Admisión Abierta" />
 
   <section class="py-16">
     <div class="max-w-5xl mx-auto px-4">
@@ -104,7 +104,7 @@ const requisitos = [
       <div class="bg-card rounded-2xl p-8 shadow-sm border border-border mb-12">
         <h2 class="font-display text-2xl font-semibold text-foreground mb-6 flex items-center gap-3">
           <CheckCircle className="h-6 w-6 text-primary" />
-          Requisitos de Admision
+          Requisitos de Admisión
         </h2>
         <div class="grid md:grid-cols-2 gap-4">
           {
@@ -131,24 +131,24 @@ const requisitos = [
       </div>
 
       <div class="bg-primary text-primary-foreground rounded-2xl p-8">
-        <h2 class="font-display text-2xl font-semibold mb-6 text-center">Tienes dudas? Contactanos</h2>
+        <h2 class="font-display text-2xl font-semibold mb-6 text-center">¿Tienes dudas? Contáctanos</h2>
         <div class="grid sm:grid-cols-2 gap-6 max-w-2xl mx-auto">
           <a href="mailto:mdo@uagro.mx" class="flex items-center gap-4 p-4 bg-primary-foreground/10 rounded-xl hover:bg-primary-foreground/20 transition-colors">
             <Mail className="h-6 w-6" />
             <div>
-              <p class="font-medium">Correo electronico</p>
+              <p class="font-medium">Correo electrónico</p>
               <p class="text-sm text-primary-foreground/80">mdo@uagro.mx</p>
             </div>
           </a>
           <a href="tel:+527474725678" class="flex items-center gap-4 p-4 bg-primary-foreground/10 rounded-xl hover:bg-primary-foreground/20 transition-colors">
             <Phone className="h-6 w-6" />
             <div>
-              <p class="font-medium">Telefono</p>
+              <p class="font-medium">Teléfono</p>
               <p class="text-sm text-primary-foreground/80">(747) 472-5678</p>
             </div>
           </a>
         </div>
-        <p class="text-center text-primary-foreground/60 text-sm mt-6">Horario de atencion: Lunes a Viernes de 9:00 a 17:00 hrs</p>
+        <p class="text-center text-primary-foreground/60 text-sm mt-6">Horario de atención: Lunes a Viernes de 9:00 a 17:00 hrs</p>
       </div>
     </div>
   </section>

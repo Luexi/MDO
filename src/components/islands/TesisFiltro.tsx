@@ -1,4 +1,4 @@
-﻿import { useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { BookOpen, Clock } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { TesisCard } from "@/components/cards/TesisCard";
@@ -53,9 +53,9 @@ export default function TesisFiltro({ generaciones, tesis }: TesisFiltroProps) {
           <div className="p-4 bg-muted rounded-full w-fit mx-auto mb-4">
             <Clock className="h-12 w-12 text-muted-foreground" />
           </div>
-          <h3 className="font-display text-xl font-semibold text-foreground mb-2">Proximamente</h3>
+          <h3 className="font-display text-xl font-semibold text-foreground mb-2">Próximamente</h3>
           <p className="text-muted-foreground max-w-md mx-auto">
-            Los trabajos de tesis de esta generacion estaran disponibles una vez que los estudiantes concluyan su proceso de titulacion.
+            Los trabajos de tesis de esta generación estarán disponibles una vez que los estudiantes concluyan su proceso de titulación.
           </p>
         </div>
       )}
@@ -66,7 +66,7 @@ export default function TesisFiltro({ generaciones, tesis }: TesisFiltroProps) {
           <div>
             <h3 className="font-display text-lg font-semibold text-foreground mb-2">Sobre el Repositorio</h3>
             <p className="text-muted-foreground text-sm leading-relaxed">
-              Este repositorio contiene los trabajos de tesis de los egresados de la Maestria en Direccion de Organizaciones. Los documentos estan disponibles en formato PDF a traves de Google Drive. Para citar estos trabajos, consulta los lineamientos APA vigentes.
+              Este repositorio contiene los trabajos de tesis de los egresados de la Maestría en Dirección de Organizaciones. Los documentos están disponibles en formato PDF a través de Google Drive. Para citar estos trabajos, consulta los lineamientos APA vigentes.
             </p>
           </div>
         </div>

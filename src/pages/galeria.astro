@@ -1,4 +1,4 @@
-﻿---
+---
 import { Camera } from "lucide-react";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { PageHeader } from "@/components/ui/PageHeader";
@@ -6,8 +6,8 @@ import { ImageCarousel } from "@/components/ui/ImageCarousel";
 import { imagenesGaleria } from "@/data/galeria";
 ---
 
-<BaseLayout title="MDO UAGro | Galeria" description="Galeria de eventos y actividades de la comunidad academica MDO UAGro.">
-  <PageHeader title="Galeria" subtitle="Momentos destacados de nuestra comunidad academica" badge="Memorias MDO" />
+<BaseLayout title="MDO UAGro | Galería" description="Galería de eventos y actividades de la comunidad académica MDO UAGro.">
+  <PageHeader title="Galería" subtitle="Momentos destacados de nuestra comunidad académica" badge="Memorias MDO" />
 
   <section class="py-16">
     <div class="max-w-5xl mx-auto px-4">
@@ -16,12 +16,12 @@ import { imagenesGaleria } from "@/data/galeria";
       <div class="mt-12 text-center">
         <div class="inline-flex items-center gap-2 px-4 py-2 bg-muted rounded-full text-sm text-muted-foreground">
           <Camera className="h-4 w-4" />
-          <span>Desliza o usa las flechas para ver mas imagenes</span>
+          <span>Desliza o usa las flechas para ver más imágenes</span>
         </div>
       </div>
 
       <div class="mt-12">
-        <h3 class="font-display text-xl font-semibold text-foreground mb-6 text-center">Todas las Imagenes</h3>
+        <h3 class="font-display text-xl font-semibold text-foreground mb-6 text-center">Todas las Imágenes</h3>
         <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
           {
             imagenesGaleria.map((imagen) => (
@@ -35,7 +35,7 @@ import { imagenesGaleria } from "@/data/galeria";
 
       <div class="mt-12 p-6 bg-muted/50 rounded-2xl border border-border text-center">
         <p class="text-sm text-muted-foreground">
-          <strong>Nota:</strong> Esta galeria se actualiza periodicamente con imagenes de eventos, graduaciones y actividades del programa.
+          <strong>Nota:</strong> Esta galería se actualiza periódicamente con imágenes de eventos, graduaciones y actividades del programa.
         </p>
       </div>
     </div>

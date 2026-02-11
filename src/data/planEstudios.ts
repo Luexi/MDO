@@ -24,26 +24,26 @@ export interface PlanOptativa {
 
 export const planPorArea: PlanAreaItem[] = [
   {
-    area: "Area formacion basica",
+    area: "Área de formación básica",
     unidades: [
-      "Direccion y liderazgo organizacional",
-      "Diseno organizacional",
+      "Dirección y liderazgo organizacional",
+      "Diseño organizacional",
       "Mercadotecnia",
     ],
   },
   {
-    area: "Area metodologica",
+    area: "Área metodológica",
     unidades: [
-      "Metodos y procesos administrativos",
+      "Métodos y procesos administrativos",
       "Optativa I",
       "Optativa II",
       "Optativa III",
     ],
   },
   {
-    area: "Area de desarrollo profesionalizante",
+    area: "Área de desarrollo profesionalizante",
     unidades: [
-      "Retribucion social",
+      "Retribución social",
       "Trabajo de Grado I",
       "Trabajo de Grado II",
       "Trabajo de Grado III",
@@ -58,8 +58,8 @@ export const planPorSemestre: PlanSemestre[] = [
   {
     semestre: "I",
     rows: [
-      { unidad: "Direccion y liderazgo organizacional", th: 8, totalCred: 8 },
-      { unidad: "Diseno organizacional", th: 8, totalCred: 8 },
+      { unidad: "Dirección y liderazgo organizacional", th: 8, totalCred: 8 },
+      { unidad: "Diseño organizacional", th: 8, totalCred: 8 },
       { unidad: "Mercadotecnia", th: 8, totalCred: 8 },
       { unidad: "Trabajo de Grado I", th: 8, totalCred: 8 },
     ],
@@ -69,7 +69,7 @@ export const planPorSemestre: PlanSemestre[] = [
   {
     semestre: "II",
     rows: [
-      { unidad: "Metodos y procesos administrativos", th: 8, totalCred: 8 },
+      { unidad: "Métodos y procesos administrativos", th: 8, totalCred: 8 },
       { unidad: "Optativa I", th: 8, totalCred: 8 },
       { unidad: "Estancia profesional I", th: 42, totalCred: 18 },
       { unidad: "Trabajo de Grado II", th: 8, totalCred: 8 },
@@ -92,7 +92,7 @@ export const planPorSemestre: PlanSemestre[] = [
     rows: [
       { unidad: "Optativa III", th: 8, totalCred: 8 },
       { unidad: "Trabajo de Grado IV", th: 8, totalCred: 8 },
-      { unidad: "Retribucion social", th: 42, totalCred: 18 },
+      { unidad: "Retribución social", th: 42, totalCred: 18 },
     ],
     totalTh: 58,
     totalCred: 34,
@@ -100,9 +100,9 @@ export const planPorSemestre: PlanSemestre[] = [
 ];
 
 export const planOptativas: PlanOptativa[] = [
-  { unidad: "Etica y responsabilidad social", th: 8, totalCred: 8 },
-  { unidad: "Gestion del capital humano", th: 8, totalCred: 8 },
-  { unidad: "Economia y entorno global", th: 8, totalCred: 8 },
+  { unidad: "Ética y responsabilidad social", th: 8, totalCred: 8 },
+  { unidad: "Gestión del capital humano", th: 8, totalCred: 8 },
+  { unidad: "Economía y entorno global", th: 8, totalCred: 8 },
   { unidad: "Desarrollo y sustentabilidad", th: 8, totalCred: 8 },
   { unidad: "Emprendimiento", th: 8, totalCred: 8 },
   { unidad: "Cultura y clima organizacional", th: 8, totalCred: 8 },

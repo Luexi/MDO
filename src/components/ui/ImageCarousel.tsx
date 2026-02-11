@@ -91,7 +91,7 @@ export function ImageCarousel({
         size="icon"
         onClick={goToPrev}
         className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-foreground rounded-full shadow-lg"
-        aria-label="Previous slide"
+        aria-label="Diapositiva anterior"
       >
         <ChevronLeft className="h-5 w-5" />
       </Button>
@@ -100,7 +100,7 @@ export function ImageCarousel({
         size="icon"
         onClick={goToNext}
         className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-foreground rounded-full shadow-lg"
-        aria-label="Next slide"
+        aria-label="Diapositiva siguiente"
       >
         <ChevronRight className="h-5 w-5" />
       </Button>
@@ -117,7 +117,7 @@ export function ImageCarousel({
                 ? "bg-white w-6"
                 : "bg-white/50 hover:bg-white/80"
             )}
-            aria-label={`Go to slide ${index + 1}`}
+            aria-label={`Ir a la diapositiva ${index + 1}`}
           />
         ))}
       </div>
