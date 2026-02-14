@@ -18,26 +18,15 @@ const lineas = [
     ],
     icon: Briefcase,
   },
-  {
-    id: "2",
-    titulo: "Procesos de Gestión y Calidad en Organizaciones",
-    descripcion:
-      "Línea orientada al análisis y optimización de los procesos organizacionales, sistemas de calidad, transformación digital y mejora continua en organizaciones del sector público, privado y social.",
-    areas: [
-      "Sistemas de gestión de calidad",
-      "Transformación digital",
-      "Administración pública",
-      "Gestión del conocimiento",
-      "Auditoría y control interno",
-    ],
-    icon: TrendingUp,
-  },
 ];
 ---
 
-<BaseLayout title="MDO UAGro | LIES" description="Líneas de investigación de la Maestría en Dirección de Organizaciones.">
+<BaseLayout
+  title="MDO UAGro | LIES"
+  description="Líneas de investigación de la Maestría en Dirección de Organizaciones."
+>
   <PageHeader
-    title="Líneas de Investigación"
+    title="Líneas de Investigación e Incidencia Social"
     subtitle="Conoce las líneas de generación y aplicación del conocimiento de nuestro programa"
     badge="LIES"
   />
@@ -53,8 +42,12 @@ const lineas = [
                   <linea.icon className="h-8 w-8 text-primary" />
                 </div>
                 <div class="flex-1">
-                  <h2 class="font-display text-2xl font-semibold text-foreground mb-3">{linea.titulo}</h2>
-                  <p class="text-muted-foreground leading-relaxed mb-6">{linea.descripcion}</p>
+                  <h2 class="font-display text-2xl font-semibold text-foreground mb-3">
+                    {linea.titulo}
+                  </h2>
+                  <p class="text-muted-foreground leading-relaxed mb-6">
+                    {linea.descripcion}
+                  </p>
 
                   <div>
                     <h3 class="font-semibold text-foreground mb-3 flex items-center gap-2">
@@ -62,7 +55,11 @@ const lineas = [
                       Áreas de Estudio
                     </h3>
                     <div class="flex flex-wrap gap-2">
-                      {linea.areas.map((area) => <span class="px-3 py-1.5 bg-muted text-sm text-foreground/80 rounded-lg">{area}</span>)}
+                      {linea.areas.map((area) => (
+                        <span class="px-3 py-1.5 bg-muted text-sm text-foreground/80 rounded-lg">
+                          {area}
+                        </span>
+                      ))}
                     </div>
                   </div>
                 </div>
@@ -74,9 +71,13 @@ const lineas = [
 
       <div class="mt-12 bg-primary/5 rounded-2xl p-8 text-center">
         <Users className="h-12 w-12 text-primary mx-auto mb-4" />
-        <h3 class="font-display text-xl font-semibold text-foreground mb-2">¿Interesado en investigar con nosotros?</h3>
+        <h3 class="font-display text-xl font-semibold text-foreground mb-2">
+          ¿Interesado en investigar con nosotros?
+        </h3>
         <p class="text-muted-foreground max-w-2xl mx-auto">
-          Nuestro núcleo académico está conformado por investigadores activos que pueden guiar tu proyecto de tesis en estas líneas de investigación.
+          Nuestro núcleo académico está conformado por investigadores activos
+          que pueden guiar tu proyecto de tesis en estas líneas de
+          investigación.
         </p>
       </div>
     </div>

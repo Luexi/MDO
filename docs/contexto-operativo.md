@@ -13,21 +13,28 @@ Fecha de actualizacion: 2026-02-11
 ## 2. Decisiones importantes ya aplicadas
 
 1. Logos y header
+
 - Navbar muestra logos institucionales (UAGro + MDO) sin texto extra en el bloque izquierdo.
 - Footer incluye UAGro + FCA + MDO.
+- Pagina principal incluye logos de UAGro, MDO, FCA y SECIHTI.
 
-2. Galeria
+1. Galeria
+
 - Se reemplazo el set original por imagenes nuevas en `public/assets/galeria/`.
 - Fuente de datos: `src/data/galeria.ts`.
 
-3. Convocatoria
-- Se agrego imagen centrada al inicio de la seccion (`/convocatoria.webp`).
+1. Convocatoria
 
-4. Nucleo academico (tarjetas)
+- Se agrego imagen centrada al inicio de la seccion (`/convocatoria.webp`).
+- Se actualizó la información de becas a "Becas Nacionales de Posgrado".
+
+1. Nucleo academico (tarjetas)
+
 - Se muestra `Dr./Dra. + Nombre`.
 - Se eliminaron subtextos en la tarjeta (sin area debajo del nombre).
 
-5. Datos de profesores
+1. Datos de profesores
+
 - Fotos cargadas en `public/assets/profesores/` y enlazadas en `src/data/profesores.ts`.
 - Integracion de datos basada en carpeta `profesores/`.
 - Regla de conflicto aplicada: **PDF del nucleo > ficha individual**.

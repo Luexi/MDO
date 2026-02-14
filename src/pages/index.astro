@@ -1,5 +1,12 @@
 ---
-import { ArrowRight, Award, BookOpen, GraduationCap, Lightbulb, Users } from "lucide-react";
+import {
+  ArrowRight,
+  Award,
+  BookOpen,
+  GraduationCap,
+  Lightbulb,
+  Users,
+} from "lucide-react";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { Button } from "@/components/ui/button";
 
@@ -29,32 +36,58 @@ const beneficios = [
   title="MDO UAGro | Inicio"
   description="Maestría en Dirección de Organizaciones de la UAGro. Información oficial, objetivos, profesores y convocatoria."
 >
-  <section class="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
-    <div class="absolute inset-0 bg-hero-gradient" />
-    <div class="absolute inset-0 bg-spotlight" />
+  <section
+    class="relative min-h-[90vh] flex items-center justify-center overflow-hidden"
+  >
+    <div class="absolute inset-0 bg-hero-gradient"></div>
+    <div class="absolute inset-0 bg-spotlight"></div>
 
-    <div class="absolute top-20 right-10 w-72 h-72 bg-primary/5 rounded-full blur-3xl" />
-    <div class="absolute bottom-20 left-10 w-96 h-96 bg-destructive/5 rounded-full blur-3xl" />
+    <div
+      class="absolute top-20 right-10 w-72 h-72 bg-primary/5 rounded-full blur-3xl"
+    >
+    </div>
+    <div
+      class="absolute bottom-20 left-10 w-96 h-96 bg-destructive/5 rounded-full blur-3xl"
+    >
+    </div>
 
     <div class="relative max-w-6xl mx-auto px-4 py-20 text-center">
-      <div class="inline-flex items-center gap-2 px-4 py-2 bg-card/80 backdrop-blur-sm rounded-full border border-border shadow-sm mb-8 animate-fade-in">
+      <div
+        class="inline-flex items-center gap-2 px-4 py-2 bg-card/80 backdrop-blur-sm rounded-full border border-border shadow-sm mb-8 animate-fade-in"
+      >
         <Award className="h-4 w-4 text-primary" />
-        <span class="text-sm font-medium text-foreground">Programa Acreditado de Calidad</span>
+        <span class="text-sm font-medium text-foreground"
+          >Con registro en el Programa Nacional de Posgrados</span
+        >
       </div>
 
-      <h1 class="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-foreground mb-6 leading-tight animate-fade-in">
+      <h1
+        class="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-foreground mb-6 leading-tight animate-fade-in"
+      >
         Maestría en <span class="text-gradient">Dirección</span>
         <br />
         de Organizaciones
       </h1>
 
-      <p class="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-10 leading-relaxed animate-fade-in">
-        Forma parte de la élite directiva. Desarrolla competencias para liderar, innovar y transformar organizaciones con impacto social en la región.
+      <p
+        class="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-10 leading-relaxed animate-fade-in"
+      >
+        Forma parte de la élite directiva. Desarrolla competencias para liderar,
+        innovar y transformar organizaciones con impacto social en la región.
       </p>
 
-      <div class="flex flex-col sm:flex-row gap-4 justify-center items-center animate-fade-in">
-        <a href="https://drive.google.com/file/d/1CITL6wAc9kgkUomDJmiG33nlxh6IWYoo/view?usp=sharing" target="_blank" rel="noopener noreferrer">
-          <Button size="lg" className="gap-2 rounded-xl bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-6 text-lg">
+      <div
+        class="flex flex-col sm:flex-row gap-4 justify-center items-center animate-fade-in"
+      >
+        <a
+          href="https://drive.google.com/file/d/1CITL6wAc9kgkUomDJmiG33nlxh6IWYoo/view?usp=sharing"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <Button
+            size="lg"
+            className="gap-2 rounded-xl bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-6 text-lg"
+          >
             <BookOpen className="h-5 w-5" />
             Plan de Estudios
           </Button>
@@ -71,9 +104,31 @@ const beneficios = [
         </a>
       </div>
 
-      <div class="mt-16 flex justify-center items-center gap-8 opacity-60 animate-fade-in">
-        <img src="/assets/logos/logo-uagro.webp" alt="UAGro" class="h-16 md:h-20 w-auto" />
-        <img src="/assets/logos/logo-mdo.webp" alt="MDO" class="h-16 md:h-20 w-auto" />
+      <div
+        class="mt-16 flex flex-col items-center gap-8 opacity-60 animate-fade-in"
+      >
+        <div class="flex justify-center items-center gap-8">
+          <img
+            src="/assets/logos/logo-uagro.webp"
+            alt="UAGro"
+            class="h-16 md:h-20 w-auto"
+          />
+          <img
+            src="/assets/logos/logo-mdo.webp"
+            alt="MDO"
+            class="h-16 md:h-20 w-auto"
+          />
+          <img
+            src="/assets/logos/logo-fca.webp"
+            alt="FCA"
+            class="h-16 md:h-20 w-auto"
+          />
+        </div>
+        <img
+          src="/assets/logos/logo-secihti.webp"
+          alt="SECHIHTI"
+          class="h-12 md:h-16 w-auto"
+        />
       </div>
     </div>
   </section>
@@ -81,9 +136,14 @@ const beneficios = [
   <section class="py-20 bg-card">
     <div class="max-w-6xl mx-auto px-4">
       <div class="text-center mb-12">
-        <h2 class="font-display text-3xl md:text-4xl font-bold text-foreground mb-4">¿Por qué elegir la MDO?</h2>
+        <h2
+          class="font-display text-3xl md:text-4xl font-bold text-foreground mb-4"
+        >
+          ¿Por qué elegir esta maestría?
+        </h2>
         <p class="text-muted-foreground max-w-2xl mx-auto">
-          Un programa diseñado para formar líderes con visión estratégica y compromiso social.
+          Un programa diseñado para formar líderes con visión estratégica y
+          compromiso social.
         </p>
       </div>
 
@@ -94,8 +154,12 @@ const beneficios = [
               <div class="p-4 bg-primary/10 rounded-xl w-fit mb-6 group-hover:bg-primary transition-colors">
                 <beneficio.icon className="h-8 w-8 text-primary group-hover:text-primary-foreground transition-colors" />
               </div>
-              <h3 class="font-display text-xl font-semibold text-foreground mb-3">{beneficio.titulo}</h3>
-              <p class="text-muted-foreground leading-relaxed">{beneficio.descripcion}</p>
+              <h3 class="font-display text-xl font-semibold text-foreground mb-3">
+                {beneficio.titulo}
+              </h3>
+              <p class="text-muted-foreground leading-relaxed">
+                {beneficio.descripcion}
+              </p>
             </div>
           ))
         }
@@ -106,26 +170,51 @@ const beneficios = [
   <section class="py-20">
     <div class="max-w-6xl mx-auto px-4">
       <div class="grid md:grid-cols-2 gap-8">
-        <a href="/objetivos" class="group relative overflow-hidden rounded-2xl bg-primary p-8 text-primary-foreground hover:shadow-xl transition-all">
+        <a
+          href="/objetivos"
+          class="group relative overflow-hidden rounded-2xl bg-primary p-8 text-primary-foreground hover:shadow-xl transition-all"
+        >
           <div class="relative z-10">
-            <h3 class="font-display text-2xl font-semibold mb-3">Conoce los Objetivos</h3>
-            <p class="text-primary-foreground/80 mb-4">Descubre el perfil de ingreso, egreso y las metas del programa.</p>
-            <span class="inline-flex items-center gap-2 font-medium group-hover:gap-3 transition-all">
+            <h3 class="font-display text-2xl font-semibold mb-3">
+              Conoce los Objetivos
+            </h3>
+            <p class="text-primary-foreground/80 mb-4">
+              Descubre el perfil de ingreso, egreso y las metas del programa.
+            </p>
+            <span
+              class="inline-flex items-center gap-2 font-medium group-hover:gap-3 transition-all"
+            >
               Explorar <ArrowRight className="h-4 w-4" />
             </span>
           </div>
-          <div class="absolute -right-8 -bottom-8 w-32 h-32 bg-white/10 rounded-full" />
+          <div
+            class="absolute -right-8 -bottom-8 w-32 h-32 bg-white/10 rounded-full"
+          >
+          </div>
         </a>
 
-        <a href="/nucleo-academico" class="group relative overflow-hidden rounded-2xl bg-accent p-8 text-accent-foreground hover:shadow-xl transition-all">
+        <a
+          href="/nucleo-academico"
+          class="group relative overflow-hidden rounded-2xl bg-accent p-8 text-accent-foreground hover:shadow-xl transition-all"
+        >
           <div class="relative z-10">
-            <h3 class="font-display text-2xl font-semibold mb-3">Núcleo Académico</h3>
-            <p class="text-accent-foreground/80 mb-4">Conoce a los doctores e investigadores que conforman nuestro claustro.</p>
-            <span class="inline-flex items-center gap-2 font-medium group-hover:gap-3 transition-all">
+            <h3 class="font-display text-2xl font-semibold mb-3">
+              Núcleo Académico
+            </h3>
+            <p class="text-accent-foreground/80 mb-4">
+              Conoce a los doctores e investigadores que conforman nuestro
+              claustro.
+            </p>
+            <span
+              class="inline-flex items-center gap-2 font-medium group-hover:gap-3 transition-all"
+            >
               Ver profesores <ArrowRight className="h-4 w-4" />
             </span>
           </div>
-          <div class="absolute -right-8 -bottom-8 w-32 h-32 bg-white/10 rounded-full" />
+          <div
+            class="absolute -right-8 -bottom-8 w-32 h-32 bg-white/10 rounded-full"
+          >
+          </div>
         </a>
       </div>
     </div>
