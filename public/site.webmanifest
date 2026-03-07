@@ -1,0 +1,16 @@
+{
+  "name": "UAGRO",
+  "short_name": "UAGRO",
+  "description": "Sitio oficial de la Maestría en Dirección de Organizaciones de la UAGro.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#0B2D5C",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}
