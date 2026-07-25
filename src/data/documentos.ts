@@ -36,9 +36,11 @@ export const documentos: Documento[] = [
   },
   {
     id: "convocatoria-2026",
-    titulo: "Convocatoria 2026",
+    // Lleva el ano porque identifica a UN documento concreto, el de la
+    // generacion que inicio en febrero de 2026, no a un proceso abierto.
+    titulo: "Convocatoria, generación febrero 2026",
     descripcion:
-      "Convocatoria vigente con requisitos, fechas y proceso de admisión.",
+      "Convocatoria con requisitos, calendario y criterios de selección.",
     categoria: "Admisión",
     icono: "FileText",
   },
