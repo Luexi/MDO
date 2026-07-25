@@ -38,6 +38,16 @@ import { withBase } from "@/lib/paths";
 
 Los enlaces externos (`https://`, `mailto:`, `tel:`) no se prefijan. Si tienes una lista mixta, usa `link()` del mismo modulo, que decide por ti.
 
+### Archivos estaticos que no pasan por Astro
+
+Lo que vive en `public/` se copia tal cual, asi que no puede usar `withBase()`. Si uno de esos archivos contiene rutas (por ejemplo `site.webmanifest`), escribelas **relativas**:
+
+```json
+{ "start_url": ".", "icons": [{ "src": "./favicon.svg" }] }
+```
+
+Una ruta relativa se resuelve contra la ubicacion del propio archivo, que siempre esta en la raiz del sitio publicado. Asi funciona igual con base `/MDO` y con base `/`, sin tocar nada al cambiar de dominio.
+
 ## 4. Estado actual y cambio al dominio propio
 
 Hoy, temporal:
