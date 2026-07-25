@@ -11,11 +11,42 @@
  * de documentos) NO se inventan: se enrutan al contacto oficial.
  */
 
+/**
+ * ATENCION: EL CALENDARIO DE ABAJO NO COINCIDE CON EL CARTEL OFICIAL.
+ *
+ * `public/convocatoria.webp` es el documento rector publicado por el programa
+ * y registra estas fechas para la generacion que inicio en febrero de 2026:
+ *
+ *   Pre-registro y entrega de fichas    20 al 30 de octubre de 2025
+ *   Aplicacion del EXANI-III            15 de noviembre de 2025
+ *   Curso propedeutico                  22 y 29 de noviembre de 2025
+ *   Entrevistas                         24 al 26 de noviembre de 2025
+ *   Publicacion de lista de aceptados   15 de diciembre de 2025
+ *   Periodo de inscripciones            19 al 23 de enero de 2026
+ *   Inicio de cursos                    febrero de 2026 (modalidad escolarizada)
+ *
+ * El cartel documenta ademas la ponderacion de seleccion, que el sitio no
+ * publica en texto: EXANI-III 20%, entrevistas 25%, curso propedeutico 25%,
+ * curriculo academico y profesional 30%.
+ *
+ * Las fechas del array son las que ya estaban en el sitio antes de esta
+ * revision y se conservan sin modificar, porque corregirlas exige saber si
+ * existe una convocatoria nueva. Mientras tanto NINGUNA etapa se marca como
+ * vigente, para no afirmar en portada algo que el propio cartel contradice.
+ *
+ * Al confirmar el calendario correcto: actualiza el array, marca `activo: true`
+ * en la etapa que corresponda y sustituye `public/convocatoria.webp`.
+ */
+
 export interface HitoCalendario {
   fecha: string;
   evento: string;
   descripcion: string;
-  /** Marca la etapa vigente del proceso. Solo una debe estar activa. */
+  /**
+   * Marca la etapa vigente del proceso. Como maximo una debe estar activa.
+   * Si ninguna lo esta, la portada omite el bloque de etapa vigente en lugar
+   * de inventar una.
+   */
   activo: boolean;
 }
 
@@ -36,7 +67,7 @@ export const calendarioAdmision: HitoCalendario[] = [
     fecha: "Enero a marzo de 2026",
     evento: "Publicación de convocatoria y registro de aspirantes",
     descripcion: "Apertura del proceso de admisión y recepción de documentos.",
-    activo: true,
+    activo: false,
   },
   {
     fecha: "Abril de 2026",
@@ -58,9 +89,15 @@ export const calendarioAdmision: HitoCalendario[] = [
   },
 ];
 
-/** La etapa vigente del proceso, para destacarla en la portada. */
-export const etapaVigente =
-  calendarioAdmision.find((hito) => hito.activo) ?? calendarioAdmision[0];
+/**
+ * La etapa vigente del proceso, o `undefined` si ninguna esta marcada.
+ *
+ * Devolver `undefined` en vez de caer al primer hito es deliberado: sin dato
+ * confirmado, la portada prefiere no decir nada antes que senalar como vigente
+ * una etapa que ya paso.
+ */
+export const etapaVigente: HitoCalendario | undefined =
+  calendarioAdmision.find((hito) => hito.activo);
 
 export const pasosAdmision: PasoAdmision[] = [
   {

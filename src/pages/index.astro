@@ -159,16 +159,26 @@ const logosInstitucionales = [
           </p>
         </div>
 
-        <div
-          class="flex items-start gap-3 rounded-2xl border border-primary/20 bg-primary/5 p-4"
-        >
-          <CalendarClock className="mt-0.5 h-5 w-5 flex-shrink-0 text-primary" aria-hidden="true" />
-          <div>
-            <p class="text-sm font-semibold text-primary">Etapa vigente</p>
-            <p class="text-sm text-foreground">{etapaVigente.fecha}</p>
-            <p class="text-sm text-muted-foreground">{etapaVigente.evento}</p>
-          </div>
-        </div>
+        {/*
+          Solo se muestra si hay una etapa confirmada como vigente. Sin dato
+          verificado no se afirma nada: ver la nota de `src/data/admision.ts`
+          sobre la discrepancia entre el calendario publicado y el cartel.
+        */}
+        {
+          etapaVigente && (
+            <div class="flex items-start gap-3 rounded-2xl border border-primary/20 bg-primary/5 p-4">
+              <CalendarClock
+                className="mt-0.5 h-5 w-5 flex-shrink-0 text-primary"
+                aria-hidden="true"
+              />
+              <div>
+                <p class="text-sm font-semibold text-primary">Etapa vigente</p>
+                <p class="text-sm text-foreground">{etapaVigente.fecha}</p>
+                <p class="text-sm text-muted-foreground">{etapaVigente.evento}</p>
+              </div>
+            </div>
+          )
+        }
       </div>
 
       <ol class="grid gap-6 md:grid-cols-3">

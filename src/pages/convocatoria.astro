@@ -34,10 +34,14 @@ import { withBase } from "@/lib/paths";
   <section class="py-12">
     <div class="mx-auto max-w-5xl px-4">
       {/*
-        El calendario y los requisitos viven en HTML y son la fuente de verdad.
-        El cartel es el derivado imprimible, no al reves: antes los datos
-        autoritativos (ponderaciones, QR, sitio oficial) estaban encerrados en un
-        JPG ilegible a 390 px y sin equivalente en texto.
+        El calendario y los requisitos se publican en HTML para que sean legibles
+        en movil y accesibles a un lector de pantalla. Antes solo existian dentro
+        del cartel, ilegible a 390 px y sin equivalente en texto.
+
+        Sobre la jerarquia de fuentes: mientras el calendario en HTML no se
+        verifique contra el cartel vigente, el cartel prevalece. Es la misma
+        regla que el proyecto ya aplica al nucleo academico, donde gana el PDF
+        rector. Ver la nota en `src/data/admision.ts`.
       */}
       <div class="grid gap-10 lg:grid-cols-[minmax(0,1fr)_20rem]">
         <div class="space-y-12">
@@ -49,6 +53,14 @@ import { withBase } from "@/lib/paths";
               <Calendar className="h-6 w-6 text-primary" aria-hidden="true" />
               Calendario del proceso
             </h2>
+
+            <p
+              class="mb-6 rounded-xl border border-border bg-muted/50 p-4 text-sm text-muted-foreground"
+            >
+              El cartel oficial de la convocatoria es el documento que prevalece.
+              Si encuentras una diferencia con las fechas de esta página,
+              confírmala con la coordinación del programa.
+            </p>
 
             <ol class="space-y-0">
               {

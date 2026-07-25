@@ -61,6 +61,10 @@ Estos cambios responden a una auditoria de diseño y accesibilidad del sitio. Se
 
 Estos puntos NO se resolvieron porque requieren informacion que solo tiene el programa:
 
+- **El calendario de admision del sitio no coincide con el cartel oficial. Es el pendiente mas urgente.** `public/convocatoria.webp` registra pre-registro del 20 al 30 de octubre de 2025, EXANI-III el 15 de noviembre de 2025, lista de aceptados el 15 de diciembre de 2025, inscripciones del 19 al 23 de enero de 2026 e inicio en febrero de 2026. El sitio publicaba otro calendario por completo (registro de enero a marzo de 2026, examen en abril, inicio en agosto). Las fechas del sitio se conservaron sin modificar, pero ninguna etapa se marca ya como vigente y se anadio un aviso de que el cartel prevalece. Corregirlo exige saber si existe una convocatoria nueva para la siguiente generacion. Detalle completo en la cabecera de `src/data/admision.ts`.
+- **Datos de contacto que difieren del cartel.** El cartel indica telefono 744 134 0900 ext. 4477 y domicilio en Av. Ruiz Cortines s/n, Col. Alta Progreso, **Acapulco**. El sitio publica (747) 472-5678 y domicilio en Ciudad Universitaria, **Chilpancingo**. El correo si coincide. Hay que confirmar cual corresponde a la coordinacion del posgrado.
+- **Dominio del cartel.** El cartel remite a `maestriadirecciondeorganizaciones.uagro.mx`, sin la particula "en", mientras que el dominio previsto para este sitio es `maestriaendirecciondeorganizaciones.uagro.mx`. Conviene verificar cual es el correcto antes de configurar el DNS.
+- **Datos del cartel que aun no existen en texto**: ponderacion de seleccion (EXANI-III 20%, entrevistas 25%, curso propedeutico 25%, curriculo 30%), modalidad escolarizada y nombre del coordinador. Son justo el tipo de dato que un aspirante necesita y que hoy solo vive dentro de una imagen.
 - **URLs reales** de convocatoria en PDF, formularios de preinscripcion, formatos y lineamientos. Mientras tanto las tarjetas dicen "En proceso".
 - **Cuotas del programa.** La pregunta frecuente existe y enruta a la coordinacion, sin cifras inventadas.
 - **Sede y modalidad de entrega de documentos.** Mismo tratamiento.
