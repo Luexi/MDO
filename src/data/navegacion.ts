@@ -32,9 +32,9 @@ export const navGrupos: NavGrupo[] = [
     label: "Admisión",
     items: [
       {
-        label: "Convocatoria 2026",
+        label: "Convocatoria",
         href: "/convocatoria",
-        descripcion: "Fechas, requisitos y proceso de ingreso",
+        descripcion: "Calendario, requisitos y criterios de selección",
       },
       {
         label: "Preguntas frecuentes",
@@ -102,9 +102,16 @@ export const navGrupos: NavGrupo[] = [
   },
 ];
 
-/** Destino de la llamada a la accion principal, presente en toda la navegacion. */
+/**
+ * Destino de la llamada a la accion principal, presente en toda la navegacion.
+ *
+ * La etiqueta no lleva ano: el proceso de la generacion de febrero de 2026 ya
+ * concluyo, asi que anunciar "Convocatoria 2026" prometeria un proceso abierto
+ * que no lo esta. Cuando se publique la convocatoria siguiente, aqui es donde
+ * conviene volver a poner el ano.
+ */
 export const ctaPrincipal = {
-  label: "Convocatoria 2026",
+  label: "Ver convocatoria",
   labelCorto: "Convocatoria",
   href: "/convocatoria",
 } as const;

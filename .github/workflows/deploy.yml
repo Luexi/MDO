@@ -31,7 +31,7 @@ jobs:
       #   PUBLIC_BASE_PATH: /MDO
       #
       # Al activar el dominio propio, sustituir por:
-      #   PUBLIC_SITE_URL:  https://maestriaendirecciondeorganizaciones.uagro.mx
+      #   PUBLIC_SITE_URL:  https://maestriadirecciondeorganizaciones.uagro.mx
       #   PUBLIC_BASE_PATH: /
       # y crear el archivo public/CNAME con el dominio dentro.
       # ---------------------------------------------------------------

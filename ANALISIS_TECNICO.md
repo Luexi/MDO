@@ -121,7 +121,7 @@ No es una capa cosmética, condiciona decisiones de implementación:
 
 ## 6. Base de despliegue
 
-El sitio vive temporalmente en una subruta de GitHub Pages (`/MDO`) y migrará a `maestriaendirecciondeorganizaciones.uagro.mx`, donde la base vuelve a ser `/`.
+El sitio vive temporalmente en una subruta de GitHub Pages (`/MDO`) y migrará a `maestriadirecciondeorganizaciones.uagro.mx`, donde la base vuelve a ser `/`.
 
 Astro prefija por su cuenta los assets que empaqueta y las rutas de página, pero **no** reescribe los `src` ni `href` escritos a mano ni lo que vive en `public/`. Por eso ninguna ruta está cableada: todas pasan por `withBase()` en `src/lib/paths.ts`.
 

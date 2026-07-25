@@ -11,7 +11,7 @@ import tailwind from "@astrojs/tailwind";
  *   URL resultante   -> https://luexi.github.io/MDO
  *
  * Estado definitivo (cuando el dominio propio quede apuntado):
- *   PUBLIC_SITE_URL  = https://maestriaendirecciondeorganizaciones.uagro.mx
+ *   PUBLIC_SITE_URL  = https://maestriadirecciondeorganizaciones.uagro.mx
  *   PUBLIC_BASE_PATH = /
  *
  * Ambos valores se fijan en `.github/workflows/deploy.yml`. No hay ninguna ruta

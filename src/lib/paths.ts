@@ -3,7 +3,7 @@
  *
  * El sitio vive temporalmente en una subruta de GitHub Pages
  * (`luexi.github.io/MDO`) y migrara al dominio propio
- * `maestriaendirecciondeorganizaciones.uagro.mx`, donde la base vuelve a ser `/`.
+ * `maestriadirecciondeorganizaciones.uagro.mx`, donde la base vuelve a ser `/`.
  *
  * Astro prefija por su cuenta los assets que empaqueta (`/_astro/*`) y las rutas
  * de pagina, pero NO reescribe los `src` ni los `href` que escribimos a mano ni

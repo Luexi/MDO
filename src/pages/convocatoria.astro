@@ -6,14 +6,20 @@ import {
   Clock,
   FileText,
   HelpCircle,
+  Info,
   Mail,
   Phone,
+  Scale,
+  Users,
 } from "lucide-react";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { Button } from "@/components/ui/button";
 import {
   calendarioAdmision,
+  convocatoriaVigente,
+  criteriosSeleccion,
+  dirigidoA,
   preguntasFrecuentes,
   requisitosAdmision,
 } from "@/data/admision";
@@ -22,29 +28,59 @@ import { withBase } from "@/lib/paths";
 ---
 
 <BaseLayout
-  title="MDO UAGro | Convocatoria 2026"
-  description="Convocatoria 2026 de la MDO UAGro: calendario, requisitos, preguntas frecuentes y contacto de la coordinación."
+  title="MDO UAGro | Convocatoria"
+  description="Convocatoria de la MDO UAGro: calendario, requisitos, criterios de selección, preguntas frecuentes y contacto de la coordinación."
 >
   <PageHeader
-    title="Convocatoria 2026"
-    subtitle="Calendario, requisitos y proceso de admisión de la generación 2026"
-    badge="Admisión abierta"
+    title="Convocatoria"
+    subtitle={`Calendario, requisitos y criterios de selección · ${convocatoriaVigente.generacion}`}
   />
 
   <section class="py-12">
     <div class="mx-auto max-w-5xl px-4">
       {/*
-        El calendario y los requisitos se publican en HTML para que sean legibles
-        en movil y accesibles a un lector de pantalla. Antes solo existian dentro
-        del cartel, ilegible a 390 px y sin equivalente en texto.
-
-        Sobre la jerarquia de fuentes: mientras el calendario en HTML no se
-        verifique contra el cartel vigente, el cartel prevalece. Es la misma
-        regla que el proyecto ya aplica al nucleo academico, donde gana el PDF
-        rector. Ver la nota en `src/data/admision.ts`.
+        El calendario, los requisitos y la ponderacion se publican en HTML,
+        tomados del cartel oficial, que es la fuente rectora. Antes solo existian
+        dentro de la imagen: ilegibles a 390 px y fuera del alcance de un lector
+        de pantalla.
       */}
       <div class="grid gap-10 lg:grid-cols-[minmax(0,1fr)_20rem]">
         <div class="space-y-12">
+          {
+            convocatoriaVigente.cerrada && (
+              <div class="flex items-start gap-4 rounded-2xl border border-border bg-muted/60 p-5">
+                <Info
+                  className="mt-0.5 h-5 w-5 flex-shrink-0 text-muted-foreground"
+                  aria-hidden="true"
+                />
+                <div>
+                  <h2 class="font-semibold text-foreground">
+                    Proceso de selección concluido
+                  </h2>
+                  <p class="mt-1 text-sm text-muted-foreground">
+                    {convocatoriaVigente.nota}
+                  </p>
+                </div>
+              </div>
+            )
+          }
+
+          <section aria-labelledby="perfil-titulo">
+            <h2
+              id="perfil-titulo"
+              class="mb-4 flex items-center gap-3 font-display text-2xl font-semibold text-foreground"
+            >
+              <Users className="h-6 w-6 text-primary" aria-hidden="true" />
+              A quién va dirigida
+            </h2>
+            <p class="leading-relaxed text-muted-foreground">{dirigidoA}</p>
+            <p class="mt-3 text-sm text-muted-foreground">
+              Modalidad: <strong class="font-medium text-foreground">
+                {convocatoriaVigente.modalidad}
+              </strong>
+            </p>
+          </section>
+
           <section aria-labelledby="calendario-titulo">
             <h2
               id="calendario-titulo"
@@ -53,14 +89,6 @@ import { withBase } from "@/lib/paths";
               <Calendar className="h-6 w-6 text-primary" aria-hidden="true" />
               Calendario del proceso
             </h2>
-
-            <p
-              class="mb-6 rounded-xl border border-border bg-muted/50 p-4 text-sm text-muted-foreground"
-            >
-              El cartel oficial de la convocatoria es el documento que prevalece.
-              Si encuentras una diferencia con las fechas de esta página,
-              confírmala con la coordinación del programa.
-            </p>
 
             <ol class="space-y-0">
               {
@@ -112,6 +140,45 @@ import { withBase } from "@/lib/paths";
             </ol>
           </section>
 
+          <section aria-labelledby="criterios-titulo">
+            <h2
+              id="criterios-titulo"
+              class="mb-6 flex items-center gap-3 font-display text-2xl font-semibold text-foreground"
+            >
+              <Scale className="h-6 w-6 text-primary" aria-hidden="true" />
+              Criterios de selección
+            </h2>
+            <table class="w-full text-sm">
+              <caption class="sr-only">
+                Ponderación de cada criterio en el proceso de selección.
+              </caption>
+              <thead>
+                <tr class="border-b border-border text-muted-foreground">
+                  <th scope="col" class="py-2 pr-3 text-left font-medium">
+                    Criterio
+                  </th>
+                  <th scope="col" class="py-2 pl-3 text-right font-medium">
+                    Ponderación
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {
+                  criteriosSeleccion.map((criterio) => (
+                    <tr class="border-b border-border/70 last:border-b-0">
+                      <td class="py-3 pr-3 text-foreground/90">
+                        {criterio.criterio}
+                      </td>
+                      <td class="py-3 pl-3 text-right font-semibold text-foreground">
+                        {criterio.ponderacion}%
+                      </td>
+                    </tr>
+                  ))
+                }
+              </tbody>
+            </table>
+          </section>
+
           <section aria-labelledby="requisitos-titulo" id="requisitos">
             <h2
               id="requisitos-titulo"
@@ -147,9 +214,9 @@ import { withBase } from "@/lib/paths";
                 Becas nacionales de posgrado
               </h2>
               <p class="text-sm text-muted-foreground">
-                Quedar admitido en el programa no garantiza la obtención de una
-                beca. Las becas las asigna SECIHTI de acuerdo con el presupuesto
-                del ejercicio fiscal correspondiente.
+                Estar admitido en un posgrado no garantiza la asignación de una
+                beca. Las becas las asigna SECIHTI en dependencia del
+                presupuesto federal.
               </p>
             </div>
           </div>
@@ -172,9 +239,7 @@ import { withBase } from "@/lib/paths";
               {
                 preguntasFrecuentes.map((item) => (
                   <details class="group">
-                    <summary
-                      class="flex cursor-pointer items-center justify-between gap-4 p-5 font-medium text-foreground marker:content-none"
-                    >
+                    <summary class="flex cursor-pointer items-center justify-between gap-4 p-5 font-medium text-foreground marker:content-none">
                       {item.pregunta}
                       <span
                         class="flex-shrink-0 text-xl leading-none text-muted-foreground transition-transform group-open:rotate-45"
@@ -197,13 +262,16 @@ import { withBase } from "@/lib/paths";
           <div class="overflow-hidden rounded-2xl border border-border bg-card shadow-sm">
             <img
               src={withBase("/convocatoria.webp")}
-              alt="Cartel de la convocatoria 2026 de la Maestría en Dirección de Organizaciones"
+              alt="Cartel oficial de la convocatoria de la Maestría en Dirección de Organizaciones, generación febrero 2026"
               width="847"
               height="1200"
               loading="lazy"
               class="w-full"
             />
             <div class="space-y-3 p-4">
+              <p class="text-xs text-muted-foreground">
+                Documento oficial. Los datos de esta página se toman de él.
+              </p>
               <a
                 href={withBase("/convocatoria.webp")}
                 target="_blank"
@@ -212,35 +280,19 @@ import { withBase } from "@/lib/paths";
               >
                 <Button variant="outline" size="sm" className="w-full gap-2 rounded-xl">
                   <FileText className="h-4 w-4" />
-                  Ver cartel en tamaño completo
+                  Ver cartel completo
                   <span class="sr-only">, se abre en una pestaña nueva</span>
                 </Button>
               </a>
-              {/*
-                El PDF oficial todavia no tiene URL publica. Se muestra el estado
-                real en vez de un boton vivo que lleva a un error de Drive, que
-                es lo que ocurria antes en las dos acciones principales de esta
-                pagina.
-              */}
-              <Button
-                variant="outline"
-                size="sm"
-                className="w-full gap-2 rounded-xl"
-                disabled
-              >
-                <Clock className="h-4 w-4" />
-                PDF oficial en proceso
-              </Button>
             </div>
           </div>
 
           <div class="rounded-2xl bg-primary p-6 text-primary-foreground">
-            <h2 class="mb-4 font-display text-xl font-semibold">
-              ¿Tienes dudas?
+            <h2 class="mb-2 font-display text-xl font-semibold">
+              Coordinación del programa
             </h2>
             <p class="mb-4 text-sm text-primary-foreground/80">
-              Escribe o llama a la coordinación del programa para resolver dudas
-              sobre requisitos, cuotas o entrega de documentos.
+              {contacto.coordinador}
             </p>
             <div class="space-y-3">
               <a
@@ -259,7 +311,7 @@ import { withBase } from "@/lib/paths";
               </a>
             </div>
             <p class="mt-4 text-sm text-primary-foreground/60">
-              {contacto.horario}
+              {contacto.domicilio}
             </p>
           </div>
         </aside>

@@ -3,7 +3,7 @@
 Sitio web estatico de la **Maestria en Direccion de Organizaciones (MDO)** de la Universidad Autonoma de Guerrero.
 
 - Produccion (temporal): <https://luexi.github.io/MDO>
-- Produccion (definitiva, pendiente de DNS): <https://maestriaendirecciondeorganizaciones.uagro.mx>
+- Produccion (definitiva, pendiente de DNS): <https://maestriadirecciondeorganizaciones.uagro.mx>
 
 ## 1) Stack y enfoque
 

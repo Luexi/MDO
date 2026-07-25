@@ -7,7 +7,7 @@ Fecha de actualizacion: 2026-07-25
 - Sitio estatico en Astro con islas React puntuales.
 - Publicado en **GitHub Pages** mediante GitHub Actions. Salida de Vercel completada.
 - URL temporal: `https://luexi.github.io/MDO` (base `/MDO`).
-- URL definitiva pendiente de DNS: `https://maestriaendirecciondeorganizaciones.uagro.mx` (base `/`).
+- URL definitiva pendiente de DNS: `https://maestriadirecciondeorganizaciones.uagro.mx` (base `/`).
 - Build validado con `npm run build`, que ahora incluye un guard de enlaces.
 - Rutas principales, ruta dinamica de profesores y nueva ruta `/plan-estudios` activas.
 
@@ -23,8 +23,8 @@ Estos cambios responden a una auditoria de diseño y accesibilidad del sitio. Se
 ### Arquitectura de informacion
 
 - **Navegacion de nueve destinos planos a tres grupos** (Admisión, Programa, Comunidad), definidos en `src/data/navegacion.ts`. Las URLs no cambiaron.
-- **La portada es ahora un embudo de admision**: etapa vigente del calendario, tres pasos del proceso y accesos a requisitos y preguntas frecuentes.
-- **`/convocatoria` es la fuente de verdad en HTML**, con calendario, requisitos y preguntas frecuentes en texto. El cartel pasa a ser el derivado imprimible en la barra lateral.
+- **La portada es ahora un embudo de admision**: tres pasos del proceso y accesos a requisitos y preguntas frecuentes.
+- **`/convocatoria` publica en texto lo que antes solo vivia dentro del cartel**: calendario, criterios de ponderacion, modalidad, perfil de aspirante y preguntas frecuentes. El cartel sigue siendo la fuente rectora y se muestra en la barra lateral.
 - **El plan de estudios se movio a `/plan-estudios`.** Antes ocupaba la parte superior de `/objetivos`, por delante del propio objetivo general.
 - **Preguntas frecuentes** en `/convocatoria#preguntas-frecuentes`, con `details`/`summary` nativos.
 
@@ -46,6 +46,9 @@ Estos cambios responden a una auditoria de diseño y accesibilidad del sitio. Se
 - Se retiraron los enlaces a Twitter y LinkedIn, que apuntaban a las portadas genericas de esas redes, y los enlaces legales sin destino.
 - **Meta del SNP corregida.** La portada afirma registro vigente y `/objetivos` lo planteaba como meta a conseguir en 2026. Ahora la meta habla de refrendarlo.
 - `/lies` se anuncia en singular, que es lo que corresponde a una sola linea registrada.
+- **El cartel oficial pasa a ser la fuente rectora del proceso de admision.** El calendario, el telefono y el domicilio del sitio no coincidian con el. Se sustituyeron por los datos del cartel: proceso de octubre de 2025 a enero de 2026 con inicio en febrero de 2026, telefono 744 134 0900 ext. 4477 y domicilio en Av. Ruiz Cortines s/n, Col. Alta Progreso, Acapulco.
+- **Se publican en texto los datos que solo existian dentro de la imagen**: ponderacion de seleccion (curriculo 30%, entrevistas 25%, propedeutico 25%, EXANI-III 20%), modalidad escolarizada, perfil de aspirante y nombre del coordinador.
+- **Las etiquetas de la llamada a la accion pierden el ano.** El proceso de la generacion de febrero de 2026 ya concluyo, asi que la pagina lo declara cerrado en vez de anunciar "Convocatoria 2026" como si estuviera abierta.
 
 ### Deuda tecnica
 
@@ -61,20 +64,28 @@ Estos cambios responden a una auditoria de diseño y accesibilidad del sitio. Se
 
 Estos puntos NO se resolvieron porque requieren informacion que solo tiene el programa:
 
-- **El calendario de admision del sitio no coincide con el cartel oficial. Es el pendiente mas urgente.** `public/convocatoria.webp` registra pre-registro del 20 al 30 de octubre de 2025, EXANI-III el 15 de noviembre de 2025, lista de aceptados el 15 de diciembre de 2025, inscripciones del 19 al 23 de enero de 2026 e inicio en febrero de 2026. El sitio publicaba otro calendario por completo (registro de enero a marzo de 2026, examen en abril, inicio en agosto). Las fechas del sitio se conservaron sin modificar, pero ninguna etapa se marca ya como vigente y se anadio un aviso de que el cartel prevalece. Corregirlo exige saber si existe una convocatoria nueva para la siguiente generacion. Detalle completo en la cabecera de `src/data/admision.ts`.
-- **Datos de contacto que difieren del cartel.** El cartel indica telefono 744 134 0900 ext. 4477 y domicilio en Av. Ruiz Cortines s/n, Col. Alta Progreso, **Acapulco**. El sitio publica (747) 472-5678 y domicilio en Ciudad Universitaria, **Chilpancingo**. El correo si coincide. Hay que confirmar cual corresponde a la coordinacion del posgrado.
-- **Dominio del cartel.** El cartel remite a `maestriadirecciondeorganizaciones.uagro.mx`, sin la particula "en", mientras que el dominio previsto para este sitio es `maestriaendirecciondeorganizaciones.uagro.mx`. Conviene verificar cual es el correcto antes de configurar el DNS.
-- **Datos del cartel que aun no existen en texto**: ponderacion de seleccion (EXANI-III 20%, entrevistas 25%, curso propedeutico 25%, curriculo 30%), modalidad escolarizada y nombre del coordinador. Son justo el tipo de dato que un aspirante necesita y que hoy solo vive dentro de una imagen.
+- **Fechas de la proxima convocatoria. Es el pendiente mas visible.** El calendario publicado corresponde al proceso que cerro en enero de 2026, y el sitio lo declara concluido. En cuanto exista convocatoria nueva hay que sustituir `public/convocatoria.webp`, actualizar `calendarioAdmision`, marcar `activo: true` en la etapa en curso y poner `cerrada: false` en `convocatoriaVigente`.
 - **URLs reales** de convocatoria en PDF, formularios de preinscripcion, formatos y lineamientos. Mientras tanto las tarjetas dicen "En proceso".
 - **Cuotas del programa.** La pregunta frecuente existe y enruta a la coordinacion, sin cifras inventadas.
-- **Sede y modalidad de entrega de documentos.** Mismo tratamiento.
+- **Sede y horario de entrega de documentos.** Mismo tratamiento.
 - **Aviso de privacidad.** El enlace se retiro hasta que exista documento publicado.
 - **Verificacion de los registros de tesis.** Se conservan con boton inhabilitado por indicacion expresa.
 - **Convenios de vinculacion.** Catorce instituciones listadas sin fuente ni fecha.
 - **Fotografia del nucleo academico.** Los retratos no comparten fondo ni encuadre; se normalizo el recorte por CSS, pero homogeneizarlos de verdad requiere volver a fotografiar.
 - **Copy de posicionamiento.** La portada dice "Forma parte de la élite directiva" mientras los objetivos hablan de inclusion, equidad y empleo digno. No se modifico por ser una decision de posicionamiento institucional.
 
-## 4. Fuente de verdad para docentes
+## 4. Fuentes rectoras
+
+El proyecto tiene dos documentos que prevalecen sobre lo que diga el codigo:
+
+| Ambito | Documento rector | Datos que gobierna |
+| --- | --- | --- |
+| Proceso de admision | `public/convocatoria.webp` | Calendario, ponderacion, modalidad, perfil de aspirante y contacto de la coordinacion |
+| Nucleo academico | `profesores/NUCLEO ACADEMICO.pdf` | Fichas, grados, cuerpos academicos y produccion |
+
+Si el sitio y el documento difieren, gana el documento. Al sustituir cualquiera de los dos, actualiza el archivo de datos correspondiente en la misma tanda.
+
+## 5. Fuente de verdad para docentes
 
 - Documento rector: `profesores/NUCLEO ACADEMICO.pdf`
 - Complemento individual: `profesores/*.txt`
@@ -84,7 +95,7 @@ Regla de conflicto: **gana el PDF**.
 
 Nota: las semblanzas usan "SNI" y `/objetivos` usa "SNII". No se unifico porque las semblanzas reproducen el PDF rector y esa regla tiene prioridad.
 
-## 5. Orden de fichas vigente en Nucleo Academico
+## 6. Orden de fichas vigente en Nucleo Academico
 
 1. Ruben Hernandez Chavarria
 2. David Antonio Reyes Pena
@@ -103,7 +114,7 @@ Nota: las semblanzas usan "SNI" y `/objetivos` usa "SNII". No se unifico porque 
 15. Jose Hugo Vazquez Mendoza
 16. Nallely Vazquez Martinez
 
-## 6. Archivos clave para mantenimiento
+## 7. Archivos clave para mantenimiento
 
 - `src/data/navegacion.ts` (arquitectura de navegacion)
 - `src/data/contacto.ts` (fuente unica de contacto)
@@ -115,7 +126,7 @@ Nota: las semblanzas usan "SNI" y `/objetivos` usa "SNII". No se unifico porque 
 - `scripts/check-enlaces.mjs`
 - `.github/workflows/deploy.yml`
 
-## 7. Recomendaciones para siguientes cambios
+## 8. Recomendaciones para siguientes cambios
 
 - Toda ruta interna nueva se escribe con `withBase()`.
 - Si un documento no existe todavia, omite `linkDrive`; no inventes URLs.

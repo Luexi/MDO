@@ -58,19 +58,19 @@ Hoy, temporal:
 | `PUBLIC_BASE_PATH` | `/MDO` |
 | URL publica | `https://luexi.github.io/MDO` |
 
-Cuando el area de sistemas apunte el DNS de `maestriaendirecciondeorganizaciones.uagro.mx`:
+Cuando el area de sistemas apunte el DNS de `maestriadirecciondeorganizaciones.uagro.mx`:
 
 1. Edita el bloque `env` de `.github/workflows/deploy.yml`:
 
    ```yaml
-   PUBLIC_SITE_URL: https://maestriaendirecciondeorganizaciones.uagro.mx
+   PUBLIC_SITE_URL: https://maestriadirecciondeorganizaciones.uagro.mx
    PUBLIC_BASE_PATH: /
    ```
 
 2. Crea `public/CNAME` con una sola linea y sin espacios:
 
    ```text
-   maestriaendirecciondeorganizaciones.uagro.mx
+   maestriadirecciondeorganizaciones.uagro.mx
    ```
 
 3. En **Settings > Pages > Custom domain**, escribe el mismo dominio y activa **Enforce HTTPS** cuando GitHub termine de emitir el certificado.
@@ -82,7 +82,7 @@ Cuando el area de sistemas apunte el DNS de `maestriaendirecciondeorganizaciones
 Para un subdominio, un registro `CNAME`:
 
 ```text
-maestriaendirecciondeorganizaciones  CNAME  luexi.github.io.
+maestriadirecciondeorganizaciones  CNAME  luexi.github.io.
 ```
 
 ## 5. Desarrollo local
@@ -98,7 +98,7 @@ Si abres `http://localhost:8080` sin la subruta veras un 404. Es el comportamien
 Para probar en local como se vera con el dominio propio:
 
 ```bash
-PUBLIC_BASE_PATH=/ PUBLIC_SITE_URL=https://maestriaendirecciondeorganizaciones.uagro.mx npm run build
+PUBLIC_BASE_PATH=/ PUBLIC_SITE_URL=https://maestriadirecciondeorganizaciones.uagro.mx npm run build
 npm run preview
 ```
 
