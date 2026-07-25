@@ -10,10 +10,9 @@ import { instalaciones } from "@/data/instalaciones";
   <PageHeader
     title="Instalaciones"
     subtitle="Conoce la infraestructura física y tecnológica disponible para nuestros estudiantes"
-    badge="Infraestructura"
   />
 
-  <section class="py-16">
+  <section class="py-12">
     <div class="max-w-6xl mx-auto px-4">
       <div class="bg-card rounded-2xl p-8 shadow-sm border border-border mb-12">
         <div class="flex items-start gap-4">
@@ -29,12 +28,18 @@ import { instalaciones } from "@/data/instalaciones";
         </div>
       </div>
 
-      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {instalaciones.map((instalacion) => <InstalacionCard instalacion={instalacion} />)}
-      </div>
+      <ul class="grid auto-rows-fr gap-6 md:grid-cols-2 lg:grid-cols-3">
+        {
+          instalaciones.map((instalacion) => (
+            <li class="h-full">
+              <InstalacionCard instalacion={instalacion} />
+            </li>
+          ))
+        }
+      </ul>
 
       <div class="mt-12 bg-muted/50 rounded-2xl p-8">
-        <h3 class="font-display text-lg font-semibold text-foreground mb-4 text-center">Servicios Adicionales</h3>
+        <h2 class="font-display text-lg font-semibold text-foreground mb-4 text-center">Servicios adicionales</h2>
         <div class="grid sm:grid-cols-2 md:grid-cols-4 gap-4 text-center">
           <div class="p-4 bg-card rounded-xl border border-border">
             <p class="font-medium text-foreground">WiFi de Alta Velocidad</p>

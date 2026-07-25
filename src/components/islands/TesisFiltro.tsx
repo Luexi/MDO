@@ -24,30 +24,37 @@ export default function TesisFiltro({ generaciones, tesis }: TesisFiltroProps) {
 
   return (
     <>
-      <div className="flex flex-wrap gap-3 mb-10 justify-center">
+      <div
+        className="mb-10 flex flex-wrap justify-center gap-3"
+        role="group"
+        aria-label="Filtrar tesis por generación"
+      >
         {generaciones.map((gen) => (
           <button
             key={gen.id}
             type="button"
+            aria-pressed={generacionActiva === gen.id}
             onClick={() => setGeneracionActiva(gen.id)}
             className={cn(
-              "px-5 py-2.5 rounded-xl font-medium transition-all",
+              "rounded-xl px-5 py-2.5 font-medium transition-all",
               generacionActiva === gen.id
                 ? "bg-primary text-primary-foreground shadow-md"
-                : "bg-card text-foreground border border-border hover:bg-muted",
+                : "border border-border bg-card text-foreground hover:bg-muted",
             )}
           >
-            {gen.label}
+            Generación {gen.label}
           </button>
         ))}
       </div>
 
       {tesisActuales.length > 0 ? (
-        <div className="grid md:grid-cols-2 gap-6">
+        <ul className="grid auto-rows-fr gap-6 md:grid-cols-2">
           {tesisActuales.map((item) => (
-            <TesisCard key={item.id} tesis={item} />
+            <li key={item.id} className="h-full">
+              <TesisCard tesis={item} />
+            </li>
           ))}
-        </div>
+        </ul>
       ) : (
         <div className="text-center py-16">
           <div className="p-4 bg-muted rounded-full w-fit mx-auto mb-4">

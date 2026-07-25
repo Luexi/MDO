@@ -1,4 +1,4 @@
-﻿# Arquitectura y Estructura del Proyecto
+# Arquitectura y Estructura del Proyecto
 
 Esta guia describe **como esta organizado el proyecto**, que hace cada carpeta y como fluye la informacion para futuras modificaciones.
 
@@ -8,7 +8,7 @@ El sitio usa un enfoque **Static Site Generation (SSG)** con Astro:
 
 - Las paginas se renderizan en build a HTML estatico.
 - La interactividad puntual se implementa con **islas React** (solo donde es estrictamente necesario).
-- Los componentes estaticos (Navbar, tabs de Objetivos) son Astro puro, sin JS en el cliente.
+- El comportamiento compartido (navbar, pestañas) es JavaScript vanilla en `src/scripts/`, cargado una sola vez desde el layout.
 - El contenido editable vive en `src/data/*`.
 
 Resultado: sitio rapido, simple de desplegar y facil de mantener.
@@ -16,141 +16,187 @@ Resultado: sitio rapido, simple de desplegar y facil de mantener.
 ## 2. Mapa de carpetas
 
 ```text
-mdocom/
+MDO/
+  .github/
+    workflows/deploy.yml   # despliegue a GitHub Pages
+
   public/
     assets/
-      galeria/          # imagenes .jpg optimizadas
-      logos/             # logos .webp (convertidos desde PNG)
-      profesores/        # fotos .jpg/.webp optimizadas (400px max)
+      galeria/             # imagenes .jpg optimizadas
+      logos/               # logos .webp
+      profesores/          # fotos .jpg/.webp (400px max)
     convocatoria.webp
-    favicon.webp
-    placeholder.svg
+    favicon.svg
     robots.txt
+    site.webmanifest
+
+  scripts/
+    check-enlaces.mjs      # guard de enlaces previo al build
 
   src/
     components/
-      cards/             # ProfesorCard.tsx
-      layout/            # Navbar.astro, Footer.astro
-      ui/                # Button, PageHeader, ImageCarousel, etc.
-    data/                # contenido editable (profesores, tesis, etc.)
-    layouts/             # BaseLayout.astro
+      cards/               # ProfesorCard, TesisCard, DocumentoCard, InstalacionCard
+      islands/             # TesisFiltro, GaleriaLightbox (React hidratado)
+      layout/              # Navbar.astro, Footer.astro
+      ui/                  # Button, PageHeader, TabGroup
+      ObjetivosTabs.astro
+      PlanEstudiosTabs.astro
+    data/                  # contenido editable
+    layouts/               # BaseLayout.astro
     lib/
+      paths.ts             # withBase(), link(), isExternal()
+      utils.ts
     pages/
       profesores/[slug].astro
-    styles/              # global.css (variables, tema)
+    scripts/               # navbar.ts, tabs.ts (comportamiento vanilla)
+    styles/                # global.css (tokens y tema)
     test/
 
   docs/
-  vercel.json            # cache headers, cleanUrls
 ```
 
 ## 3. Ruteo (Astro file-based)
 
 Cada archivo en `src/pages/` define una ruta:
 
-- `src/pages/index.astro` -> `/`
-- `src/pages/objetivos.astro` -> `/objetivos`
-- `src/pages/nucleo-academico.astro` -> `/nucleo-academico`
-- `src/pages/lies.astro` -> `/lies`
-- `src/pages/repositorio.astro` -> `/repositorio`
-- `src/pages/tesis.astro` -> `/tesis`
-- `src/pages/instalaciones.astro` -> `/instalaciones`
-- `src/pages/galeria.astro` -> `/galeria`
-- `src/pages/vinculacion.astro` -> `/vinculacion`
-- `src/pages/convocatoria.astro` -> `/convocatoria`
-- `src/pages/profesores/[slug].astro` -> `/profesores/:slug`
-- `src/pages/404.astro` -> pagina 404
+- `index.astro` -> `/`
+- `objetivos.astro` -> `/objetivos`
+- `plan-estudios.astro` -> `/plan-estudios`
+- `nucleo-academico.astro` -> `/nucleo-academico`
+- `lies.astro` -> `/lies`
+- `repositorio.astro` -> `/repositorio`
+- `tesis.astro` -> `/tesis`
+- `instalaciones.astro` -> `/instalaciones`
+- `galeria.astro` -> `/galeria`
+- `vinculacion.astro` -> `/vinculacion`
+- `convocatoria.astro` -> `/convocatoria`
+- `profesores/[slug].astro` -> `/profesores/:slug`
+- `404.astro` -> pagina 404
+
+Las URLs publicas llevan ademas la base de despliegue (`/MDO` hoy). Ver la seccion 10.
 
 ### Ruta dinamica de profesores
 
 `src/pages/profesores/[slug].astro` usa `getStaticPaths()` para generar una pagina por profesor en build, tomando los datos de `src/data/profesores.ts`.
 
-## 4. Layout y composicion visual
+## 4. Arquitectura de navegacion
 
-- `src/layouts/BaseLayout.astro`
-  - `<head>` (meta tags, title, Google Fonts async)
-  - Navbar (`src/components/layout/Navbar.astro`) componente Astro puro
-  - Footer (`src/components/layout/Footer.astro`) estatico
-  - `<slot />` para contenido de cada pagina
+La navegacion agrupa los destinos en tres bloques, uno por cada pregunta real de las audiencias del programa. Se define en `src/data/navegacion.ts` y la consumen el Navbar y el Footer, de modo que no pueden desincronizarse.
 
-## 5. Islas React y componentes Astro puros
+| Grupo | Pregunta que responde | Destinos |
+| --- | --- | --- |
+| Admisión | ¿cómo entro? | Convocatoria, Preguntas frecuentes, Documentos y formatos |
+| Programa | ¿es serio esto? | Objetivos y perfiles, Plan de estudios, Líneas de investigación |
+| Comunidad | ¿quiénes son? | Núcleo académico, Tesis, Vinculación, Instalaciones, Galería |
 
-### Componentes Astro puros (0 JS en cliente)
+Las URLs no cambiaron al reagrupar: solo cambio la forma de llegar a ellas, para no romper el SEO ya indexado.
 
-- `src/components/layout/Navbar.astro` — navegacion con menu movil (script inline vanilla)
-- `src/components/ObjetivosTabs.astro` — tabs CSS-only con radio buttons + `peer-checked`
-- `src/components/PlanEstudiosTabs.astro` — tabs CSS-only de plan de estudios
+## 5. Layout y composicion visual
+
+`src/layouts/BaseLayout.astro` monta:
+
+- Enlace de salto al contenido (`skip link`), primer elemento tabulable de cada pagina
+- `<head>`: meta tags, canonical, Open Graph, JSON-LD en la portada, fuentes async
+- Navbar (`src/components/layout/Navbar.astro`)
+- `<main id="contenido-principal">` con `<slot />`
+- Footer (`src/components/layout/Footer.astro`)
+- Un unico `<script>` que inicializa `initNavbar()` e `initTabs()`
+
+## 6. Islas React y componentes Astro
+
+### Componentes Astro (0 JS de framework en cliente)
+
+- `layout/Navbar.astro` — navegacion agrupada; el comportamiento vive en `src/scripts/navbar.ts`
+- `ui/TabGroup.astro` — patron WAI-ARIA de pestañas; comportamiento en `src/scripts/tabs.ts`
+- `ObjetivosTabs.astro` y `PlanEstudiosTabs.astro` — consumen `TabGroup`
 
 ### Islas React (se hidratan solo donde se usan)
 
-- `src/components/islands/TesisFiltro.tsx` (`client:idle`) — filtro por generacion
-- `src/components/ui/ImageCarousel.tsx` (`client:idle`) — carrusel de galeria
+- `islands/TesisFiltro.tsx` (`client:idle`) — filtro por generacion
+- `islands/GaleriaLightbox.tsx` (`client:idle`) — rejilla con visor modal
 
-## 6. Capa de contenido (`src/data`)
+### Patron de pestañas
 
-Los archivos de `src/data` son la fuente principal de informacion editable:
+`TabGroup.astro` recibe `tabs` y expone slots **estaticos** (`panel-1`, `panel-2`, `panel-3`), porque el compilador de Astro exige que `slot[name]` sea una cadena literal. El estado activo se deriva de `aria-selected` con la variante `aria-*` de Tailwind, de modo que lo que se ve y lo que anuncia un lector de pantalla son el mismo atributo y no pueden divergir. Sin JavaScript, un bloque `<noscript>` revela todos los paneles y oculta la barra, para que el contenido nunca quede inalcanzable.
 
-- `src/data/profesores.ts`: listado y detalle de docentes
-- `src/data/tesis.ts`: generaciones y tesis
-- `src/data/documentos.ts`: documentos y enlaces
-- `src/data/instalaciones.ts`: infraestructura
-- `src/data/galeria.ts`: imagenes de galeria
-- `src/data/vinculacion.ts`: instituciones y mecanismos
+## 7. Capa de contenido (`src/data`)
 
-## 7. Assets y convenciones
+- `profesores.ts`: listado y detalle de docentes
+- `tesis.ts`: generaciones y tesis
+- `documentos.ts`: documentos y enlaces
+- `instalaciones.ts`: infraestructura
+- `galeria.ts`: imagenes con texto alternativo descriptivo
+- `vinculacion.ts`: instituciones y mecanismos
+- `admision.ts`: calendario, pasos, requisitos y preguntas frecuentes
+- `contacto.ts`: fuente unica de correo, telefono, domicilio y redes
+- `navegacion.ts`: arquitectura de navegacion y estado activo
 
-- Logos: `public/assets/logos/` (formato `.webp`)
-- Galeria: `public/assets/galeria/` (formato `.jpg`, optimizadas)
-- Profesores: `public/assets/profesores/` (formato `.jpg`/`.webp`, max 400px ancho)
-- Cualquier archivo en `public/` se publica en la raiz del sitio.
+`linkDrive` es **opcional** en `documentos.ts` y `tesis.ts`. Omitirlo hace que la tarjeta se renderice en estado "En proceso" con el boton inhabilitado. Es la unica forma correcta de expresar "todavia no hay documento".
 
-Ejemplo:
-- archivo: `public/assets/logos/logo-mdo.webp`
-- URL: `/assets/logos/logo-mdo.webp`
+## 8. Assets y convenciones
 
-### Optimizacion de imagenes
+- Logos: `public/assets/logos/` (`.webp`)
+- Galeria: `public/assets/galeria/` (`.jpg` optimizadas)
+- Profesores: `public/assets/profesores/` (`.jpg`/`.webp`, max 400px ancho)
 
-Todas las imagenes fueron optimizadas con sharp:
+Toda `<img>` declara `width` y `height` para reservar espacio y evitar saltos de maquetacion. Cuando el contenedor fija la proporcion, se usan dimensiones nominales con esa misma relacion.
 
-- Logos PNG convertidos a WebP (-82% a -99%)
-- Fotos de profesores redimensionadas a 400px max y comprimidas con mozjpeg
-- Imagenes de galeria comprimidas
-- Todas las `<img>` below-the-fold usan `loading="lazy"`
+## 9. Estilos y design system
 
-## 8. Estilos y design system
+- `src/styles/global.css`: tokens de color en HSL, estilos base, guarda de movimiento reducido y utilidades
+- `tailwind.config.ts`: escaneo de clases y tema extendido
 
-- `src/styles/global.css`
-  - variables CSS (colores, radios, gradientes)
-  - base styles
-  - utilidades custom
-- `tailwind.config.ts`
-  - escaneo de clases
-  - tema extendido
+### Escala de radios
 
-## 9. Configuracion clave
+Se usa la escala por defecto de Tailwind, sin sobrescribir:
 
-- `astro.config.mjs`: integraciones, output estatico, host/port
-- `vercel.json`: `cleanUrls`, cache headers inmutables para `_astro/` y `assets/`
+```text
+sm 0.125 · md 0.375 · lg 0.5 · xl 0.75 · 2xl 1 · 3xl 1.5   (rem)
+```
+
+Convencion del proyecto:
+
+- `rounded-lg`: elementos pequeños (enlaces de nav, insignias, cajas de icono)
+- `rounded-xl`: controles (botones, campos, celdas de lista)
+- `rounded-2xl`: contenedores (tarjetas, paneles, secciones)
+- `rounded-full`: elementos circulares o en pastilla
+
+### Contraste
+
+`--muted-foreground` da 4.87:1 sobre el fondo de pagina y 5.22:1 sobre tarjeta. Es el color de casi todo el cuerpo de texto, asi que cualquier cambio en ese token debe verificarse contra ambas superficies, no solo contra una.
+
+## 10. Base de despliegue
+
+El sitio vive en una subruta de GitHub Pages (`/MDO`) y migrara a un dominio propio, donde la base vuelve a ser `/`. Astro prefija lo que empaqueta, pero no los `src` ni `href` escritos a mano ni lo que vive en `public/`.
+
+Por eso **toda ruta interna pasa por `withBase()`** (`src/lib/paths.ts`). Cambiar de dominio es editar dos variables en el workflow. Ver `docs/despliegue-github-pages.md`.
+
+## 11. Configuracion clave
+
+- `astro.config.mjs`: integraciones, output estatico, `site` y `base` desde variables de entorno
+- `.github/workflows/deploy.yml`: lint, pruebas, build y publicacion en Pages
+- `scripts/check-enlaces.mjs`: guard de enlaces, corre antes de `astro build`
 - `tsconfig.json`: alias `@/*` a `src/*`
 - `postcss.config.js`: Tailwind + Autoprefixer
 - `eslint.config.js`: reglas lint
 - `vitest.config.ts`: tests unitarios
 
-## 10. Build y despliegue
+## 12. Build y despliegue
 
-- Build local: `npm run build`
+- Build local: `npm run build` (guard de enlaces + `astro check` + `astro build`)
 - Salida: `dist/`
-- Deploy estatico recomendado: Vercel con output `dist`
+- Despliegue: automatico en push a `main` via GitHub Actions
 
-## 11. Que NO editar
+## 13. Que NO editar
 
 - `dist/`: artefactos de compilacion
 - `.astro/`: archivos generados por Astro
 - `package-lock.json`: no editar a mano
 
-## 12. Reglas de evolucion del proyecto
+## 14. Reglas de evolucion del proyecto
 
 1. Prioriza cambios de contenido en `src/data/*`.
-2. Si hay nueva interaccion, crear isla en `src/components/islands/`.
-3. Mantener rutas estables para no romper enlaces.
-4. Ejecutar `lint + build` antes de merge/deploy.
+2. Si hay nueva interaccion, evalua primero un `<script>` en `src/scripts/`; crea isla React solo si necesitas estado complejo.
+3. Manten rutas estables para no romper enlaces.
+4. Toda ruta interna nueva usa `withBase()`.
+5. Ejecuta `lint + test + build` antes de merge.

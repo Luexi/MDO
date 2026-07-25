@@ -5,15 +5,18 @@ import TesisFiltro from "@/components/islands/TesisFiltro";
 import { generaciones, tesis } from "@/data/tesis";
 ---
 
-<BaseLayout title="MDO UAGro | Tesis" description="Consulta los trabajos de investigación de los egresados de la MDO UAGro.">
+<BaseLayout
+  title="MDO UAGro | Tesis"
+  description="Trabajos de grado de las y los egresados de la Maestría en Dirección de Organizaciones, por generación."
+>
   <PageHeader
-    title="Repositorio de Tesis"
-    subtitle="Consulta los trabajos de investigación de nuestros egresados"
-    badge="Trabajos de Grado"
+    title="Tesis"
+    subtitle="Trabajos de investigación de nuestras generaciones de egreso"
   />
 
-  <section class="py-16">
-    <div class="max-w-6xl mx-auto px-4">
+  <section class="py-12" aria-labelledby="trabajos">
+    <div class="mx-auto max-w-6xl px-4">
+      <h2 id="trabajos" class="sr-only">Trabajos de grado por generación</h2>
       <TesisFiltro generaciones={generaciones} tesis={tesis} client:idle />
     </div>
   </section>

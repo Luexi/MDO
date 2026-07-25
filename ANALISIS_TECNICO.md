@@ -2,17 +2,21 @@
 
 Este documento proporciona un análisis detallado de la estructura, propósito, arquitectura y funcionamiento del sitio web de la **Maestría en Dirección de Organizaciones (MDO)** de la Universidad Autónoma de Guerrero.
 
+Última actualización: 2026-07-25
+
 ## 1. Propósito del Proyecto
 
-El objetivo principal de este proyecto es servir como el **sitio web oficial e informativo** para la MDO. Su función es comunicar de manera clara y accesible:
+El objetivo principal de este proyecto es servir como el **sitio web oficial e informativo** para la MDO. Atiende tres audiencias con tres preguntas distintas:
 
-- Los objetivos y perfil de egreso del programa.
-- El núcleo académico y la producción de sus profesores.
-- Información para aspirantes (convocatorias, requisitos).
-- Repositorio de tesis y documentos normativos.
-- Evidencia de instalaciones y vinculación institucional.
+| Audiencia | Pregunta | Superficie principal |
+| --- | --- | --- |
+| Aspirantes | ¿cómo entro y cuándo? | Portada y `/convocatoria` |
+| Evaluadores del SNP | ¿es sólido este programa? | `/objetivos`, `/plan-estudios`, `/nucleo-academico`, `/lies` |
+| Estudiantado actual | ¿dónde está mi formato? | `/repositorio`, `/tesis` |
 
-El sitio está diseñado para ser **rápido, seguro y fácil de mantener**, priorizando una arquitectura estática que no requiere bases de datos complejas ni mantenimiento de servidores en tiempo de ejecución.
+Esa división es la que gobierna la arquitectura de navegación del sitio.
+
+El sitio está diseñado para ser **rápido, accesible y fácil de mantener**, priorizando una arquitectura estática que no requiere bases de datos ni servidores en tiempo de ejecución.
 
 ## 2. Arquitectura Técnica
 
@@ -21,99 +25,125 @@ El proyecto utiliza una arquitectura **JAMstack** moderna centrada en la generac
 ### Stack Tecnológico
 
 - **Framework Principal**: [Astro 5](https://astro.build/) (Static Site Generator).
-- **Lenguaje**: TypeScript (para lógica y seguridad de tipos).
+- **Lenguaje**: TypeScript.
 - **Componentes UI**:
-  - **Astro Components (`.astro`)**: Para la estructura general, layouts y contenido estático (90% del sitio).
-  - **React (`.tsx`)**: Utilizado exclusivamente para "Islas" de interactividad (menú móvil, carruseles, filtros).
-- **Estilos**: [Tailwind CSS](https://tailwindcss.com/) para diseño utilitario y responsivo.
+  - **Astro (`.astro`)**: estructura general, layouts y contenido estático.
+  - **React (`.tsx`)**: exclusivamente para islas de interactividad.
+  - **Scripts vanilla (`src/scripts/`)**: comportamiento compartido (navegación, pestañas) sin costo de framework.
+- **Estilos**: [Tailwind CSS](https://tailwindcss.com/) sobre tokens CSS propios en HSL.
 - **Iconos**: Lucide React.
-- **Toolchain**: NPM para gestión de paquetes y scripts de build.
+- **Hosting**: GitHub Pages, desplegado por GitHub Actions.
 
 ### Enfoque de "Islas" (Islands Architecture)
 
-A diferencia de una Single Page Application (SPA) tradicional, este sitio envía **HTML puro** al navegador. JavaScript solo se carga en las pequeñas secciones que lo necesitan (las "islas"), mejorando drásticamente el rendimiento y el SEO.
+El sitio envía **HTML puro** al navegador. JavaScript solo se carga donde hace falta.
 
-Ejemplos de islas en este proyecto:
+Islas React activas:
 
-- `Navbar.tsx`: Para manejar el estado del menú desplegable en móviles.
-- `ObjetivosTabs.tsx`: Para cambiar entre pestañas de información sin recargar.
-- `TesisFiltro.tsx`: Para filtrar tesis por generación dinámicamente.
-- `ImageCarousel.tsx`: Para la galería de imágenes.
+- `TesisFiltro.tsx`: filtra tesis por generación.
+- `GaleriaLightbox.tsx`: rejilla de galería con visor modal accesible.
+
+Comportamiento resuelto sin React:
+
+- `src/scripts/navbar.ts`: menús desplegables, menú móvil, foco y Escape.
+- `src/scripts/tabs.ts`: patrón WAI-ARIA de pestañas.
+
+Este reparto es deliberado: React solo entra cuando el estado lo justifica.
 
 ## 3. Estructura del Proyecto
 
-La estructura de carpetas sigue las convenciones de Astro, optimizada para orden y escalabilidad:
-
 ```text
-mdocom/
-├── public/                 # Archivos estáticos públicos (se sirven tal cual)
-│   ├── assets/             # Imágenes, logos, documentos PDF
-│   └── favicon.ico         # Icono del sitio
-├── src/                    # Código fuente
-│   ├── components/         # Bloques de construcción UI
-│   │   ├── cards/          # Tarjetas informativas (Profesores, Tesis, etc.)
-│   │   ├── islands/        # Componentes interactivos (React)
-│   │   ├── layout/         # Componentes estructurales (Navbar, Footer)
-│   │   └── ui/             # Elementos base (Botones, Inputs, Badges)
-│   ├── data/               # "Base de datos" en archivos TypeScript/JSON
-│   ├── layouts/            # Plantillas de página (BaseLayout.astro)
-│   ├── pages/              # Rutas del sitio (File-based routing)
-│   └── styles/             # Estilos globales (global.css)
-├── docs/                   # Documentación técnica detallada
-├── astro.config.mjs        # Configuración de Astro
-├── tailwind.config.ts      # Configuración de diseño y tema
-└── package.json            # Dependencias y scripts
+MDO/
+├── .github/workflows/      # Despliegue a GitHub Pages
+├── public/                 # Archivos estáticos servidos tal cual
+│   ├── assets/             # Imágenes, logos, documentos
+│   └── favicon.svg
+├── scripts/
+│   └── check-enlaces.mjs   # Guard de enlaces previo al build
+├── src/
+│   ├── components/
+│   │   ├── cards/          # Tarjetas informativas
+│   │   ├── islands/        # Componentes React hidratados
+│   │   ├── layout/         # Navbar y Footer
+│   │   └── ui/             # Button, PageHeader, TabGroup
+│   ├── data/               # Capa de contenido en TypeScript
+│   ├── layouts/            # BaseLayout.astro
+│   ├── lib/paths.ts        # withBase() para rutas con base de despliegue
+│   ├── pages/              # Ruteo basado en archivos
+│   ├── scripts/            # Comportamiento vanilla compartido
+│   └── styles/             # global.css (tokens y tema)
+├── docs/                   # Documentación técnica
+├── astro.config.mjs
+├── tailwind.config.ts
+└── package.json
 ```
 
 ## 4. Funcionamiento y Flujo de Datos
 
-### Ruteo (Routing)
+### Ruteo
 
-El sitio utiliza **ruteo basado en archivos**. Cada archivo dentro de `src/pages/` se convierte automáticamente en una URL:
+Ruteo basado en archivos. Cada archivo en `src/pages/` es una URL:
 
-- `src/pages/index.astro`  →  `/` (Inicio)
-- `src/pages/objetivos.astro`  →  `/objetivos`
-- `src/pages/profesores/[slug].astro`  →  `/profesores/nombre-profesor` (Ruta dinámica)
+- `index.astro` → `/`
+- `objetivos.astro` → `/objetivos`
+- `plan-estudios.astro` → `/plan-estudios`
+- `profesores/[slug].astro` → `/profesores/:slug` (ruta dinámica)
+
+Las URLs públicas llevan además la base de despliegue. Ver la sección 6.
 
 ### Capa de Datos (`src/data`)
 
-En lugar de una base de datos SQL/NoSQL externa, el contenido reside en archivos TypeScript dentro de `src/data/`. Esto permite:
+El contenido reside en archivos TypeScript, lo que permite edición sencilla, seguridad de tipos y versionado en Git.
 
-1. **Edición sencilla**: Se editan los archivos `.ts` y se reconstruye el sitio.
-2. **Seguridad de tipos**: TypeScript valida que no falten campos (ej. que cada profesor tenga nombre y foto).
-3. **Versionado**: Todo el contenido está en Git, permitiendo historial de cambios.
+**Archivos clave:**
 
-**Archivos clave de datos:**
+- `navegacion.ts`: arquitectura de navegación. Alimenta Navbar y Footer a la vez, de modo que no pueden desincronizarse.
+- `admision.ts`: calendario, pasos, requisitos y preguntas frecuentes. Lo consumen portada y convocatoria.
+- `contacto.ts`: fuente única de correo, teléfono, domicilio y redes.
+- `profesores.ts`: catálogo del núcleo académico.
+- `tesis.ts`, `documentos.ts`, `instalaciones.ts`, `galeria.ts`, `vinculacion.ts`.
 
-- `profesores.ts`: Catálogo completo del núcleo académico.
-- `tesis.ts`: Lista de tesis por generación.
-- `documentos.ts`: Normatividad y formatos.
+**Decisión de modelado relevante:** en `documentos.ts` y `tesis.ts` el campo `linkDrive` es **opcional**. Omitirlo hace que la tarjeta se renderice en estado "En proceso" con el botón inhabilitado. Es la forma correcta de expresar "aún no hay documento", en vez de apuntar a una URL inexistente.
 
 ### Generación de Páginas Dinámicas
 
-Para las páginas de detalle de profesores (`[slug].astro`), Astro utiliza la función `getStaticPaths()`. Durante el proceso de construcción (`build`), lee `profesores.ts` y genera una página HTML estática individual para cada profesor.
+`profesores/[slug].astro` usa `getStaticPaths()`: durante el build lee `profesores.ts` y genera una página HTML por profesor.
 
-## 5. Ciclo de Vida y Despliegue
+## 5. Accesibilidad como requisito de arquitectura
 
-1. **Desarrollo (`npm run dev`)**:
-    - Inicia un servidor local en `localhost:8080`.
-    - Habilitada la recarga en caliente (HMR) para ver cambios al instante.
+No es una capa cosmética, condiciona decisiones de implementación:
 
-2. **Construcción (`npm run build`)**:
-    - Astro compila todo el TypeScript y React.
-    - Genera archivos HTML, CSS y JS optimizados en la carpeta `dist/`.
-    - Las imágenes se optimizan (si se configurara) y los assets se copian.
+- **Pestañas**: `TabGroup.astro` implementa el patrón WAI-ARIA. El estado visual se deriva de `aria-selected` mediante la variante `aria-*` de Tailwind, así que apariencia y semántica son el mismo atributo y no pueden divergir. Sin JavaScript, un bloque `<noscript>` revela todos los paneles.
+- **Navegación**: `aria-expanded`, `aria-controls`, `aria-current="page"`, cierre con Escape con devolución de foco, y contención de foco en el menú móvil.
+- **Contraste**: el token `--muted-foreground` cumple AA sobre las dos superficies del sitio (fondo de página y tarjeta), no solo sobre una.
+- **Movimiento**: guarda global `prefers-reduced-motion`.
+- **Enlace de salto** al contenido principal como primer elemento tabulable.
 
-3. **Producción**:
-    - La carpeta `dist/` contiene el sitio web final.
-    - Este contenido es **totalmente estático**, por lo que puede desplegarse en cualquier hosting estático (Vercel, Netlify, GitHub Pages, Apache/Nginx) sin necesidad de Node.js en el servidor.
+## 6. Base de despliegue
 
-## 6. Mantenimiento
+El sitio vive temporalmente en una subruta de GitHub Pages (`/MDO`) y migrará a `maestriaendirecciondeorganizaciones.uagro.mx`, donde la base vuelve a ser `/`.
 
-Para mantener el sitio actualizado, el flujo de trabajo es:
+Astro prefija por su cuenta los assets que empaqueta y las rutas de página, pero **no** reescribe los `src` ni `href` escritos a mano ni lo que vive en `public/`. Por eso ninguna ruta está cableada: todas pasan por `withBase()` en `src/lib/paths.ts`.
 
-1. **Modificar contenido** en `src/data/` (ej. añadir un nuevo profesor o tesis).
-2. **Subir imágenes** a `public/assets/` si es necesario.
-3. **Probar localmente** (`npm run dev`).
-4. **Generar versión final** (`npm run build`).
-5. **Desplegar** la carpeta `dist`.
+Consecuencia práctica: cambiar de dominio es editar dos variables de entorno en el workflow y añadir un archivo `CNAME`. No hay que tocar ningún componente.
+
+## 7. Ciclo de Vida y Despliegue
+
+1. **Desarrollo (`npm run dev`)**: servidor local en `http://localhost:8080/MDO` con recarga en caliente.
+
+2. **Construcción (`npm run build`)**, en tres etapas:
+   - `check-enlaces`: falla si hay URLs de marcador, anclas vacías o referencias al hosting anterior.
+   - `astro check`: validación de tipos.
+   - `astro build`: genera `dist/`.
+
+3. **Producción**: GitHub Actions ejecuta lint, pruebas y build en cada push a `main`, y publica `dist/` en Pages. Si algo falla, no se publica nada.
+
+## 8. Mantenimiento
+
+1. Modificar contenido en `src/data/`.
+2. Subir imágenes a `public/assets/` con `width` y `height` declarados en el marcado.
+3. Probar localmente (`npm run dev`).
+4. Verificar (`npm run lint`, `npm run test`, `npm run build`).
+5. Push a `main`: el despliegue es automático.
+
+Ver `docs/guia-edicion-y-mantenimiento.md` para el detalle por tipo de cambio y `docs/despliegue-github-pages.md` para el procedimiento de dominio.

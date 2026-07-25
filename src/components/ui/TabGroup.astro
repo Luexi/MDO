@@ -1,0 +1,108 @@
+---
+/**
+ * Grupo de pestañas accesible.
+ *
+ * El estado visual se deriva de `aria-selected` mediante la variante `aria-*`
+ * de Tailwind, en vez de una clase paralela. Asi la apariencia y lo que anuncia
+ * un lector de pantalla no pueden desincronizarse: son el mismo atributo.
+ *
+ * Los nombres de slot son estaticos por exigencia del compilador de Astro
+ * (`slot[name] must be a static string`), de ahi que los paneles se declaren
+ * como `panel-1`, `panel-2` y `panel-3` y no por identificador. Se admiten
+ * hasta tres pestañas, que es lo que necesita el sitio.
+ *
+ * Uso:
+ *   <TabGroup grupo="perfiles" etiqueta="Perfiles del programa"
+ *             tabs={[{ id: "ingreso", label: "Perfil de Ingreso", icono: UserCheck },
+ *                    { id: "egreso",  label: "Perfil de Egreso",  icono: GraduationCap }]}>
+ *     <Fragment slot="panel-1">...</Fragment>
+ *     <Fragment slot="panel-2">...</Fragment>
+ *   </TabGroup>
+ */
+import type { ComponentType } from "react";
+
+export interface Tab {
+  id: string;
+  label: string;
+  icono?: ComponentType<{ className?: string; "aria-hidden"?: boolean | "true" | "false" }>;
+}
+
+interface Props {
+  /** Prefijo unico de los id generados. Debe ser unico dentro de la pagina. */
+  grupo: string;
+  /** Nombre accesible del conjunto de pestañas. */
+  etiqueta: string;
+  tabs: Tab[];
+  class?: string;
+}
+
+const { grupo, etiqueta, tabs, class: clase } = Astro.props;
+
+if (tabs.length < 2 || tabs.length > 3) {
+  throw new Error(
+    `TabGroup "${grupo}": se admiten entre 2 y 3 pestañas, se recibieron ${tabs.length}.`,
+  );
+}
+
+const panelProps = (indice: number) => ({
+  role: "tabpanel" as const,
+  id: `${grupo}-panel-${tabs[indice].id}`,
+  "aria-labelledby": `${grupo}-tab-${tabs[indice].id}`,
+  tabindex: "0",
+  hidden: indice !== 0,
+  "data-tab-panel": true,
+  class: "mt-6 focus-visible:outline-none",
+});
+---
+
+<div data-tabs class={clase}>
+  <div
+    role="tablist"
+    aria-label={etiqueta}
+    data-tablist
+    class:list={[
+      "grid w-full gap-1 rounded-xl bg-muted p-1",
+      tabs.length === 3 ? "grid-cols-3" : "grid-cols-2",
+    ]}
+  >
+    {
+      tabs.map((tab, indice) => {
+        const Icono = tab.icono;
+        return (
+          <button
+            type="button"
+            role="tab"
+            id={`${grupo}-tab-${tab.id}`}
+            aria-controls={`${grupo}-panel-${tab.id}`}
+            aria-selected={indice === 0 ? "true" : "false"}
+            tabindex={indice === 0 ? 0 : -1}
+            class="flex cursor-pointer items-center justify-center gap-2 rounded-lg px-4 py-3 text-center text-sm font-medium text-muted-foreground transition-colors hover:text-foreground aria-selected:bg-card aria-selected:text-foreground aria-selected:shadow-sm"
+          >
+            {Icono && <Icono className="h-4 w-4" aria-hidden="true" />}
+            {tab.label}
+          </button>
+        );
+      })
+    }
+  </div>
+
+  <div {...panelProps(0)}><slot name="panel-1" /></div>
+  <div {...panelProps(1)}><slot name="panel-2" /></div>
+  {tabs.length === 3 && <div {...panelProps(2)}><slot name="panel-3" /></div>}
+</div>
+
+{/*
+  Sin JavaScript no hay conmutacion posible, asi que se revelan todos los
+  paneles y se oculta la barra. El contenido nunca queda inalcanzable, que es
+  justo lo que fallaba en la version anterior.
+*/}
+<noscript>
+  <style>
+    [data-tab-panel][hidden] {
+      display: block !important;
+    }
+    [data-tablist] {
+      display: none !important;
+    }
+  </style>
+</noscript>

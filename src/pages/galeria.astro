@@ -1,43 +1,27 @@
 ---
-import { Camera } from "lucide-react";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { PageHeader } from "@/components/ui/PageHeader";
-import { ImageCarousel } from "@/components/ui/ImageCarousel";
+import GaleriaLightbox from "@/components/islands/GaleriaLightbox";
 import { imagenesGaleria } from "@/data/galeria";
 ---
 
-<BaseLayout title="MDO UAGro | Galería" description="Galería de eventos y actividades de la comunidad académica MDO UAGro.">
-  <PageHeader title="Galería" subtitle="Momentos destacados de nuestra comunidad académica" badge="Memorias MDO" />
+<BaseLayout
+  title="MDO UAGro | Galería"
+  description="Galería de eventos y actividades de la comunidad académica de la MDO UAGro."
+>
+  <PageHeader
+    title="Galería"
+    subtitle="Momentos destacados de nuestra comunidad académica"
+  />
 
-  <section class="py-16">
-    <div class="max-w-5xl mx-auto px-4">
-      <ImageCarousel items={imagenesGaleria} autoPlay={true} interval={5000} className="shadow-xl" client:idle />
+  <section class="py-12">
+    <div class="mx-auto max-w-6xl px-4">
+      <GaleriaLightbox imagenes={imagenesGaleria} client:idle />
 
-      <div class="mt-12 text-center">
-        <div class="inline-flex items-center gap-2 px-4 py-2 bg-muted rounded-full text-sm text-muted-foreground">
-          <Camera className="h-4 w-4" />
-          <span>Desliza o usa las flechas para ver más imágenes</span>
-        </div>
-      </div>
-
-      <div class="mt-12">
-        <h3 class="font-display text-xl font-semibold text-foreground mb-6 text-center">Todas las Imágenes</h3>
-        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
-          {
-            imagenesGaleria.map((imagen) => (
-              <div class="aspect-square rounded-xl overflow-hidden bg-muted group cursor-pointer">
-                <img src={imagen.src} alt={imagen.alt} loading="lazy" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110" />
-              </div>
-            ))
-          }
-        </div>
-      </div>
-
-      <div class="mt-12 p-6 bg-muted/50 rounded-2xl border border-border text-center">
-        <p class="text-sm text-muted-foreground">
-          <strong>Nota:</strong> Esta galería se actualiza periódicamente con imágenes de eventos, graduaciones y actividades del programa.
-        </p>
-      </div>
+      <p class="mt-10 rounded-2xl border border-border bg-muted/50 p-6 text-sm text-muted-foreground">
+        Esta galería se actualiza periódicamente con imágenes de eventos,
+        graduaciones y actividades del programa.
+      </p>
     </div>
   </section>
 </BaseLayout>

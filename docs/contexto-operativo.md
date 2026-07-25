@@ -1,51 +1,86 @@
-﻿# Contexto Operativo del Proyecto (Actualizado)
+# Contexto Operativo del Proyecto
 
-Fecha de actualizacion: 2026-02-11
+Fecha de actualizacion: 2026-07-25
 
 ## 1. Estado funcional
 
-- Proyecto migrado a Astro (sitio estatico) con islas React puntuales.
-- Optimizado: dist/ de 5.5MB a 2.3MB (-58%), imagenes comprimidas, React eliminado de 25/27 paginas.
-- Build validado con `npm run build`.
-- Rutas principales y ruta dinamica de profesores activas.
-- Desplegado en Vercel con cache inmutable y `cleanUrls`.
+- Sitio estatico en Astro con islas React puntuales.
+- Publicado en **GitHub Pages** mediante GitHub Actions. Salida de Vercel completada.
+- URL temporal: `https://luexi.github.io/MDO` (base `/MDO`).
+- URL definitiva pendiente de DNS: `https://maestriaendirecciondeorganizaciones.uagro.mx` (base `/`).
+- Build validado con `npm run build`, que ahora incluye un guard de enlaces.
+- Rutas principales, ruta dinamica de profesores y nueva ruta `/plan-estudios` activas.
 
-## 2. Decisiones importantes ya aplicadas
+## 2. Cambios aplicados el 2026-07-25
 
-1. Logos y header
+Estos cambios responden a una auditoria de diseño y accesibilidad del sitio. Se agrupan por naturaleza del problema.
 
-- Navbar muestra logos institucionales (UAGro + MDO) sin texto extra en el bloque izquierdo.
-- Footer incluye UAGro + FCA + MDO.
-- Pagina principal incluye logos de UAGro, MDO, FCA y SECIHTI.
+### Correcciones que bloqueaban tareas
 
-1. Galeria
+- **Enlaces de marcador en produccion.** Once URLs apuntaban a destinos inexistentes de Google Drive, incluidas las dos acciones principales de `/convocatoria`, los seis documentos del repositorio y tres tesis. Se retiraron y las tarjetas afectadas se muestran en estado "En proceso" con el boton inhabilitado. El unico enlace real que existia (Plan de Estudios) quedo conectado.
+- **Pestañas inoperables con teclado.** Los tabs de perfiles y de plan de estudios usaban `input[type=radio]` con clase `hidden`, que los sacaba del orden de tabulacion, y sus etiquetas nunca recibian el estilo de estado activo porque `peer-*` no alcanzaba a elementos anidados. Se sustituyeron por el patron WAI-ARIA en `src/components/ui/TabGroup.astro`, con navegacion por flechas, Home y End, y salida sin JavaScript.
 
-- Se reemplazo el set original por imagenes nuevas en `public/assets/galeria/`.
-- Fuente de datos: `src/data/galeria.ts`.
+### Arquitectura de informacion
 
-1. Convocatoria
+- **Navegacion de nueve destinos planos a tres grupos** (Admisión, Programa, Comunidad), definidos en `src/data/navegacion.ts`. Las URLs no cambiaron.
+- **La portada es ahora un embudo de admision**: etapa vigente del calendario, tres pasos del proceso y accesos a requisitos y preguntas frecuentes.
+- **`/convocatoria` es la fuente de verdad en HTML**, con calendario, requisitos y preguntas frecuentes en texto. El cartel pasa a ser el derivado imprimible en la barra lateral.
+- **El plan de estudios se movio a `/plan-estudios`.** Antes ocupaba la parte superior de `/objetivos`, por delante del propio objetivo general.
+- **Preguntas frecuentes** en `/convocatoria#preguntas-frecuentes`, con `details`/`summary` nativos.
 
-- Se agrego imagen centrada al inicio de la seccion (`/convocatoria.webp`).
-- Se actualizó la información de becas a "Becas Nacionales de Posgrado".
+### Accesibilidad
 
-1. Nucleo academico (tarjetas)
+- Enlace de salto al contenido en todas las paginas.
+- `aria-expanded`, `aria-controls`, cierre con Escape, bloqueo de desplazamiento de fondo y contencion de foco en el menu movil.
+- `aria-current="page"` en el destino activo.
+- `--muted-foreground` corregido: de 4.35:1 a 4.87:1 sobre el fondo de pagina. Afectaba a practicamente todo el cuerpo de texto del sitio.
+- Guarda `prefers-reduced-motion` global.
+- Texto alternativo descriptivo en las cinco imagenes de galeria, que antes compartian `alt` numerado y el mismo titulo.
+- Jerarquia de encabezados sin saltos y un unico `h1` por pagina.
+- El carrusel con autoplay sin pausa (incumplia WCAG 2.2.2) se sustituyo por una rejilla con visor modal operable por teclado.
 
-- Se muestra `Dr./Dra. + Nombre`.
-- Se eliminaron subtextos en la tarjeta (sin area debajo del nombre).
+### Contenido y datos
 
-1. Datos de profesores
+- **48 marcas `(PDF NA)`** de la captura interna, visibles en el historial academico de cada ficha, eliminadas. Tambien una nota de gestion interna y una referencia al PDF de origen dentro de una semblanza.
+- **Fuente unica de contacto** en `src/data/contacto.ts`. Antes convivian dos correos distintos del programa en la misma pantalla.
+- Se retiraron los enlaces a Twitter y LinkedIn, que apuntaban a las portadas genericas de esas redes, y los enlaces legales sin destino.
+- **Meta del SNP corregida.** La portada afirma registro vigente y `/objetivos` lo planteaba como meta a conseguir en 2026. Ahora la meta habla de refrendarlo.
+- `/lies` se anuncia en singular, que es lo que corresponde a una sola linea registrada.
 
-- Fotos cargadas en `public/assets/profesores/` y enlazadas en `src/data/profesores.ts`.
-- Integracion de datos basada en carpeta `profesores/`.
-- Regla de conflicto aplicada: **PDF del nucleo > ficha individual**.
+### Deuda tecnica
 
-## 3. Fuente de verdad para docentes
+- `Navbar.tsx` (codigo muerto, sin importaciones) eliminado.
+- Trece iconos SVG dibujados a mano sustituidos por `lucide-react`, que ya era dependencia.
+- **Escala de radios corregida.** La configuracion redefinia `lg`, `md`, `sm`, `2xl` y `3xl` pero omitia `xl`, con lo que `rounded-lg` resultaba mayor que `rounded-xl`. Se usa la escala por defecto de Tailwind.
+- Configuracion muerta purgada: `darkMode` sin una sola variante `dark:`, tokens `sidebar-*`, colores `uagro.*`, keyframes sin uso y el plugin `tailwindcss-animate`.
+- `width` y `height` en las 16 imagenes que no los declaraban.
+- Tarjetas con `h-full` y CTA anclado con `mt-auto`: los botones de una misma fila ya no quedan a alturas distintas.
+- Rejillas de tres columnas alimentadas por listas que no son multiplo de tres, corregidas para no dejar huecos.
+
+## 3. Pendientes que dependen de la coordinacion
+
+Estos puntos NO se resolvieron porque requieren informacion que solo tiene el programa:
+
+- **URLs reales** de convocatoria en PDF, formularios de preinscripcion, formatos y lineamientos. Mientras tanto las tarjetas dicen "En proceso".
+- **Cuotas del programa.** La pregunta frecuente existe y enruta a la coordinacion, sin cifras inventadas.
+- **Sede y modalidad de entrega de documentos.** Mismo tratamiento.
+- **Aviso de privacidad.** El enlace se retiro hasta que exista documento publicado.
+- **Verificacion de los registros de tesis.** Se conservan con boton inhabilitado por indicacion expresa.
+- **Convenios de vinculacion.** Catorce instituciones listadas sin fuente ni fecha.
+- **Fotografia del nucleo academico.** Los retratos no comparten fondo ni encuadre; se normalizo el recorte por CSS, pero homogeneizarlos de verdad requiere volver a fotografiar.
+- **Copy de posicionamiento.** La portada dice "Forma parte de la élite directiva" mientras los objetivos hablan de inclusion, equidad y empleo digno. No se modifico por ser una decision de posicionamiento institucional.
+
+## 4. Fuente de verdad para docentes
 
 - Documento rector: `profesores/NUCLEO ACADEMICO.pdf`
 - Complemento individual: `profesores/*.txt`
 - Sitio publicado: `src/data/profesores.ts`
 
-## 4. Orden de fichas vigente en Nucleo Academico
+Regla de conflicto: **gana el PDF**.
+
+Nota: las semblanzas usan "SNI" y `/objetivos` usa "SNII". No se unifico porque las semblanzas reproducen el PDF rector y esa regla tiene prioridad.
+
+## 5. Orden de fichas vigente en Nucleo Academico
 
 1. Ruben Hernandez Chavarria
 2. David Antonio Reyes Pena
@@ -64,37 +99,24 @@ Fecha de actualizacion: 2026-02-11
 15. Jose Hugo Vazquez Mendoza
 16. Nallely Vazquez Martinez
 
-## 5. Archivos clave para mantenimiento
+## 6. Archivos clave para mantenimiento
 
+- `src/data/navegacion.ts` (arquitectura de navegacion)
+- `src/data/contacto.ts` (fuente unica de contacto)
+- `src/data/admision.ts` (calendario, pasos, requisitos, preguntas frecuentes)
 - `src/data/profesores.ts`
-- `src/components/cards/ProfesorCard.tsx`
-- `src/components/layout/Navbar.astro`
-- `src/pages/profesores/[slug].astro`
-- `src/pages/nucleo-academico.astro`
-- `vercel.json` (cache y cleanUrls)
-- `docs/guia-edicion-y-mantenimiento.md`
-
-## 6. Optimizaciones aplicadas (2026-02-11)
-
-### Peso del sitio
-
-- Imagenes comprimidas con sharp (4.2MB → 1.1MB total, -75%)
-- Logos PNG → WebP, fotos de profesores redimensionadas a 400px max
-- Google Fonts cargadas async (no render-blocking)
-- Navbar y tabs de Objetivos convertidos de React a Astro puro
-- Se elimino `@radix-ui/react-tabs`
-- dist/ paso de 5.5MB a 2.3MB (-58%)
-
-### Edge requests
-
-- `vercel.json` con `cleanUrls: true` y cache inmutable (1 año) para `_astro/` y `assets/`
-- `loading="lazy"` en imagenes de profesores, galeria y footer
-- Convocatoria convertida de JPEG a WebP
+- `src/lib/paths.ts` (`withBase()`)
+- `src/components/ui/TabGroup.astro` y `src/scripts/tabs.ts`
+- `src/components/layout/Navbar.astro` y `src/scripts/navbar.ts`
+- `scripts/check-enlaces.mjs`
+- `.github/workflows/deploy.yml`
 
 ## 7. Recomendaciones para siguientes cambios
 
-- Mantener UTF-8 sin BOM en archivos TS/MD.
-- Antes de deploy: `npm run lint` + `npm run build`.
-- Si se reemplazan fotos: conservar naming por slug para evitar romper rutas.
-- Optimizar imagenes nuevas antes de subirlas (WebP para logos, JPEG mozjpeg para fotos).
-- Preferir componentes Astro puros sobre islas React cuando sea posible.
+- Toda ruta interna nueva se escribe con `withBase()`.
+- Si un documento no existe todavia, omite `linkDrive`; no inventes URLs.
+- Manten UTF-8 sin BOM en archivos TS y MD.
+- Antes de push: `npm run lint`, `npm run test` y `npm run build`. El workflow los repite y no publica si fallan.
+- Si reemplazas fotos, conserva el naming por slug para no romper rutas.
+- Optimiza imagenes nuevas antes de subirlas (WebP para logos, JPEG comprimido para fotos) y declara `width` y `height`.
+- Prefiere un `<script>` en `src/scripts/` sobre una isla React cuando el estado sea simple.

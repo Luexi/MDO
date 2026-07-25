@@ -3,66 +3,70 @@
 @tailwind utilities;
 
 /* ============================================
-   🎓 MDO UAGro Design System
+   Sistema de diseño MDO UAGro
    Maestría en Dirección de Organizaciones
    ============================================ */
 
 @layer base {
   :root {
-    /* UAGro Institutional Colors (HSL) */
-    --uagro-blue: 216 79% 20%;           /* #0B2D5C - Azul institucional oscuro */
-    --uagro-blue-light: 224 60% 33%;     /* #1F3A8A - Azul para botones/acentos */
-    --uagro-red: 0 73% 50%;              /* #D72626 - Rojo institucional */
-    
-    /* Background & Surface */
-    --background: 228 33% 97%;           /* #F6F7FB - Fondo claro */
-    --foreground: 222 47% 11%;           /* #0F172A - Texto principal */
-    
+    /* Colores institucionales UAGro (HSL) */
+    --uagro-blue: 216 79% 20%; /* #0B2D5C - Azul institucional oscuro */
+    --uagro-blue-light: 224 60% 33%; /* #1F3A8A - Azul para botones y acentos */
+    --uagro-red: 0 73% 50%; /* #D72626 - Rojo institucional */
+
+    /* Fondo y superficies */
+    --background: 228 33% 97%; /* #F6F7FB */
+    --foreground: 222 47% 11%; /* #0F172A */
+
     --card: 0 0% 100%;
     --card-foreground: 222 47% 11%;
 
     --popover: 0 0% 100%;
     --popover-foreground: 222 47% 11%;
 
-    /* Primary = UAGro Blue */
+    /* Primary = azul UAGro */
     --primary: 216 79% 20%;
     --primary-foreground: 0 0% 100%;
 
-    /* Secondary */
     --secondary: 228 33% 97%;
     --secondary-foreground: 222 47% 11%;
 
-    /* Muted */
     --muted: 220 14% 96%;
-    --muted-foreground: 215 16% 47%;     /* #64748B */
+    /*
+     * Contraste: 4.87:1 sobre --background y 5.22:1 sobre --card, ambos por
+     * encima del minimo AA de 4.5:1 para texto normal.
+     *
+     * El valor anterior (215 16% 47%) daba 4.35:1 sobre el fondo de pagina y
+     * 4.70:1 sobre tarjeta, asi que el mismo token fallaba o pasaba segun la
+     * superficie donde cayera. Es el color de practicamente todo el cuerpo de
+     * texto del sitio, por lo que el fallo afectaba a todas las paginas.
+     */
+    --muted-foreground: 215 18% 44%;
 
-    /* Accent = UAGro Blue Light */
+    /* Accent = azul UAGro claro */
     --accent: 224 60% 33%;
     --accent-foreground: 0 0% 100%;
 
-    /* Destructive = UAGro Red */
+    /* Destructive = rojo UAGro */
     --destructive: 0 73% 50%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 220 13% 91%;               /* #E5E7EB */
+    --border: 220 13% 91%; /* #E5E7EB */
     --input: 220 13% 91%;
     --ring: 216 79% 20%;
 
-    --radius: 1rem;
-
-    /* Spotlight Gradients */
-    --gradient-spotlight: radial-gradient(ellipse 80% 50% at 50% -20%, hsl(224 60% 33% / 0.15), transparent);
-    --gradient-hero: linear-gradient(135deg, hsl(228 33% 97%) 0%, hsl(220 30% 95%) 50%, hsl(228 33% 97%) 100%);
-    
-    /* Sidebar (keeping for compatibility) */
-    --sidebar-background: 0 0% 98%;
-    --sidebar-foreground: 240 5.3% 26.1%;
-    --sidebar-primary: 216 79% 20%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 224 60% 33%;
-    --sidebar-accent-foreground: 0 0% 100%;
-    --sidebar-border: 220 13% 91%;
-    --sidebar-ring: 216 79% 20%;
+    /* Degradados de superficie */
+    --gradient-spotlight: radial-gradient(
+      ellipse 80% 50% at 50% -20%,
+      hsl(224 60% 33% / 0.15),
+      transparent
+    );
+    --gradient-hero: linear-gradient(
+      135deg,
+      hsl(228 33% 97%) 0%,
+      hsl(220 30% 95%) 50%,
+      hsl(228 33% 97%) 100%
+    );
   }
 }
 
@@ -77,21 +81,61 @@
 
   body {
     @apply bg-background text-foreground font-sans antialiased;
-    font-family: 'Inter', system-ui, sans-serif;
+    font-family: "Inter", system-ui, sans-serif;
   }
 
-  h1, h2, h3, h4, h5, h6 {
-    font-family: 'Playfair Display', Georgia, serif;
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: "Playfair Display", Georgia, serif;
+  }
+
+  /*
+   * Objetivo de anclaje: el navbar es fijo (~82px), asi que sin este margen
+   * cualquier salto a un ancla deja el titulo destino oculto detras de la barra.
+   */
+  :target {
+    scroll-margin-top: 7rem;
+  }
+
+  /* Foco visible y consistente en todo elemento interactivo. */
+  :focus-visible {
+    @apply outline-none ring-2 ring-ring ring-offset-2 ring-offset-background;
+  }
+}
+
+/*
+ * Movimiento reducido.
+ *
+ * Antes el sitio declaraba `scroll-behavior: smooth` global, animaciones de
+ * entrada y transiciones de hover sin ninguna guarda, de modo que quien activa
+ * la preferencia del sistema recibia igual todo el movimiento.
+ */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }
 
 @layer utilities {
   .font-display {
-    font-family: 'Playfair Display', Georgia, serif;
+    font-family: "Playfair Display", Georgia, serif;
   }
-  
+
   .font-sans {
-    font-family: 'Inter', system-ui, sans-serif;
+    font-family: "Inter", system-ui, sans-serif;
   }
 
   .bg-spotlight {
@@ -102,17 +146,24 @@
     background: var(--gradient-hero);
   }
 
-  .text-gradient {
-    @apply bg-clip-text text-transparent bg-gradient-to-r from-primary to-accent;
-  }
-
   .card-shadow {
-    box-shadow: 0 4px 6px -1px hsl(216 79% 20% / 0.05), 
-                0 2px 4px -2px hsl(216 79% 20% / 0.05);
+    box-shadow:
+      0 4px 6px -1px hsl(216 79% 20% / 0.05),
+      0 2px 4px -2px hsl(216 79% 20% / 0.05);
   }
 
   .card-shadow-hover {
-    box-shadow: 0 10px 15px -3px hsl(216 79% 20% / 0.08), 
-                0 4px 6px -4px hsl(216 79% 20% / 0.05);
+    box-shadow:
+      0 10px 15px -3px hsl(216 79% 20% / 0.08),
+      0 4px 6px -4px hsl(216 79% 20% / 0.05);
+  }
+
+  /* Accesible para lectores de pantalla, invisible en pantalla. */
+  .sr-only-focusable {
+    @apply sr-only;
+  }
+
+  .sr-only-focusable:focus {
+    @apply not-sr-only fixed left-4 top-4 z-[100] rounded-xl bg-primary px-4 py-3 text-primary-foreground shadow-lg;
   }
 }

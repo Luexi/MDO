@@ -1,112 +1,203 @@
 ---
+import { ChevronDown, Menu, X } from "lucide-react";
+import {
+  ctaPrincipal,
+  esRutaActiva,
+  grupoActivo,
+  navGrupos,
+} from "@/data/navegacion";
+import { withBase } from "@/lib/paths";
+
 interface Props {
   currentPath: string;
 }
 
 const { currentPath } = Astro.props;
-
-const navItems = [
-  { label: "Inicio", href: "/" },
-  { label: "Objetivos", href: "/objetivos" },
-  { label: "Núcleo Académico", href: "/nucleo-academico" },
-  { label: "LIES", href: "/lies" },
-  { label: "Repositorio", href: "/repositorio" },
-  { label: "Tesis", href: "/tesis" },
-  { label: "Instalaciones", href: "/instalaciones" },
-  { label: "Galería", href: "/galeria" },
-  { label: "Vinculación", href: "/vinculacion" },
-];
-
-function isActive(href: string) {
-  if (href === "/") return currentPath === "/";
-  return currentPath === href;
-}
+const inicioActivo = esRutaActiva("/", currentPath);
 ---
 
-<header class="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[95%] max-w-6xl">
-  <nav class="bg-card/90 backdrop-blur-md rounded-2xl shadow-lg border border-border px-4 py-3">
-    <div class="flex items-center justify-between">
-      <a href="/" class="flex items-center gap-3">
-        <img src="/assets/logos/logo-uagro.webp" alt="UAGro" class="h-10 w-auto" />
-        <img src="/assets/logos/logo-mdo.webp" alt="Logo Maestría MDO" class="h-12 w-auto hidden sm:block" />
+<header class="fixed top-4 left-1/2 z-50 w-[95%] max-w-6xl -translate-x-1/2">
+  <nav
+    aria-label="Navegación principal"
+    class="rounded-2xl border border-border bg-card/90 px-4 py-3 shadow-lg backdrop-blur-md"
+  >
+    <div class="flex items-center justify-between gap-3">
+      <a
+        href={withBase("/")}
+        class="flex flex-shrink-0 items-center gap-3 rounded-lg"
+        aria-label="MDO UAGro, ir al inicio"
+      >
+        <img
+          src={withBase("/assets/logos/logo-uagro.webp")}
+          alt="Universidad Autónoma de Guerrero"
+          width="40"
+          height="40"
+          class="h-10 w-auto"
+        />
+        <img
+          src={withBase("/assets/logos/logo-mdo.webp")}
+          alt="Maestría en Dirección de Organizaciones"
+          width="48"
+          height="48"
+          class="hidden h-12 w-auto sm:block"
+        />
       </a>
 
-      <div class="hidden lg:flex items-center gap-1">
-        {navItems.map((item) => (
-          <a
-            href={item.href}
-            class:list={[
-              "px-3 py-2 rounded-lg text-sm font-medium transition-colors",
-              isActive(item.href)
-                ? "bg-primary text-primary-foreground"
-                : "text-foreground/80 hover:text-foreground hover:bg-muted",
-            ]}
-          >
-            {item.label}
-          </a>
-        ))}
+      <div class="hidden items-center gap-1 lg:flex">
+        <a
+          href={withBase("/")}
+          aria-current={inicioActivo ? "page" : undefined}
+          class:list={[
+            "rounded-lg px-3 py-2 text-sm font-medium transition-colors",
+            inicioActivo
+              ? "bg-primary text-primary-foreground"
+              : "text-foreground/80 hover:bg-muted hover:text-foreground",
+          ]}
+        >
+          Inicio
+        </a>
+
+        {
+          navGrupos.map((grupo) => {
+            const activo = grupoActivo(grupo, currentPath);
+            return (
+              <div class="relative" data-nav-grupo>
+                <button
+                  type="button"
+                  data-nav-boton
+                  aria-expanded="false"
+                  aria-controls={`nav-panel-${grupo.id}`}
+                  class:list={[
+                    "flex items-center gap-1 rounded-lg px-3 py-2 text-sm font-medium transition-colors",
+                    activo
+                      ? "bg-primary text-primary-foreground"
+                      : "text-foreground/80 hover:bg-muted hover:text-foreground",
+                  ]}
+                >
+                  {grupo.label}
+                  <ChevronDown className="h-4 w-4" aria-hidden="true" />
+                </button>
+
+                <div
+                  id={`nav-panel-${grupo.id}`}
+                  data-nav-panel
+                  hidden
+                  class="absolute left-0 top-full z-10 mt-2 w-80 rounded-2xl border border-border bg-card p-2 shadow-xl"
+                >
+                  <ul class="flex flex-col">
+                    {grupo.items.map((item) => {
+                      const itemActivo = esRutaActiva(item.href, currentPath);
+                      return (
+                        <li>
+                          <a
+                            href={withBase(item.href)}
+                            aria-current={itemActivo ? "page" : undefined}
+                            class:list={[
+                              "block rounded-xl px-3 py-2.5 transition-colors",
+                              itemActivo
+                                ? "bg-muted"
+                                : "hover:bg-muted focus-visible:bg-muted",
+                            ]}
+                          >
+                            <span class="block text-sm font-medium text-foreground">
+                              {item.label}
+                            </span>
+                            <span class="mt-0.5 block text-xs text-muted-foreground">
+                              {item.descripcion}
+                            </span>
+                          </a>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </div>
+              </div>
+            );
+          })
+        }
       </div>
 
-      <div class="flex items-center gap-2">
-        <a href="/convocatoria" class="hidden sm:block">
-          <button class="inline-flex items-center justify-center whitespace-nowrap text-sm font-semibold ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 h-10 px-4 py-2 bg-destructive hover:bg-destructive/90 text-destructive-foreground rounded-xl">
-            Convocatoria
-          </button>
+      <div class="flex flex-shrink-0 items-center gap-2">
+        {/*
+          Visible tambien en movil. Antes llevaba `hidden sm:block`, asi que en
+          telefono, que es el dispositivo mayoritario de esta audiencia, la
+          accion de conversion principal desaparecia de la barra y exigia abrir
+          primero el menu.
+        */}
+        <a
+          href={withBase(ctaPrincipal.href)}
+          class="inline-flex h-10 items-center justify-center whitespace-nowrap rounded-xl bg-destructive px-4 text-sm font-semibold text-destructive-foreground transition-colors hover:bg-destructive/90"
+        >
+          {ctaPrincipal.labelCorto}
         </a>
 
         <button
-          id="menu-toggle"
-          class="lg:hidden p-2 rounded-lg hover:bg-muted transition-colors"
-          aria-label="Abrir o cerrar menú"
           type="button"
+          data-menu-boton
+          aria-expanded="false"
+          aria-controls="menu-movil"
+          aria-label="Abrir o cerrar el menú de navegación"
+          class="rounded-lg p-2 transition-colors hover:bg-muted lg:hidden"
         >
-          <svg id="icon-menu" class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <line x1="4" x2="20" y1="12" y2="12" />
-            <line x1="4" x2="20" y1="6" y2="6" />
-            <line x1="4" x2="20" y1="18" y2="18" />
-          </svg>
-          <svg id="icon-close" class="h-6 w-6 hidden" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M18 6 6 18" />
-            <path d="m6 6 12 12" />
-          </svg>
+          <span data-icono-menu>
+            <Menu className="h-6 w-6" aria-hidden="true" />
+          </span>
+          <span data-icono-cerrar class="hidden">
+            <X className="h-6 w-6" aria-hidden="true" />
+          </span>
         </button>
       </div>
     </div>
 
-    <div id="mobile-menu" class="lg:hidden mt-4 pt-4 border-t border-border hidden">
-      <div class="flex flex-col gap-2">
-        {navItems.map((item) => (
-          <a
-            href={item.href}
-            class:list={[
-              "px-4 py-3 rounded-xl text-sm font-medium transition-colors",
-              isActive(item.href)
-                ? "bg-primary text-primary-foreground"
-                : "text-foreground/80 hover:text-foreground hover:bg-muted",
-            ]}
-          >
-            {item.label}
-          </a>
-        ))}
-        <a href="/convocatoria" class="mt-2">
-          <button class="w-full inline-flex items-center justify-center whitespace-nowrap text-sm font-semibold ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 h-10 px-4 py-2 bg-destructive hover:bg-destructive/90 text-destructive-foreground rounded-xl">
-            Convocatoria 2026
-          </button>
-        </a>
-      </div>
+    <div
+      id="menu-movil"
+      data-menu-movil
+      hidden
+      class="mt-4 max-h-[70vh] overflow-y-auto border-t border-border pt-4 lg:hidden"
+    >
+      <a
+        href={withBase("/")}
+        aria-current={inicioActivo ? "page" : undefined}
+        class:list={[
+          "block rounded-xl px-4 py-3 text-sm font-medium transition-colors",
+          inicioActivo
+            ? "bg-primary text-primary-foreground"
+            : "text-foreground/80 hover:bg-muted",
+        ]}
+      >
+        Inicio
+      </a>
+
+      {
+        navGrupos.map((grupo) => (
+          <section class="mt-4 first:mt-2">
+            <h2 class="px-4 pb-1 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+              {grupo.label}
+            </h2>
+            <ul class="flex flex-col">
+              {grupo.items.map((item) => {
+                const itemActivo = esRutaActiva(item.href, currentPath);
+                return (
+                  <li>
+                    <a
+                      href={withBase(item.href)}
+                      aria-current={itemActivo ? "page" : undefined}
+                      class:list={[
+                        "block rounded-xl px-4 py-3 text-sm font-medium transition-colors",
+                        itemActivo
+                          ? "bg-primary text-primary-foreground"
+                          : "text-foreground/80 hover:bg-muted",
+                      ]}
+                    >
+                      {item.label}
+                    </a>
+                  </li>
+                );
+              })}
+            </ul>
+          </section>
+        ))
+      }
     </div>
   </nav>
 </header>
-
-<script>
-  const toggle = document.getElementById("menu-toggle");
-  const menu = document.getElementById("mobile-menu");
-  const iconMenu = document.getElementById("icon-menu");
-  const iconClose = document.getElementById("icon-close");
-
-  toggle?.addEventListener("click", () => {
-    menu?.classList.toggle("hidden");
-    iconMenu?.classList.toggle("hidden");
-    iconClose?.classList.toggle("hidden");
-  });
-</script>

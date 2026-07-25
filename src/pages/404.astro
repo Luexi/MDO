@@ -1,13 +1,78 @@
 ---
+import { ArrowRight } from "lucide-react";
 import BaseLayout from "@/layouts/BaseLayout.astro";
+import { withBase } from "@/lib/paths";
+
+// Tres destinos reales, uno por audiencia. La version anterior era una pantalla
+// casi vacia con un unico enlace y sin footer, es decir, sin ninguna navegacion
+// alternativa justo cuando la persona ya se habia perdido.
+const destinos = [
+  {
+    titulo: "Convocatoria 2026",
+    descripcion: "Calendario, requisitos y proceso de admisión.",
+    href: "/convocatoria",
+  },
+  {
+    titulo: "Núcleo académico",
+    descripcion: "Profesorado del programa y sus líneas de investigación.",
+    href: "/nucleo-academico",
+  },
+  {
+    titulo: "Documentos y formatos",
+    descripcion: "Normatividad, formatos oficiales y plan de estudios.",
+    href: "/repositorio",
+  },
+];
 ---
 
-<BaseLayout title="MDO UAGro | 404" description="Página no encontrada" noFooter={true}>
-  <section class="flex min-h-screen items-center justify-center bg-muted px-4">
-    <div class="text-center">
-      <h1 class="mb-4 text-4xl font-bold">404</h1>
-      <p class="mb-4 text-xl text-muted-foreground">Página no encontrada</p>
-      <a href="/" class="text-primary underline hover:text-primary/90">Regresar al inicio</a>
+<BaseLayout
+  title="MDO UAGro | Página no encontrada"
+  description="La página que buscas no existe o cambió de dirección."
+>
+  <section class="py-16">
+    <div class="mx-auto max-w-3xl px-4 text-center">
+      <p class="font-display text-5xl font-bold text-primary">404</p>
+      <h1 class="mt-4 font-display text-3xl font-bold text-foreground">
+        Esta página no existe
+      </h1>
+      <p class="mx-auto mt-3 max-w-xl text-muted-foreground">
+        Puede que la dirección haya cambiado o que el enlace esté incompleto.
+        Estos son los destinos que más se consultan:
+      </p>
+
+      <ul class="mt-10 grid gap-4 text-left sm:grid-cols-3">
+        {
+          destinos.map((destino) => (
+            <li class="h-full">
+              <a
+                href={withBase(destino.href)}
+                class="group flex h-full flex-col rounded-2xl border border-border bg-card p-5 transition-shadow hover:shadow-md"
+              >
+                <span class="font-display text-lg font-semibold text-foreground">
+                  {destino.titulo}
+                </span>
+                <span class="mt-1 text-sm text-muted-foreground">
+                  {destino.descripcion}
+                </span>
+                <span class="mt-auto inline-flex items-center gap-2 pt-4 text-sm font-medium text-accent">
+                  Ir
+                  <ArrowRight
+                    className="h-4 w-4 transition-transform group-hover:translate-x-1"
+                    aria-hidden="true"
+                  />
+                </span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+
+      <a
+        href={withBase("/")}
+        class="mt-8 inline-flex rounded font-medium text-accent hover:underline"
+      >
+        Volver al inicio
+      </a>
     </div>
   </section>
 </BaseLayout>

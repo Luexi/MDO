@@ -1,7 +1,16 @@
 ---
-import { ArrowLeft, BookOpen, FileText, GraduationCap, Mail, User } from "lucide-react";
+import {
+  ArrowLeft,
+  BookOpen,
+  FileText,
+  GraduationCap,
+  Mail,
+  User,
+  Users,
+} from "lucide-react";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { profesores } from "@/data/profesores";
+import { withBase } from "@/lib/paths";
 
 export function getStaticPaths() {
   return profesores.map((profesor) => ({
@@ -17,47 +26,79 @@ const { profesor } = Astro.props;
   title={`MDO UAGro | ${profesor.nombre}`}
   description={`Ficha académica de ${profesor.nombreCompleto} en la Maestría en Dirección de Organizaciones.`}
 >
-  <section class="relative py-16 bg-hero-gradient overflow-hidden">
-    <div class="absolute inset-0 bg-spotlight" />
-    <div class="relative max-w-6xl mx-auto px-4">
-      <a href="/nucleo-academico" class="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground mb-8 transition-colors">
-        <ArrowLeft className="h-4 w-4" />
-        Volver al Núcleo Académico
+  <section class="relative overflow-hidden bg-hero-gradient py-12">
+    <div class="absolute inset-0 bg-spotlight"></div>
+    <div class="relative mx-auto max-w-5xl px-4">
+      <a
+        href={withBase("/nucleo-academico")}
+        class="mb-8 inline-flex items-center gap-2 rounded text-muted-foreground transition-colors hover:text-foreground"
+      >
+        <ArrowLeft className="h-4 w-4" aria-hidden="true" />
+        Volver al núcleo académico
       </a>
 
-      <div class="flex flex-col md:flex-row gap-8 items-start">
-        <div class="w-48 h-56 rounded-2xl overflow-hidden bg-muted flex-shrink-0 shadow-lg">
+      <div class="flex flex-col items-start gap-8 md:flex-row">
+        <div
+          class="h-56 w-48 flex-shrink-0 overflow-hidden rounded-2xl bg-muted shadow-lg"
+        >
           {
             profesor.foto ? (
-              <img src={profesor.foto} alt={profesor.nombreCompleto} class="w-full h-full object-cover" />
+              <img
+                src={withBase(profesor.foto)}
+                alt={`Retrato de ${profesor.nombreCompleto}`}
+                width="192"
+                height="224"
+                class="h-full w-full object-cover object-top"
+              />
             ) : (
-              <div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-primary/10 to-accent/10">
-                <User className="h-20 w-20 text-muted-foreground/50" />
+              <div class="flex h-full w-full items-center justify-center bg-gradient-to-br from-primary/10 to-accent/10">
+                <User className="h-20 w-20 text-muted-foreground/50" aria-hidden="true" />
               </div>
             )
           }
         </div>
 
         <div>
-          <span class="text-accent font-medium">{profesor.grado}</span>
-          <h1 class="font-display text-3xl md:text-4xl font-bold text-foreground mt-1 mb-2">{profesor.nombre}</h1>
-          {profesor.area && <p class="text-lg text-muted-foreground mb-4">{profesor.area}</p>}
-          {
-            profesor.linea && (
-              <div class="inline-flex items-center gap-2 px-3 py-1.5 bg-primary/10 rounded-lg text-sm text-primary">
-                <BookOpen className="h-4 w-4" />
-                {profesor.linea}
-              </div>
-            )
-          }
+          <p class="font-medium text-accent">{profesor.grado}</p>
+          <h1
+            class="mb-3 mt-1 font-display text-3xl font-bold text-foreground md:text-4xl"
+          >
+            {profesor.nombre}
+          </h1>
+
+          <div class="flex flex-wrap gap-2">
+            {
+              profesor.linea && (
+                <span class="inline-flex items-center gap-2 rounded-lg bg-primary/10 px-3 py-1.5 text-sm text-primary">
+                  <BookOpen className="h-4 w-4" aria-hidden="true" />
+                  {profesor.linea}
+                </span>
+              )
+            }
+            {/*
+              El campo `area` guarda la clave del cuerpo academico registrado
+              (por ejemplo UAGro-CA-229). Antes se imprimia suelto bajo el
+              nombre, sin etiqueta, de modo que parecia un dato sin significado.
+            */}
+            {
+              profesor.area && (
+                <span class="inline-flex items-center gap-2 rounded-lg bg-muted px-3 py-1.5 text-sm text-muted-foreground">
+                  <Users className="h-4 w-4" aria-hidden="true" />
+                  Cuerpo académico {profesor.area}
+                </span>
+              )
+            }
+          </div>
+
           {
             profesor.email && (
-              <div class="mt-4">
-                <a href={`mailto:${profesor.email}`} class="inline-flex items-center gap-2 text-accent hover:underline">
-                  <Mail className="h-4 w-4" />
-                  {profesor.email}
-                </a>
-              </div>
+              <a
+                href={`mailto:${profesor.email}`}
+                class="mt-4 inline-flex items-center gap-2 rounded text-accent hover:underline"
+              >
+                <Mail className="h-4 w-4" aria-hidden="true" />
+                {profesor.email}
+              </a>
             )
           }
         </div>
@@ -66,26 +107,43 @@ const { profesor } = Astro.props;
   </section>
 
   <section class="py-12">
-    <div class="max-w-4xl mx-auto px-4 space-y-8">
-      <div class="bg-card rounded-2xl p-6 border border-border">
-        <h2 class="font-display text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
-          <User className="h-5 w-5 text-primary" />
+    <div class="mx-auto max-w-4xl space-y-8 px-4">
+      <section
+        aria-labelledby="semblanza"
+        class="rounded-2xl border border-border bg-card p-6"
+      >
+        <h2
+          id="semblanza"
+          class="mb-4 flex items-center gap-2 font-display text-xl font-semibold text-foreground"
+        >
+          <User className="h-5 w-5 text-primary" aria-hidden="true" />
           Semblanza
         </h2>
-        <p class="text-muted-foreground leading-relaxed">{profesor.semblanza || "Información próximamente disponible."}</p>
-      </div>
+        <p class="leading-relaxed text-muted-foreground">
+          {profesor.semblanza || "Información próximamente disponible."}
+        </p>
+      </section>
 
-      <div class="bg-card rounded-2xl p-6 border border-border">
-        <h2 class="font-display text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
-          <GraduationCap className="h-5 w-5 text-primary" />
-          Historial Académico
+      <section
+        aria-labelledby="historial"
+        class="rounded-2xl border border-border bg-card p-6"
+      >
+        <h2
+          id="historial"
+          class="mb-4 flex items-center gap-2 font-display text-xl font-semibold text-foreground"
+        >
+          <GraduationCap className="h-5 w-5 text-primary" aria-hidden="true" />
+          Historial académico
         </h2>
         {
           profesor.historialAcademico && profesor.historialAcademico.length > 0 ? (
             <ul class="space-y-3">
               {profesor.historialAcademico.map((item: string) => (
                 <li class="flex items-start gap-3">
-                  <span class="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0" />
+                  <span
+                    class="mt-2 h-2 w-2 flex-shrink-0 rounded-full bg-primary"
+                    aria-hidden="true"
+                  />
                   <span class="text-muted-foreground">{item}</span>
                 </li>
               ))}
@@ -94,32 +152,41 @@ const { profesor } = Astro.props;
             <p class="text-muted-foreground">Información próximamente disponible.</p>
           )
         }
-      </div>
+      </section>
 
-      <div class="bg-card rounded-2xl p-6 border border-border">
-        <h2 class="font-display text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
-          <FileText className="h-5 w-5 text-primary" />
-          Publicaciones Recientes
+      <section
+        aria-labelledby="publicaciones"
+        class="rounded-2xl border border-border bg-card p-6"
+      >
+        <h2
+          id="publicaciones"
+          class="mb-4 flex items-center gap-2 font-display text-xl font-semibold text-foreground"
+        >
+          <FileText className="h-5 w-5 text-primary" aria-hidden="true" />
+          Publicaciones
         </h2>
         {
           profesor.publicaciones && profesor.publicaciones.length > 0 ? (
-            <div class="space-y-4">
-              {profesor.publicaciones.map((pub: { titulo: string; anio: string; tipo: string }) => (
-                <div class="p-4 bg-muted/50 rounded-xl">
-                  <p class="font-medium text-foreground">{pub.titulo}</p>
-                  <div class="flex items-center gap-3 mt-2 text-sm text-muted-foreground">
-                    <span>{pub.anio}</span>
-                    <span class="px-2 py-0.5 bg-accent/10 text-accent rounded text-xs">{pub.tipo}</span>
-                  </div>
-                </div>
-              ))}
-            </div>
+            <ul class="space-y-4">
+              {profesor.publicaciones.map(
+                (pub: { titulo: string; anio: string; tipo: string }) => (
+                  <li class="rounded-xl bg-muted/50 p-4">
+                    <p class="font-medium text-foreground">{pub.titulo}</p>
+                    <p class="mt-2 flex items-center gap-3 text-sm text-muted-foreground">
+                      <span>{pub.anio}</span>
+                      <span class="rounded bg-accent/10 px-2 py-0.5 text-xs text-accent">
+                        {pub.tipo}
+                      </span>
+                    </p>
+                  </li>
+                ),
+              )}
+            </ul>
           ) : (
             <p class="text-muted-foreground">Información próximamente disponible.</p>
           )
         }
-      </div>
+      </section>
     </div>
   </section>
 </BaseLayout>
-

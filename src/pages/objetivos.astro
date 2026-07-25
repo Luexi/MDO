@@ -1,9 +1,9 @@
 ---
+import { ArrowRight, CheckCircle2, Target } from "lucide-react";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { PageHeader } from "@/components/ui/PageHeader";
 import ObjetivosTabs from "@/components/ObjetivosTabs.astro";
-import PlanEstudiosTabs from "@/components/PlanEstudiosTabs.astro";
-import { planOptativas, planPorArea, planPorSemestre } from "@/data/planEstudios";
+import { withBase } from "@/lib/paths";
 
 const objetivosParticulares = [
   "Diagnosticar de forma crítica la situación operativa, financiera y estratégica de organizaciones públicas y privadas.",
@@ -13,7 +13,12 @@ const objetivosParticulares = [
 ];
 
 const metas = [
-  "Conseguir en 2026 el reconocimiento en el Sistema Nacional de Posgrados (SNP) como programa elegible para becas.",
+  // El programa ya cuenta con registro en el Programa Nacional de Posgrados, de
+  // modo que la meta 2026 es refrendarlo, no obtenerlo. La redaccion anterior
+  // ("conseguir en 2026 el reconocimiento") contradecia la afirmacion de la
+  // portada justo en el dato que mas pesa para un aspirante: la elegibilidad
+  // para beca.
+  "Refrendar en 2026 el reconocimiento en el Sistema Nacional de Posgrados (SNP) y sostener la elegibilidad del programa para becas.",
   "Actualizar en 2028 el plan de estudios con base en evaluación del SNP y seguimiento de egresadas y egresados.",
   "Consolidar el núcleo académico: 60% con experiencia profesional destacable (2027), 100% con Perfil Deseable PRODEP (2027) y 80% con distinción SNII (2028).",
   "Sostener productividad anual del núcleo académico: 90% en eventos de investigación LIES y al menos una publicación arbitrada o en libro reconocido por integrante.",
@@ -43,73 +48,128 @@ const perfilEgreso = [
 ];
 ---
 
-<BaseLayout title="MDO UAGro | Objetivos" description="Objetivos, metas y perfiles de ingreso y egreso del programa MDO UAGro.">
+<BaseLayout
+  title="MDO UAGro | Objetivos"
+  description="Objetivo general, metas y perfiles de ingreso y egreso del programa MDO UAGro."
+>
   <PageHeader
-    title="Objetivos del Programa"
+    title="Objetivos del programa"
     subtitle="Formando líderes con capacidades directivas y de investigación de alto nivel"
-    badge="MDO UAGro"
   />
 
-  <section class="py-16">
-    <div class="max-w-4xl mx-auto px-4">
-      <PlanEstudiosTabs areas={planPorArea} semestres={planPorSemestre} optativas={planOptativas} />
-
-      <div class="bg-card rounded-2xl p-8 shadow-sm border border-border mb-12">
+  <section class="py-12">
+    <div class="mx-auto max-w-4xl space-y-12 px-4">
+      {/*
+        El Objetivo General abre la pagina. Antes lo precedia el plan de estudios
+        completo, con sus tablas por semestre, dentro de una pagina titulada
+        "Objetivos del Programa": el contenido que daba nombre a la pagina
+        aparecia despues de varias pantallas de otra cosa. El plan tiene ahora
+        URL propia en /plan-estudios.
+      */}
+      <section
+        aria-labelledby="objetivo-general"
+        class="rounded-2xl border border-border bg-card p-8 shadow-sm"
+      >
         <div class="flex items-start gap-4">
-          <div class="p-3 bg-primary/10 rounded-xl">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6 text-primary"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+          <div class="rounded-xl bg-primary/10 p-3">
+            <Target className="h-6 w-6 text-primary" aria-hidden="true" />
           </div>
           <div>
-            <h2 class="font-display text-2xl font-semibold text-foreground mb-4">Objetivo General</h2>
-            <p class="text-muted-foreground leading-relaxed text-lg">
-              Formar personas con capacidades directivas y de investigación de alto nivel, competentes en el diseño,
-              implementación y evaluación de modelos de gestión e intervención que optimicen el desempeño de las
-              organizaciones públicas, privadas o no lucrativas, orientando resultados hacia la creación sostenible con
-              impacto social en la región.
+            <h2
+              id="objetivo-general"
+              class="mb-4 font-display text-2xl font-semibold text-foreground"
+            >
+              Objetivo general
+            </h2>
+            <p class="text-lg leading-relaxed text-muted-foreground">
+              Formar personas con capacidades directivas y de investigación de
+              alto nivel, competentes en el diseño, implementación y evaluación
+              de modelos de gestión e intervención que optimicen el desempeño de
+              las organizaciones públicas, privadas o no lucrativas, orientando
+              resultados hacia la creación sostenible con impacto social en la
+              región.
             </p>
           </div>
         </div>
-      </div>
+      </section>
 
-      <div class="mb-12">
-        <h2 class="font-display text-2xl font-semibold text-foreground mb-6 flex items-center gap-3">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6 text-primary"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/></svg>
-          Objetivos Particulares
+      <section aria-labelledby="objetivos-particulares">
+        <h2
+          id="objetivos-particulares"
+          class="mb-6 flex items-center gap-3 font-display text-2xl font-semibold text-foreground"
+        >
+          <CheckCircle2 className="h-6 w-6 text-primary" aria-hidden="true" />
+          Objetivos particulares
         </h2>
-        <div class="space-y-4">
+        <ol class="space-y-4">
           {
             objetivosParticulares.map((objetivo, index) => (
-              <div class="flex items-start gap-4 bg-card rounded-xl p-4 border border-border">
-                <span class="flex-shrink-0 w-8 h-8 bg-primary/10 text-primary rounded-lg flex items-center justify-center font-semibold text-sm">
+              <li class="flex items-start gap-4 rounded-xl border border-border bg-card p-4">
+                <span
+                  class="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg bg-primary/10 text-sm font-semibold text-primary"
+                  aria-hidden="true"
+                >
                   {index + 1}
                 </span>
-                <p class="text-foreground/90 leading-relaxed">{objetivo}</p>
-              </div>
+                <p class="leading-relaxed text-foreground/90">{objetivo}</p>
+              </li>
             ))
           }
-        </div>
-      </div>
+        </ol>
+      </section>
 
-      <div class="mb-12">
-        <h2 class="font-display text-2xl font-semibold text-foreground mb-6 flex items-center gap-3">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6 text-primary"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/></svg>
-          Metas del Programa
+      <section aria-labelledby="metas">
+        <h2
+          id="metas"
+          class="mb-6 flex items-center gap-3 font-display text-2xl font-semibold text-foreground"
+        >
+          <Target className="h-6 w-6 text-primary" aria-hidden="true" />
+          Metas del programa
         </h2>
-        <div class="space-y-4">
+        <ol class="space-y-4">
           {
             metas.map((meta, index) => (
-              <div class="flex items-start gap-4 bg-card rounded-xl p-4 border border-border">
-                <span class="flex-shrink-0 w-8 h-8 bg-primary/10 text-primary rounded-lg flex items-center justify-center font-semibold text-sm">
+              <li class="flex items-start gap-4 rounded-xl border border-border bg-card p-4">
+                <span
+                  class="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg bg-primary/10 text-sm font-semibold text-primary"
+                  aria-hidden="true"
+                >
                   {index + 1}
                 </span>
-                <p class="text-foreground/90 leading-relaxed">{meta}</p>
-              </div>
+                <p class="leading-relaxed text-foreground/90">{meta}</p>
+              </li>
             ))
           }
-        </div>
-      </div>
+        </ol>
+      </section>
 
-      <ObjetivosTabs perfilIngreso={perfilIngreso} perfilEgreso={perfilEgreso} />
+      <section aria-labelledby="perfiles">
+        <h2
+          id="perfiles"
+          class="mb-6 font-display text-2xl font-semibold text-foreground"
+        >
+          Perfiles de ingreso y egreso
+        </h2>
+        <ObjetivosTabs perfilIngreso={perfilIngreso} perfilEgreso={perfilEgreso} />
+      </section>
+
+      <a
+        href={withBase("/plan-estudios")}
+        class="group flex items-center justify-between gap-4 rounded-2xl border border-border bg-card p-6 transition-shadow hover:shadow-md"
+      >
+        <div>
+          <h2 class="font-display text-xl font-semibold text-foreground">
+            Plan de estudios
+          </h2>
+          <p class="mt-1 text-sm text-muted-foreground">
+            Unidades de aprendizaje por área de formación y por semestre.
+          </p>
+        </div>
+        <ArrowRight
+          className="h-5 w-5 flex-shrink-0 text-accent transition-transform group-hover:translate-x-1"
+          aria-hidden="true"
+        />
+      </a>
     </div>
   </section>
 </BaseLayout>

@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "astro dev --host --port 8080",
-    "build": "astro check && astro build",
+    "check:enlaces": "node scripts/check-enlaces.mjs",
+    "build": "node scripts/check-enlaces.mjs && astro check && astro build",
     "preview": "astro preview --host --port 8080",
     "lint": "eslint .",
     "test": "vitest run",

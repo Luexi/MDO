@@ -1,8 +1,15 @@
 ---
-import { Briefcase, Target, TrendingUp, Users } from "lucide-react";
+import { Briefcase, Target, Users } from "lucide-react";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { PageHeader } from "@/components/ui/PageHeader";
+import { withBase } from "@/lib/paths";
 
+/*
+ * El programa registra una sola linea de generacion y aplicacion del
+ * conocimiento. El titulo y el copy estan en singular para que coincidan con el
+ * contenido: antes la pagina se anunciaba en plural ("Líneas de Investigación",
+ * "estas líneas de investigación") mostrando un unico elemento.
+ */
 const lineas = [
   {
     id: "1",
@@ -19,66 +26,75 @@ const lineas = [
     icon: Briefcase,
   },
 ];
+
+const esSingular = lineas.length === 1;
 ---
 
 <BaseLayout
-  title="MDO UAGro | LIES"
-  description="Líneas de investigación de la Maestría en Dirección de Organizaciones."
+  title="MDO UAGro | Línea de investigación"
+  description="Línea de generación y aplicación del conocimiento de la Maestría en Dirección de Organizaciones."
 >
   <PageHeader
-    title="Líneas de Investigación e Incidencia Social"
-    subtitle="Conoce las líneas de generación y aplicación del conocimiento de nuestro programa"
-    badge="LIES"
+    title={
+      esSingular
+        ? "Línea de investigación e incidencia social"
+        : "Líneas de investigación e incidencia social"
+    }
+    subtitle="Generación y aplicación del conocimiento en la Maestría en Dirección de Organizaciones"
   />
 
-  <section class="py-16">
-    <div class="max-w-5xl mx-auto px-4">
+  <section class="py-12">
+    <div class="mx-auto max-w-5xl px-4">
       <div class="space-y-8">
         {
           lineas.map((linea) => (
-            <div class="bg-card rounded-2xl p-8 shadow-sm border border-border hover:shadow-md transition-shadow">
-              <div class="flex items-start gap-6">
-                <div class="p-4 bg-primary/10 rounded-xl flex-shrink-0">
-                  <linea.icon className="h-8 w-8 text-primary" />
+            <article class="rounded-2xl border border-border bg-card p-8 shadow-sm">
+              <div class="flex flex-col items-start gap-6 sm:flex-row">
+                <div class="flex-shrink-0 rounded-xl bg-primary/10 p-4">
+                  <linea.icon className="h-8 w-8 text-primary" aria-hidden="true" />
                 </div>
                 <div class="flex-1">
-                  <h2 class="font-display text-2xl font-semibold text-foreground mb-3">
+                  <h2 class="mb-3 font-display text-2xl font-semibold text-foreground">
                     {linea.titulo}
                   </h2>
-                  <p class="text-muted-foreground leading-relaxed mb-6">
+                  <p class="mb-6 leading-relaxed text-muted-foreground">
                     {linea.descripcion}
                   </p>
 
-                  <div>
-                    <h3 class="font-semibold text-foreground mb-3 flex items-center gap-2">
-                      <Target className="h-4 w-4 text-accent" />
-                      Áreas de Estudio
-                    </h3>
-                    <div class="flex flex-wrap gap-2">
-                      {linea.areas.map((area) => (
-                        <span class="px-3 py-1.5 bg-muted text-sm text-foreground/80 rounded-lg">
-                          {area}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
+                  <h3 class="mb-3 flex items-center gap-2 font-semibold text-foreground">
+                    <Target className="h-4 w-4 text-accent" aria-hidden="true" />
+                    Áreas de estudio
+                  </h3>
+                  <ul class="flex flex-wrap gap-2">
+                    {linea.areas.map((area) => (
+                      <li class="rounded-lg bg-muted px-3 py-1.5 text-sm text-foreground/80">
+                        {area}
+                      </li>
+                    ))}
+                  </ul>
                 </div>
               </div>
-            </div>
+            </article>
           ))
         }
       </div>
 
-      <div class="mt-12 bg-primary/5 rounded-2xl p-8 text-center">
-        <Users className="h-12 w-12 text-primary mx-auto mb-4" />
-        <h3 class="font-display text-xl font-semibold text-foreground mb-2">
-          ¿Interesado en investigar con nosotros?
-        </h3>
-        <p class="text-muted-foreground max-w-2xl mx-auto">
-          Nuestro núcleo académico está conformado por investigadores activos
-          que pueden guiar tu proyecto de tesis en estas líneas de
-          investigación.
+      <div class="mt-12 rounded-2xl bg-primary/5 p-8 text-center">
+        <Users className="mx-auto mb-4 h-12 w-12 text-primary" aria-hidden="true" />
+        <h2 class="mb-2 font-display text-xl font-semibold text-foreground">
+          ¿Te interesa investigar con nosotros?
+        </h2>
+        <p class="mx-auto max-w-2xl text-muted-foreground">
+          El núcleo académico está conformado por investigadoras e
+          investigadores activos que pueden dirigir tu proyecto de tesis en
+          {esSingular ? " esta línea." : " estas líneas."}
         </p>
+        <a
+          href={withBase("/nucleo-academico")}
+          class="mt-4 inline-flex rounded font-medium text-accent hover:underline"
+        >
+          Conocer al núcleo académico
+        </a>
       </div>
     </div>
   </section>

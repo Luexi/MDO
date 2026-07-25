@@ -1,22 +1,31 @@
 import type { Config } from "tailwindcss";
-import tailwindcssAnimate from "tailwindcss-animate";
 
+/**
+ * Escala de radios: se usa la escala por defecto de Tailwind, sin sobrescribir.
+ *
+ *   sm 0.125 · md 0.375 · lg 0.5 · xl 0.75 · 2xl 1 · 3xl 1.5  (rem)
+ *
+ * La configuracion anterior redefinia `lg`, `md`, `sm`, `2xl` y `3xl` pero
+ * omitia `xl`, con lo que la escala quedaba invertida: `rounded-lg` (1rem)
+ * resultaba MAS grande que `rounded-xl` (0.75rem) e identico a `rounded-2xl`.
+ * Como `rounded-xl` es la clase mas usada del proyecto, la pieza mas comun era
+ * la mas pequeña de las tres. Al no sobrescribir nada, la escala vuelve a ser
+ * monotona y predecible.
+ *
+ * Convencion del proyecto:
+ *   rounded-lg   -> elementos pequeños (enlaces de nav, insignias, cajas de icono)
+ *   rounded-xl   -> controles (botones, campos, celdas de lista)
+ *   rounded-2xl  -> contenedores (tarjetas, paneles, secciones)
+ *   rounded-full -> elementos circulares o en pastilla
+ */
 export default {
-  darkMode: ["class"],
   content: ["./src/**/*.{astro,html,js,jsx,ts,tsx}"],
   prefix: "",
   theme: {
-    container: {
-      center: true,
-      padding: "2rem",
-      screens: {
-        "2xl": "1400px",
-      },
-    },
     extend: {
       fontFamily: {
-        sans: ['Inter', 'system-ui', 'sans-serif'],
-        display: ['Playfair Display', 'Georgia', 'serif'],
+        sans: ["Inter", "system-ui", "sans-serif"],
+        display: ["Playfair Display", "Georgia", "serif"],
       },
       colors: {
         border: "hsl(var(--border))",
@@ -52,55 +61,17 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
-        sidebar: {
-          DEFAULT: "hsl(var(--sidebar-background))",
-          foreground: "hsl(var(--sidebar-foreground))",
-          primary: "hsl(var(--sidebar-primary))",
-          "primary-foreground": "hsl(var(--sidebar-primary-foreground))",
-          accent: "hsl(var(--sidebar-accent))",
-          "accent-foreground": "hsl(var(--sidebar-accent-foreground))",
-          border: "hsl(var(--sidebar-border))",
-          ring: "hsl(var(--sidebar-ring))",
-        },
-        // UAGro Custom Colors
-        uagro: {
-          blue: "hsl(var(--uagro-blue))",
-          "blue-light": "hsl(var(--uagro-blue-light))",
-          red: "hsl(var(--uagro-red))",
-        },
-      },
-      borderRadius: {
-        lg: "var(--radius)",
-        md: "calc(var(--radius) - 2px)",
-        sm: "calc(var(--radius) - 4px)",
-        "2xl": "1rem",
-        "3xl": "1.5rem",
       },
       keyframes: {
-        "accordion-down": {
-          from: { height: "0" },
-          to: { height: "var(--radix-accordion-content-height)" },
-        },
-        "accordion-up": {
-          from: { height: "var(--radix-accordion-content-height)" },
-          to: { height: "0" },
-        },
         "fade-in": {
           from: { opacity: "0", transform: "translateY(10px)" },
           to: { opacity: "1", transform: "translateY(0)" },
         },
-        "slide-in": {
-          from: { opacity: "0", transform: "translateX(-10px)" },
-          to: { opacity: "1", transform: "translateX(0)" },
-        },
       },
       animation: {
-        "accordion-down": "accordion-down 0.2s ease-out",
-        "accordion-up": "accordion-up 0.2s ease-out",
         "fade-in": "fade-in 0.5s ease-out forwards",
-        "slide-in": "slide-in 0.3s ease-out forwards",
       },
     },
   },
-  plugins: [tailwindcssAnimate],
+  plugins: [],
 } satisfies Config;

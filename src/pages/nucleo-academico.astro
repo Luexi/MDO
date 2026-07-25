@@ -6,20 +6,33 @@ import { profesores } from "@/data/profesores";
 ---
 
 <BaseLayout
-  title="MDO UAGro | Núcleo Académico"
-  description="Conoce al cuerpo docente de excelencia que conforma la Maestría en Dirección de Organizaciones."
+  title="MDO UAGro | Núcleo académico"
+  description="Profesorado de la Maestría en Dirección de Organizaciones, con sus líneas de investigación y producción académica."
 >
   <PageHeader
-    title="Núcleo Académico"
-    subtitle="Conoce al cuerpo docente de excelencia que conforma nuestra maestría"
-    badge="Claustro Docente"
+    title="Núcleo académico"
+    subtitle="Profesorado del programa y sus líneas de generación y aplicación del conocimiento"
   />
 
-  <section class="py-16">
-    <div class="max-w-7xl mx-auto px-4">
-      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        {profesores.map((profesor) => <ProfesorCard profesor={profesor} />)}
-      </div>
+  <section class="py-12" aria-labelledby="claustro">
+    <div class="mx-auto max-w-7xl px-4">
+      {/*
+        Encabezado de seccion explicito. Sin el, la pagina saltaba de `h1` a los
+        `h3` de las tarjetas, y quedaba sin ningun `h2` en toda su estructura.
+      */}
+      <h2 id="claustro" class="mb-6 text-sm font-medium text-muted-foreground">
+        {profesores.length} integrantes del núcleo académico
+      </h2>
+
+      <ul class="grid auto-rows-fr grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        {
+          profesores.map((profesor) => (
+            <li class="h-full">
+              <ProfesorCard profesor={profesor} />
+            </li>
+          ))
+        }
+      </ul>
     </div>
   </section>
 </BaseLayout>

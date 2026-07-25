@@ -21,10 +21,10 @@ export function InstalacionCard({ instalacion }: InstalacionCardProps) {
   const IconComponent = iconMap[instalacion.icono] || Building2;
 
   return (
-    <div className="bg-card rounded-2xl p-6 shadow-sm border border-border hover:shadow-md transition-all group">
-      <div className="flex items-center gap-4 mb-4">
-        <div className="p-3 bg-primary/10 rounded-xl group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
-          <IconComponent className="h-6 w-6 text-primary group-hover:text-primary-foreground transition-colors" />
+    <div className="group flex h-full flex-col rounded-2xl border border-border bg-card p-6 shadow-sm transition-shadow hover:shadow-md">
+      <div className="mb-4 flex items-center gap-4">
+        <div className="rounded-xl bg-primary/10 p-3 transition-colors group-hover:bg-primary">
+          <IconComponent className="h-6 w-6 text-primary transition-colors group-hover:text-primary-foreground" />
         </div>
         <div className="flex-1">
           <h3 className="font-display text-xl font-semibold text-foreground">
@@ -32,10 +32,12 @@ export function InstalacionCard({ instalacion }: InstalacionCardProps) {
           </h3>
         </div>
         <div className="text-right">
-          <span className="text-3xl font-bold text-primary">{instalacion.cantidad}</span>
+          <span className="text-3xl font-bold text-primary">
+            {instalacion.cantidad}
+          </span>
         </div>
       </div>
-      <p className="text-sm text-muted-foreground leading-relaxed">
+      <p className="text-sm leading-relaxed text-muted-foreground">
         {instalacion.descripcion}
       </p>
     </div>

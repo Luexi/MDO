@@ -1,41 +1,61 @@
 ---
-import { FolderOpen } from "lucide-react";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { DocumentoCard } from "@/components/cards/DocumentoCard";
-import { documentos } from "@/data/documentos";
+import { categoriasDocumentos, documentos } from "@/data/documentos";
+import { contacto } from "@/data/contacto";
 
-const categorias = [...new Set(documentos.map((documento) => documento.categoria))];
+const grupos = categoriasDocumentos
+  .map((categoria) => ({
+    categoria,
+    items: documentos.filter((documento) => documento.categoria === categoria),
+  }))
+  .filter((grupo) => grupo.items.length > 0);
 ---
 
-<BaseLayout title="MDO UAGro | Repositorio" description="Repositorio de documentos oficiales, formatos y recursos del programa.">
+<BaseLayout
+  title="MDO UAGro | Documentos y formatos"
+  description="Documentos oficiales, formatos y normatividad del programa MDO UAGro."
+>
   <PageHeader
-    title="Repositorio de Documentos"
-    subtitle="Accede a los documentos oficiales, formatos y recursos del programa"
-    badge="Documentos"
+    title="Documentos y formatos"
+    subtitle="Normatividad, formatos oficiales y recursos del programa"
   />
 
-  <section class="py-16">
-    <div class="max-w-6xl mx-auto px-4">
+  <section class="py-12">
+    <div class="mx-auto max-w-6xl px-4">
       {
-        categorias.map((categoria) => (
-          <div class="mb-12 last:mb-0">
-            <h2 class="font-display text-2xl font-semibold text-foreground mb-6 flex items-center gap-3">
-              <FolderOpen className="h-6 w-6 text-primary" />
-              {categoria}
+        grupos.map((grupo) => (
+          <section class="mb-12 last:mb-0" aria-labelledby={`grupo-${grupo.categoria}`}>
+            <h2
+              id={`grupo-${grupo.categoria}`}
+              class="mb-6 font-display text-2xl font-semibold text-foreground"
+            >
+              {grupo.categoria}
             </h2>
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {documentos.filter((item) => item.categoria === categoria).map((documento) => <DocumentoCard documento={documento} />)}
+            {/*
+              `auto-rows-fr` iguala la altura de las filas y, junto con el
+              `h-full` de la tarjeta, alinea los botones de una misma fila.
+            */}
+            <div class="grid auto-rows-fr gap-6 md:grid-cols-2 lg:grid-cols-3">
+              {grupo.items.map((documento) => (
+                <DocumentoCard documento={documento} />
+              ))}
             </div>
-          </div>
+          </section>
         ))
       }
 
-      <div class="mt-12 p-6 bg-muted/50 rounded-2xl border border-border">
-        <p class="text-sm text-muted-foreground text-center">
-          <strong>Nota:</strong> Todos los documentos se abren en Google Drive. Para descargar, haz clic en el icono de descarga dentro de Drive.
-        </p>
-      </div>
+      <p
+        class="mt-12 rounded-2xl border border-border bg-muted/50 p-6 text-sm text-muted-foreground"
+      >
+        Los documentos disponibles se abren en Google Drive. Los marcados como
+        <strong class="font-medium text-foreground">En proceso</strong> aún no
+        tienen versión publicada; solicítalos a la coordinación en <a
+          href={`mailto:${contacto.email}`}
+          class="rounded font-medium text-accent hover:underline">{contacto.email}</a
+        >.
+      </p>
     </div>
   </section>
 </BaseLayout>

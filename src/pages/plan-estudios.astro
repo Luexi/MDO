@@ -1,0 +1,78 @@
+---
+import { ArrowLeft, ExternalLink } from "lucide-react";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { PageHeader } from "@/components/ui/PageHeader";
+import PlanEstudiosTabs from "@/components/PlanEstudiosTabs.astro";
+import { Button } from "@/components/ui/button";
+import { documentos } from "@/data/documentos";
+import {
+  planOptativas,
+  planPorArea,
+  planPorSemestre,
+} from "@/data/planEstudios";
+import { withBase } from "@/lib/paths";
+
+// El PDF oficial del plan es el unico documento del repositorio con URL real.
+const planPdf = documentos.find((documento) => documento.id === "plan-estudios");
+---
+
+<BaseLayout
+  title="MDO UAGro | Plan de estudios"
+  description="Estructura curricular de la Maestría en Dirección de Organizaciones: unidades de aprendizaje por área de formación y por semestre."
+>
+  <PageHeader
+    title="Plan de estudios"
+    subtitle="Estructura curricular por área de formación y organización por semestre"
+  />
+
+  <section class="py-12">
+    <div class="mx-auto max-w-5xl space-y-8 px-4">
+      {/*
+        Encabezado de seccion explicito: los paneles del componente de pestañas
+        emiten `h3`, asi que sin este `h2` la pagina saltaba de `h1` a `h3`.
+      */}
+      <h2 class="sr-only">Estructura curricular</h2>
+      <PlanEstudiosTabs
+        areas={planPorArea}
+        semestres={planPorSemestre}
+        optativas={planOptativas}
+      />
+
+      {
+        planPdf?.linkDrive && (
+          <div class="flex flex-col items-start gap-4 rounded-2xl border border-border bg-card p-6 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <h2 class="font-display text-lg font-semibold text-foreground">
+                Documento oficial
+              </h2>
+              <p class="mt-1 text-sm text-muted-foreground">
+                Consulta la estructura curricular completa en el documento
+                institucional.
+              </p>
+            </div>
+            <a
+              href={planPdf.linkDrive}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="flex-shrink-0"
+            >
+              <Button variant="outline" className="gap-2 rounded-xl">
+                <ExternalLink className="h-4 w-4" />
+                Abrir en Google Drive
+                <span class="sr-only">, se abre en una pestaña nueva</span>
+              </Button>
+            </a>
+          </div>
+        )
+      }
+
+      <a
+        href={withBase("/objetivos")}
+        class="inline-flex items-center gap-2 rounded font-medium text-accent hover:underline"
+      >
+        <ArrowLeft className="h-4 w-4" aria-hidden="true" />
+        Volver a objetivos y perfiles
+      </a>
+    </div>
+  </section>
+</BaseLayout>

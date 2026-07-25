@@ -5,208 +5,252 @@ import {
   CheckCircle,
   Clock,
   FileText,
+  HelpCircle,
   Mail,
   Phone,
-  UserPlus,
 } from "lucide-react";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { Button } from "@/components/ui/button";
-
-const fechasClave = [
-  {
-    fecha: "Enero - Marzo 2026",
-    evento: "Publicación de Convocatoria y Registro de Aspirantes",
-    descripcion: "Apertura del proceso de admisión y recepción de documentos.",
-    activo: true,
-  },
-  {
-    fecha: "Abril 2026",
-    evento: "Examen EXANI-III (CENEVAL)",
-    descripcion: "Aplicación del examen de admisión nacional.",
-    activo: false,
-  },
-  {
-    fecha: "Mayo 2026",
-    evento: "Publicación de Resultados",
-    descripcion: "Difusión de la lista de aspirantes aceptados.",
-    activo: false,
-  },
-  {
-    fecha: "Agosto 2026",
-    evento: "Inicio de Cursos",
-    descripcion: "Bienvenida e inicio del primer semestre.",
-    activo: false,
-  },
-];
-
-const requisitos = [
-  "Título de licenciatura en áreas afines (original y copia)",
-  "Certificado de calificaciones con promedio mínimo de 8.0",
-  "Acta de nacimiento (original y copia)",
-  "CURP ampliada",
-  "Carta de exposición de motivos",
-  "Curriculum vitae actualizado",
-  "2 cartas de recomendación académica",
-  "Fotografías tamaño infantil (4 a color)",
-  "Comprobante de pago de derechos",
-];
+import {
+  calendarioAdmision,
+  preguntasFrecuentes,
+  requisitosAdmision,
+} from "@/data/admision";
+import { contacto } from "@/data/contacto";
+import { withBase } from "@/lib/paths";
 ---
 
 <BaseLayout
   title="MDO UAGro | Convocatoria 2026"
-  description="Convocatoria 2026: fechas, requisitos y proceso de pre-registro para la MDO UAGro."
+  description="Convocatoria 2026 de la MDO UAGro: calendario, requisitos, preguntas frecuentes y contacto de la coordinación."
 >
   <PageHeader
     title="Convocatoria 2026"
-    subtitle="Únete a la próxima generación de líderes organizacionales"
-    badge="Admisión Abierta"
+    subtitle="Calendario, requisitos y proceso de admisión de la generación 2026"
+    badge="Admisión abierta"
   />
 
-  <section class="py-16">
-    <div class="max-w-5xl mx-auto px-4">
-      <div class="mb-12 flex justify-center">
-        <img
-          src="/convocatoria.webp"
-          alt="Convocatoria MDO 2026"
-          class="w-full max-w-2xl rounded-2xl border border-border shadow-lg"
-          loading="lazy"
-        />
-      </div>
+  <section class="py-12">
+    <div class="mx-auto max-w-5xl px-4">
+      {/*
+        El calendario y los requisitos viven en HTML y son la fuente de verdad.
+        El cartel es el derivado imprimible, no al reves: antes los datos
+        autoritativos (ponderaciones, QR, sitio oficial) estaban encerrados en un
+        JPG ilegible a 390 px y sin equivalente en texto.
+      */}
+      <div class="grid gap-10 lg:grid-cols-[minmax(0,1fr)_20rem]">
+        <div class="space-y-12">
+          <section aria-labelledby="calendario-titulo">
+            <h2
+              id="calendario-titulo"
+              class="mb-6 flex items-center gap-3 font-display text-2xl font-semibold text-foreground"
+            >
+              <Calendar className="h-6 w-6 text-primary" aria-hidden="true" />
+              Calendario del proceso
+            </h2>
 
-      <div class="flex flex-col sm:flex-row gap-4 justify-center mb-12">
-        <a
-          href="https://drive.google.com/file/d/PLACEHOLDER_CONVOCATORIA"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Button size="lg" className="gap-2 rounded-xl px-8 py-6 text-lg">
-            <FileText className="h-5 w-5" />
-            Descargar Convocatoria PDF
-          </Button>
-        </a>
-        <a
-          href="https://forms.google.com/PLACEHOLDER_PREREGISTRO"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Button
-            size="lg"
-            variant="outline"
-            className="gap-2 rounded-xl px-8 py-6 text-lg border-accent text-accent hover:bg-accent hover:text-accent-foreground"
+            <ol class="space-y-0">
+              {
+                calendarioAdmision.map((item, index) => (
+                  <li class="relative pb-8 pl-8 last:pb-0">
+                    {index !== calendarioAdmision.length - 1 && (
+                      <span
+                        class="absolute left-[11px] top-6 h-full w-0.5 bg-border"
+                        aria-hidden="true"
+                      />
+                    )}
+                    <span
+                      class:list={[
+                        "absolute left-0 top-1 flex h-6 w-6 items-center justify-center rounded-full",
+                        item.activo
+                          ? "bg-primary"
+                          : "border-2 border-border bg-muted",
+                      ]}
+                      aria-hidden="true"
+                    >
+                      {item.activo && (
+                        <Clock className="h-3 w-3 text-primary-foreground" />
+                      )}
+                    </span>
+                    <div class="ml-4">
+                      <p
+                        class:list={[
+                          "text-sm font-medium",
+                          item.activo ? "text-primary" : "text-muted-foreground",
+                        ]}
+                      >
+                        {item.fecha}
+                        {item.activo && (
+                          <span class="ml-2 rounded-full bg-primary/10 px-2 py-0.5 text-xs">
+                            Etapa vigente
+                          </span>
+                        )}
+                      </p>
+                      <h3 class="mt-1 font-semibold text-foreground">
+                        {item.evento}
+                      </h3>
+                      <p class="mt-1 text-sm text-muted-foreground">
+                        {item.descripcion}
+                      </p>
+                    </div>
+                  </li>
+                ))
+              }
+            </ol>
+          </section>
+
+          <section aria-labelledby="requisitos-titulo" id="requisitos">
+            <h2
+              id="requisitos-titulo"
+              class="mb-6 flex items-center gap-3 font-display text-2xl font-semibold text-foreground"
+            >
+              <CheckCircle className="h-6 w-6 text-primary" aria-hidden="true" />
+              Requisitos de admisión
+            </h2>
+            <ul class="grid gap-3 sm:grid-cols-2">
+              {
+                requisitosAdmision.map((requisito) => (
+                  <li class="flex items-start gap-3 rounded-xl bg-muted/50 p-3">
+                    <CheckCircle
+                      className="mt-0.5 h-5 w-5 flex-shrink-0 text-accent"
+                      aria-hidden="true"
+                    />
+                    <span class="text-sm text-foreground/90">{requisito}</span>
+                  </li>
+                ))
+              }
+            </ul>
+          </section>
+
+          <div
+            class="flex items-start gap-4 rounded-2xl border border-destructive/20 bg-destructive/10 p-6"
           >
-            <UserPlus className="h-5 w-5" />
-            Iniciar Pre-Registro
-          </Button>
-        </a>
-      </div>
+            <AlertCircle
+              className="h-6 w-6 flex-shrink-0 text-destructive"
+              aria-hidden="true"
+            />
+            <div>
+              <h2 class="mb-2 font-semibold text-foreground">
+                Becas nacionales de posgrado
+              </h2>
+              <p class="text-sm text-muted-foreground">
+                Quedar admitido en el programa no garantiza la obtención de una
+                beca. Las becas las asigna SECIHTI de acuerdo con el presupuesto
+                del ejercicio fiscal correspondiente.
+              </p>
+            </div>
+          </div>
 
-      <div class="bg-card rounded-2xl p-8 shadow-sm border border-border mb-12">
-        <h2
-          class="font-display text-2xl font-semibold text-foreground mb-6 flex items-center gap-3"
-        >
-          <Calendar className="h-6 w-6 text-primary" />
-          Fechas Importantes
-        </h2>
-        <div class="space-y-0">
-          {
-            fechasClave.map((item, index) => (
-              <div class="relative pl-8 pb-8 last:pb-0">
-                {index !== fechasClave.length - 1 && (
-                  <div class="absolute left-[11px] top-6 w-0.5 h-full bg-border" />
-                )}
-                <div
-                  class={`absolute left-0 top-1 w-6 h-6 rounded-full flex items-center justify-center ${item.activo ? "bg-primary" : "bg-muted border-2 border-border"}`}
-                >
-                  {item.activo && (
-                    <Clock className="h-3 w-3 text-primary-foreground" />
-                  )}
-                </div>
-                <div class="ml-4">
-                  <span
-                    class={`text-sm font-medium ${item.activo ? "text-primary" : "text-muted-foreground"}`}
-                  >
-                    {item.fecha}
-                  </span>
-                  <h3 class="font-semibold text-foreground mt-1">
-                    {item.evento}
-                  </h3>
-                  <p class="text-sm text-muted-foreground mt-1">
-                    {item.descripcion}
-                  </p>
-                </div>
-              </div>
-            ))
-          }
+          <section aria-labelledby="faq-titulo" id="preguntas-frecuentes">
+            <h2
+              id="faq-titulo"
+              class="mb-6 flex items-center gap-3 font-display text-2xl font-semibold text-foreground"
+            >
+              <HelpCircle className="h-6 w-6 text-primary" aria-hidden="true" />
+              Preguntas frecuentes
+            </h2>
+
+            {/*
+              `details`/`summary` nativos: plegables, operables con teclado y
+              anunciados correctamente por lectores de pantalla sin una linea de
+              JavaScript ni atributos ARIA propios.
+            */}
+            <div class="divide-y divide-border overflow-hidden rounded-2xl border border-border bg-card">
+              {
+                preguntasFrecuentes.map((item) => (
+                  <details class="group">
+                    <summary
+                      class="flex cursor-pointer items-center justify-between gap-4 p-5 font-medium text-foreground marker:content-none"
+                    >
+                      {item.pregunta}
+                      <span
+                        class="flex-shrink-0 text-xl leading-none text-muted-foreground transition-transform group-open:rotate-45"
+                        aria-hidden="true"
+                      >
+                        +
+                      </span>
+                    </summary>
+                    <p class="px-5 pb-5 text-sm leading-relaxed text-muted-foreground">
+                      {item.respuesta}
+                    </p>
+                  </details>
+                ))
+              }
+            </div>
+          </section>
         </div>
-      </div>
 
-      <div class="bg-card rounded-2xl p-8 shadow-sm border border-border mb-12">
-        <h2
-          class="font-display text-2xl font-semibold text-foreground mb-6 flex items-center gap-3"
-        >
-          <CheckCircle className="h-6 w-6 text-primary" />
-          Requisitos de Admisión
-        </h2>
-        <div class="grid md:grid-cols-2 gap-4">
-          {
-            requisitos.map((req) => (
-              <div class="flex items-start gap-3 p-3 bg-muted/50 rounded-xl">
-                <CheckCircle className="h-5 w-5 text-accent flex-shrink-0 mt-0.5" />
-                <span class="text-sm text-foreground/90">{req}</span>
-              </div>
-            ))
-          }
-        </div>
-      </div>
+        <aside class="space-y-6 lg:sticky lg:top-28 lg:self-start">
+          <div class="overflow-hidden rounded-2xl border border-border bg-card shadow-sm">
+            <img
+              src={withBase("/convocatoria.webp")}
+              alt="Cartel de la convocatoria 2026 de la Maestría en Dirección de Organizaciones"
+              width="847"
+              height="1200"
+              loading="lazy"
+              class="w-full"
+            />
+            <div class="space-y-3 p-4">
+              <a
+                href={withBase("/convocatoria.webp")}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="block"
+              >
+                <Button variant="outline" size="sm" className="w-full gap-2 rounded-xl">
+                  <FileText className="h-4 w-4" />
+                  Ver cartel en tamaño completo
+                  <span class="sr-only">, se abre en una pestaña nueva</span>
+                </Button>
+              </a>
+              {/*
+                El PDF oficial todavia no tiene URL publica. Se muestra el estado
+                real en vez de un boton vivo que lleva a un error de Drive, que
+                es lo que ocurria antes en las dos acciones principales de esta
+                pagina.
+              */}
+              <Button
+                variant="outline"
+                size="sm"
+                className="w-full gap-2 rounded-xl"
+                disabled
+              >
+                <Clock className="h-4 w-4" />
+                PDF oficial en proceso
+              </Button>
+            </div>
+          </div>
 
-      <div
-        class="bg-destructive/10 rounded-2xl p-6 mb-12 border border-destructive/20"
-      >
-        <div class="flex items-start gap-4">
-          <AlertCircle className="h-6 w-6 text-destructive flex-shrink-0" />
-          <div>
-            <h3 class="font-semibold text-foreground mb-2">
-              Importante: Becas Nacionales de Posgrado
-            </h3>
-            <p class="text-sm text-muted-foreground">
-              Quedar admitido en el programa no garantiza la obtención de una
-              beca, estas las asigna SECIHTI de acuerdo al presupuesto del
-              ejercicio fiscal
+          <div class="rounded-2xl bg-primary p-6 text-primary-foreground">
+            <h2 class="mb-4 font-display text-xl font-semibold">
+              ¿Tienes dudas?
+            </h2>
+            <p class="mb-4 text-sm text-primary-foreground/80">
+              Escribe o llama a la coordinación del programa para resolver dudas
+              sobre requisitos, cuotas o entrega de documentos.
+            </p>
+            <div class="space-y-3">
+              <a
+                href={`mailto:${contacto.email}`}
+                class="flex items-center gap-3 rounded-xl bg-primary-foreground/10 p-3 transition-colors hover:bg-primary-foreground/20"
+              >
+                <Mail className="h-5 w-5 flex-shrink-0" aria-hidden="true" />
+                <span class="break-all text-sm">{contacto.email}</span>
+              </a>
+              <a
+                href={contacto.telefonoHref}
+                class="flex items-center gap-3 rounded-xl bg-primary-foreground/10 p-3 transition-colors hover:bg-primary-foreground/20"
+              >
+                <Phone className="h-5 w-5 flex-shrink-0" aria-hidden="true" />
+                <span class="text-sm">{contacto.telefono}</span>
+              </a>
+            </div>
+            <p class="mt-4 text-sm text-primary-foreground/60">
+              {contacto.horario}
             </p>
           </div>
-        </div>
-      </div>
-
-      <div class="bg-primary text-primary-foreground rounded-2xl p-8">
-        <h2 class="font-display text-2xl font-semibold mb-6 text-center">
-          ¿Tienes dudas? Contáctanos
-        </h2>
-        <div class="grid sm:grid-cols-2 gap-6 max-w-2xl mx-auto">
-          <a
-            href="mailto:mdo@uagro.mx"
-            class="flex items-center gap-4 p-4 bg-primary-foreground/10 rounded-xl hover:bg-primary-foreground/20 transition-colors"
-          >
-            <Mail className="h-6 w-6" />
-            <div>
-              <p class="font-medium">Correo electrónico</p>
-              <p class="text-sm text-primary-foreground/80">mdo@uagro.mx</p>
-            </div>
-          </a>
-          <a
-            href="tel:+527474725678"
-            class="flex items-center gap-4 p-4 bg-primary-foreground/10 rounded-xl hover:bg-primary-foreground/20 transition-colors"
-          >
-            <Phone className="h-6 w-6" />
-            <div>
-              <p class="font-medium">Teléfono</p>
-              <p class="text-sm text-primary-foreground/80">(747) 472-5678</p>
-            </div>
-          </a>
-        </div>
-        <p class="text-center text-primary-foreground/60 text-sm mt-6">
-          Horario de atención: Lunes a Viernes de 9:00 a 17:00 hrs
-        </p>
+        </aside>
       </div>
     </div>
   </section>

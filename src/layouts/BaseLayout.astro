@@ -1,6 +1,7 @@
 ---
 import Navbar from "@/components/layout/Navbar.astro";
 import Footer from "@/components/layout/Footer.astro";
+import { withBase } from "@/lib/paths";
 import "@/styles/global.css";
 
 interface Props {
@@ -12,9 +13,6 @@ interface Props {
 const siteName = "UAGRO";
 const alternateSiteName = "MDO UAGro";
 const organizationName = "Universidad Autónoma de Guerrero";
-const fallbackSiteUrl = "https://mdo-alpha.vercel.app";
-const iconPath = "/favicon.svg";
-const ogImagePath = "/assets/logos/logo-mdo.webp";
 
 const {
   title = "MDO UAGro | Maestría en Dirección de Organizaciones",
@@ -23,11 +21,13 @@ const {
 } = Astro.props;
 
 const currentPath = Astro.url.pathname;
-const siteOrigin =
-  Astro.site?.toString() ?? import.meta.env.PUBLIC_SITE_URL ?? fallbackSiteUrl;
+// `Astro.site` viene de `astro.config.mjs`, que lo toma de PUBLIC_SITE_URL.
+const siteOrigin = Astro.site?.toString() ?? "http://localhost:8080";
 const canonicalUrl = new URL(currentPath, siteOrigin).toString();
-const homeUrl = new URL("/", siteOrigin).toString();
-const ogImageUrl = new URL(ogImagePath, siteOrigin).toString();
+const homeUrl = new URL(withBase("/"), siteOrigin).toString();
+const logoUrl = new URL(withBase("/assets/logos/logo-uagro.webp"), siteOrigin).toString();
+const ogImageUrl = new URL(withBase("/assets/logos/logo-mdo.webp"), siteOrigin).toString();
+
 const websiteSchema = {
   "@context": "https://schema.org",
   "@type": "WebSite",
@@ -39,16 +39,17 @@ const websiteSchema = {
     "@type": "Organization",
     name: organizationName,
     url: homeUrl,
-    logo: new URL("/assets/logos/logo-uagro.webp", siteOrigin).toString(),
+    logo: logoUrl,
   },
 };
+
 const organizationSchema = {
   "@context": "https://schema.org",
   "@type": "Organization",
   name: organizationName,
   alternateName: siteName,
   url: homeUrl,
-  logo: new URL("/assets/logos/logo-uagro.webp", siteOrigin).toString(),
+  logo: logoUrl,
 };
 ---
 
@@ -74,8 +75,8 @@ const organizationSchema = {
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImageUrl} />
-    <link rel="icon" type="image/svg+xml" href={iconPath} />
-    <link rel="manifest" href="/site.webmanifest" />
+    <link rel="icon" type="image/svg+xml" href={withBase("/favicon.svg")} />
+    <link rel="manifest" href={withBase("/site.webmanifest")} />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -85,23 +86,48 @@ const organizationSchema = {
       onload="this.media='all'"
     />
     <noscript>
-      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" />
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap"
+      />
     </noscript>
-    {currentPath === "/" && (
-      <>
-        <script is:inline type="application/ld+json" set:html={JSON.stringify(websiteSchema)} />
-        <script is:inline type="application/ld+json" set:html={JSON.stringify(organizationSchema)} />
-      </>
-    )}
+    {
+      currentPath === withBase("/") && (
+        <>
+          <script
+            is:inline
+            type="application/ld+json"
+            set:html={JSON.stringify(websiteSchema)}
+          />
+          <script
+            is:inline
+            type="application/ld+json"
+            set:html={JSON.stringify(organizationSchema)}
+          />
+        </>
+      )
+    }
     <title>{title}</title>
   </head>
   <body>
-    <div class="min-h-screen flex flex-col bg-background">
+    <a href="#contenido-principal" class="sr-only-focusable">
+      Saltar al contenido principal
+    </a>
+
+    <div class="flex min-h-screen flex-col bg-background">
       <Navbar currentPath={currentPath} />
-      <main class="flex-1 pt-24">
+      <main id="contenido-principal" class="flex-1 pt-24">
         <slot />
       </main>
       {!noFooter && <Footer />}
     </div>
+
+    <script>
+      import { initNavbar } from "@/scripts/navbar";
+      import { initTabs } from "@/scripts/tabs";
+
+      initNavbar();
+      initTabs();
+    </script>
   </body>
 </html>

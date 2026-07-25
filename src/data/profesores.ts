@@ -31,9 +31,9 @@ export const profesores: Profesor[] = [
     semblanza:
       "Doctor en administración pública por el Instituto Internacional del Derecho y del Estado. Miembro SNI candidato y coordinador de la Red de Educación para el Desarrollo Regional y Sostenibilidad de la UAGro.",
     historialAcademico: [
-      "Último grado (PDF NA): Doctor en administración pública - Instituto Internacional del Derecho y del Estado",
-      "Cuerpo académico (PDF NA): UAGro-CA-229 Gestión y comportamiento organizacional",
-      "Red de colaboración (PDF NA): Red de Educación para el Desarrollo Regional y Sostenibilidad de la UAGro",
+      "Último grado: Doctor en administración pública - Instituto Internacional del Derecho y del Estado",
+      "Cuerpo académico: UAGro-CA-229 Gestión y comportamiento organizacional",
+      "Red de colaboración: Red de Educación para el Desarrollo Regional y Sostenibilidad de la UAGro",
     ],
     publicaciones: [
       {
@@ -56,9 +56,9 @@ export const profesores: Profesor[] = [
     semblanza:
       "Doctor en administración por la UAGro. Integrante del SNI nivel 1 e integrante de la Red Mexicana de Investigadores en Estudios Organizacionales.",
     historialAcademico: [
-      "Último grado (PDF NA): Doctor en administración - UAGro",
-      "Cuerpo académico (PDF NA): UAGro-CA-252 Innovación y responsabilidad social en las organizaciones",
-      "Red de colaboración (PDF NA): Red Mexicana de Investigadores en Estudios Organizacionales",
+      "Último grado: Doctor en administración - UAGro",
+      "Cuerpo académico: UAGro-CA-252 Innovación y responsabilidad social en las organizaciones",
+      "Red de colaboración: Red Mexicana de Investigadores en Estudios Organizacionales",
     ],
     publicaciones: [
       {
@@ -81,9 +81,9 @@ export const profesores: Profesor[] = [
     semblanza:
       "Doctora en ciencias de la educación por el Colegio Mayor de San Carlos. SNI candidata e integrante de la Red Nacional de Productividad, Innovación y Competitividad Empresarial.",
     historialAcademico: [
-      "Último grado (PDF NA): Doctora en ciencias de la educación - Colegio Mayor de San Carlos",
-      "Cuerpo académico (PDF NA): UAGro-CA-252 Innovación y responsabilidad social en las organizaciones",
-      "Red de colaboración (PDF NA): Red Nacional de Productividad, Innovación y Competitividad Empresarial",
+      "Último grado: Doctora en ciencias de la educación - Colegio Mayor de San Carlos",
+      "Cuerpo académico: UAGro-CA-252 Innovación y responsabilidad social en las organizaciones",
+      "Red de colaboración: Red Nacional de Productividad, Innovación y Competitividad Empresarial",
     ],
     publicaciones: [
       {
@@ -105,9 +105,9 @@ export const profesores: Profesor[] = [
     semblanza:
       "Doctora en administración pública por el Instituto Internacional del Derecho y del Estado. Integrante SNI candidata, Perfil PRODEP y coordinadora del cuerpo académico UAGro-CA-227.",
     historialAcademico: [
-      "Último grado (PDF NA): Doctora en administración pública - Instituto Internacional del Derecho y del Estado",
-      "Cuerpo académico (PDF NA): UAGro-CA-227 Educación virtual y responsabilidad social",
-      "Red de colaboración (PDF NA): Red de Educación para el Desarrollo Regional y Sostenibilidad de la UAGro",
+      "Último grado: Doctora en administración pública - Instituto Internacional del Derecho y del Estado",
+      "Cuerpo académico: UAGro-CA-227 Educación virtual y responsabilidad social",
+      "Red de colaboración: Red de Educación para el Desarrollo Regional y Sostenibilidad de la UAGro",
     ],
     publicaciones: [
       {
@@ -129,9 +129,9 @@ export const profesores: Profesor[] = [
     semblanza:
       "Doctora en administración por la Universidad Americana de Acapulco. SNI candidata, Perfil PRODEP e integrante de la Red de Educación para el Desarrollo Regional y Sostenibilidad de la UAGro.",
     historialAcademico: [
-      "Último grado (PDF NA): Doctora en administración - Universidad Americana de Acapulco",
-      "Cuerpo académico (PDF NA): UAGro-CA-252 Innovación y responsabilidad social en las organizaciones",
-      "Red de colaboración (PDF NA): Red de Educación para el Desarrollo Regional y Sostenibilidad de la UAGro",
+      "Último grado: Doctora en administración - Universidad Americana de Acapulco",
+      "Cuerpo académico: UAGro-CA-252 Innovación y responsabilidad social en las organizaciones",
+      "Red de colaboración: Red de Educación para el Desarrollo Regional y Sostenibilidad de la UAGro",
     ],
     publicaciones: [
       {
@@ -153,9 +153,9 @@ export const profesores: Profesor[] = [
     semblanza:
       "Doctora en administración pública por el Instituto Internacional del Derecho y del Estado. Perfil PRODEP e integrante de la Red de Educación para el Desarrollo Regional y Sostenibilidad de la UAGro.",
     historialAcademico: [
-      "Último grado (PDF NA): Doctora en administración pública - Instituto Internacional del Derecho y del Estado",
-      "Cuerpo académico (PDF NA): UAGro-CA-229 Gestión y comportamiento organizacional",
-      "Red de colaboración (PDF NA): Red de Educación para el Desarrollo Regional y Sostenibilidad de la UAGro",
+      "Último grado: Doctora en administración pública - Instituto Internacional del Derecho y del Estado",
+      "Cuerpo académico: UAGro-CA-229 Gestión y comportamiento organizacional",
+      "Red de colaboración: Red de Educación para el Desarrollo Regional y Sostenibilidad de la UAGro",
     ],
     publicaciones: [
       {
@@ -178,9 +178,9 @@ export const profesores: Profesor[] = [
     semblanza:
       "Doctora en administración pública por el Instituto Internacional del Derecho y del Estado. Perfil PRODEP e integrante de la Red de Educación para el Desarrollo Regional y Sostenibilidad de la UAGro.",
     historialAcademico: [
-      "Último grado (PDF NA): Doctora en administración pública - Instituto Internacional del Derecho y del Estado",
-      "Cuerpo académico (PDF NA): UAGro-CA-229 Gestión y comportamiento organizacional",
-      "Red de colaboración (PDF NA): Red de Educación para el Desarrollo Regional y Sostenibilidad de la UAGro",
+      "Último grado: Doctora en administración pública - Instituto Internacional del Derecho y del Estado",
+      "Cuerpo académico: UAGro-CA-229 Gestión y comportamiento organizacional",
+      "Red de colaboración: Red de Educación para el Desarrollo Regional y Sostenibilidad de la UAGro",
     ],
     publicaciones: [
       {
@@ -203,9 +203,9 @@ export const profesores: Profesor[] = [
     semblanza:
       "Doctor en administración por Atlantic International University (Honolulu, Hawaii). Integrante del cuerpo académico UAGro-CA-210 y de la Red de Educación para el Desarrollo Regional y Sostenibilidad de la UAGro.",
     historialAcademico: [
-      "Último grado (PDF NA): Doctor en administración - Atlantic International University",
-      "Cuerpo académico (PDF NA): UAGro-CA-210 Gestión, desarrollo y aspectos financieros de las empresas",
-      "Red de colaboración (PDF NA): Red de Educación para el Desarrollo Regional y Sostenibilidad de la UAGro",
+      "Último grado: Doctor en administración - Atlantic International University",
+      "Cuerpo académico: UAGro-CA-210 Gestión, desarrollo y aspectos financieros de las empresas",
+      "Red de colaboración: Red de Educación para el Desarrollo Regional y Sostenibilidad de la UAGro",
     ],
     publicaciones: [
       {
@@ -228,9 +228,9 @@ export const profesores: Profesor[] = [
     semblanza:
       "Doctora en administración pública por el Instituto Internacional del Derecho y del Estado. Perfil PRODEP e integrante del cuerpo académico UAGro-CA-227.",
     historialAcademico: [
-      "Último grado (PDF NA): Doctora en administración pública - Instituto Internacional del Derecho y del Estado",
-      "Cuerpo académico (PDF NA): UAGro-CA-227 Educación virtual y responsabilidad social",
-      "Red de colaboración (PDF NA): Red de Educación para el Desarrollo Regional y Sostenibilidad de la UAGro",
+      "Último grado: Doctora en administración pública - Instituto Internacional del Derecho y del Estado",
+      "Cuerpo académico: UAGro-CA-227 Educación virtual y responsabilidad social",
+      "Red de colaboración: Red de Educación para el Desarrollo Regional y Sostenibilidad de la UAGro",
     ],
     publicaciones: [
       {
@@ -252,9 +252,9 @@ export const profesores: Profesor[] = [
     semblanza:
       "Doctor en administración y gestión empresarial por la Universidad del Centro del Bajío. Integrante del SNI nivel 1 y presidente de la Red Académica de Gestión de Mercadotecnia del Consorcio de Universidades Mexicanas.",
     historialAcademico: [
-      "Último grado (PDF NA): Doctor en administración y gestión empresarial - Universidad del Centro del Bajío",
-      "Cuerpo académico (PDF NA): UAGro-CA-209 Responsabilidad social y gestión de las organizaciones",
-      "Red de colaboración (PDF NA): Red Académica de Gestión de Mercadotecnia (CUMex)",
+      "Último grado: Doctor en administración y gestión empresarial - Universidad del Centro del Bajío",
+      "Cuerpo académico: UAGro-CA-209 Responsabilidad social y gestión de las organizaciones",
+      "Red de colaboración: Red Académica de Gestión de Mercadotecnia (CUMex)",
     ],
     publicaciones: [
       {
@@ -276,9 +276,9 @@ export const profesores: Profesor[] = [
     semblanza:
       "Doctora en administración por la Universidad IEXPRO. Perfil PRODEP e integrante de la Red de Educación para el Desarrollo Regional y Sostenibilidad de la UAGro.",
     historialAcademico: [
-      "Último grado (PDF NA): Doctora en administración - Universidad IEXPRO",
-      "Cuerpo académico (PDF NA): UAGro-CA-227 Educación virtual y responsabilidad social",
-      "Red de colaboración (PDF NA): Red de Educación para el Desarrollo Regional y Sostenibilidad de la UAGro",
+      "Último grado: Doctora en administración - Universidad IEXPRO",
+      "Cuerpo académico: UAGro-CA-227 Educación virtual y responsabilidad social",
+      "Red de colaboración: Red de Educación para el Desarrollo Regional y Sostenibilidad de la UAGro",
     ],
     publicaciones: [
       {
@@ -298,13 +298,11 @@ export const profesores: Profesor[] = [
     linea: "Turismo sustentable",
     foto: "/assets/profesores/justino-arziga-castanon.jpg",
     semblanza:
-      "Doctor en ciencias del desarrollo regional por la UAGro. De acuerdo con el PDF del Núcleo Académico, figura como candidato SNI a partir de 2026.",
+      "Doctor en ciencias del desarrollo regional por la UAGro. Figura como candidato SNI a partir de 2026.",
     historialAcademico: [
-      "Último grado (PDF NA): Doctor en ciencias del desarrollo regional - UAGro",
-      "Cuerpo académico (PDF NA): UAGro-CA-14 Turismo sustentable",
-      "Red de colaboración (PDF NA): Red Latinoamericana de Estudios Subnacionales de la UAGro",
-      "Nota: información individual no actualizada por el profesor.",
-    ],
+      "Último grado: Doctor en ciencias del desarrollo regional - UAGro",
+      "Cuerpo académico: UAGro-CA-14 Turismo sustentable",
+      "Red de colaboración: Red Latinoamericana de Estudios Subnacionales de la UAGro",    ],
     publicaciones: [
       {
         titulo: "Educación para el desarrollo regional",
@@ -326,9 +324,9 @@ export const profesores: Profesor[] = [
     semblanza:
       "Doctora en Dirección de Organizaciones por la Universidad del Distrito Federal. SNI candidata e integrante de redes de difusión y divulgación en ciencias y humanidades.",
     historialAcademico: [
-      "Último grado (PDF NA): Doctora en Dirección de Organizaciones - Universidad del Distrito Federal",
-      "Cuerpo académico (PDF NA): UAGro-224 Biotecnología y econometría de los sistemas agroalimentarios",
-      "Red de colaboración (PDF NA): Red de Difusión y Divulgación de Investigaciones en Ciencias y Humanidades",
+      "Último grado: Doctora en Dirección de Organizaciones - Universidad del Distrito Federal",
+      "Cuerpo académico: UAGro-224 Biotecnología y econometría de los sistemas agroalimentarios",
+      "Red de colaboración: Red de Difusión y Divulgación de Investigaciones en Ciencias y Humanidades",
     ],
     publicaciones: [
       {
@@ -350,9 +348,9 @@ export const profesores: Profesor[] = [
     semblanza:
       "Doctora en ciencias ambientales por la UAGro. SNI candidata e integrante del cuerpo académico UAGro-CA-185 Educación y sustentabilidad.",
     historialAcademico: [
-      "Último grado (PDF NA): Doctora en ciencias ambientales - UAGro",
-      "Cuerpo académico (PDF NA): UAGro-CA-185 Educación y sustentabilidad",
-      "Red de colaboración (PDF NA): Red de Educación para el Desarrollo Regional y Sostenibilidad de la UAGro",
+      "Último grado: Doctora en ciencias ambientales - UAGro",
+      "Cuerpo académico: UAGro-CA-185 Educación y sustentabilidad",
+      "Red de colaboración: Red de Educación para el Desarrollo Regional y Sostenibilidad de la UAGro",
     ],
     publicaciones: [
       {
@@ -374,9 +372,9 @@ export const profesores: Profesor[] = [
     semblanza:
       "Doctor en administración por la UAGro (candidato SNI a partir de 2026). Integrante del cuerpo académico UAGro-CA-227.",
     historialAcademico: [
-      "Último grado (PDF NA): Doctor en administración - UAGro",
-      "Cuerpo académico (PDF NA): UAGro-CA-227 Educación virtual y responsabilidad social",
-      "Red de colaboración (PDF NA): Red de Educación para el Desarrollo Regional y Sostenibilidad de la UAGro",
+      "Último grado: Doctor en administración - UAGro",
+      "Cuerpo académico: UAGro-CA-227 Educación virtual y responsabilidad social",
+      "Red de colaboración: Red de Educación para el Desarrollo Regional y Sostenibilidad de la UAGro",
     ],
     publicaciones: [
       {
@@ -398,9 +396,9 @@ export const profesores: Profesor[] = [
     semblanza:
       "Doctora en Dirección de Organizaciones por la UPAEP. Perfil PRODEP e integrante del cuerpo académico UAGro-CA-227.",
     historialAcademico: [
-      "Último grado (PDF NA): Doctora en dirección de organizaciones - UPAEP",
-      "Cuerpo académico (PDF NA): UAGro-CA-227 Educación virtual y responsabilidad social",
-      "Red de colaboración (PDF NA): Red Nacional de Productividad, Innovación y Competitividad Empresarial",
+      "Último grado: Doctora en dirección de organizaciones - UPAEP",
+      "Cuerpo académico: UAGro-CA-227 Educación virtual y responsabilidad social",
+      "Red de colaboración: Red Nacional de Productividad, Innovación y Competitividad Empresarial",
     ],
     publicaciones: [
       {
