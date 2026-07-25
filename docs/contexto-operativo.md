@@ -49,6 +49,7 @@ Estos cambios responden a una auditoria de diseño y accesibilidad del sitio. Se
 - **El cartel oficial pasa a ser la fuente rectora del proceso de admision.** El calendario, el telefono y el domicilio del sitio no coincidian con el. Se sustituyeron por los datos del cartel: proceso de octubre de 2025 a enero de 2026 con inicio en febrero de 2026, telefono 744 134 0900 ext. 4477 y domicilio en Av. Ruiz Cortines s/n, Col. Alta Progreso, Acapulco.
 - **Se publican en texto los datos que solo existian dentro de la imagen**: ponderacion de seleccion (curriculo 30%, entrevistas 25%, propedeutico 25%, EXANI-III 20%), modalidad escolarizada, perfil de aspirante y nombre del coordinador.
 - **Las etiquetas de la llamada a la accion pierden el ano.** El proceso de la generacion de febrero de 2026 ya concluyo, asi que la pagina lo declara cerrado en vez de anunciar "Convocatoria 2026" como si estuviera abierta.
+- **Copy de posicionamiento de la portada.** Decia "Forma parte de la élite directiva", en contradiccion con el objetivo del cartel (fortalecer micro, pequeñas y medianas empresas y favorecer a los sectores productivos mas vulnerables) y con las metas de inclusion y empleo digno del propio sitio. Se sustituyo por: "Dirige con responsabilidad social. Un posgrado público enfocado en fortalecer las micro, pequeñas y medianas empresas de Guerrero."
 
 ### Deuda tecnica
 
@@ -72,7 +73,6 @@ Estos puntos NO se resolvieron porque requieren informacion que solo tiene el pr
 - **Verificacion de los registros de tesis.** Se conservan con boton inhabilitado por indicacion expresa.
 - **Convenios de vinculacion.** Catorce instituciones listadas sin fuente ni fecha.
 - **Fotografia del nucleo academico.** Los retratos no comparten fondo ni encuadre; se normalizo el recorte por CSS, pero homogeneizarlos de verdad requiere volver a fotografiar.
-- **Copy de posicionamiento.** La portada dice "Forma parte de la élite directiva" mientras los objetivos hablan de inclusion, equidad y empleo digno. No se modifico por ser una decision de posicionamiento institucional.
 
 ## 4. Fuentes rectoras
 
