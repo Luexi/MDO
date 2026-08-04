@@ -9,11 +9,13 @@ Fecha de actualizacion: 2026-08-04
 - URL temporal: `https://luexi.github.io/MDO` (base `/MDO`).
 - URL definitiva pendiente de DNS: `https://maestriadirecciondeorganizaciones.uagro.mx` (base `/`).
 - Convocatoria para la generacion febrero 2027 publicada, con pre-registro del 19 al 30 de octubre de 2026.
+- Vercel reactivado temporalmente porque el QR del cartel apunta a `https://mdo-alpha.vercel.app`; la rama de produccion vuelve a ser `main` y el despliegue usa base `/`.
 - Build validado con `npm run build`, que ahora incluye un guard de enlaces.
 - Rutas principales, ruta dinamica de profesores y nueva ruta `/plan-estudios` activas.
 
 ## 2. Cambios aplicados el 2026-08-04
 
+- **Vercel recuperado temporalmente.** El dominio `mdo-alpha.vercel.app` vuelve a desplegar desde `main`. Astro usa `/` por defecto para Vercel y el workflow de GitHub Pages conserva explicitamente `/MDO`, de modo que ambos destinos cargan sus assets correctamente.
 - **Convocatoria febrero 2027 publicada.** Se sustituyo el cartel oficial y se sincronizaron la portada, `/convocatoria` y el repositorio de documentos.
 - **Calendario actualizado.** El proceso inicia con el pre-registro del 19 al 30 de octubre de 2026 y concluye con las inscripciones del 18 al 22 de enero de 2027. A la fecha de esta actualizacion ninguna etapa esta marcada como vigente.
 - **Ponderaciones actualizadas.** EXANI-III 20%, conocimientos en metodologia de investigacion (curso propedeutico) 30%, entrevista 30% y curriculo profesional 20%.
