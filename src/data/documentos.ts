@@ -35,10 +35,11 @@ export const documentos: Documento[] = [
     icono: "FileSpreadsheet",
   },
   {
-    id: "convocatoria-2026",
+    id: "convocatoria-2027",
     // Lleva el ano porque identifica a UN documento concreto, el de la
-    // generacion que inicio en febrero de 2026, no a un proceso abierto.
-    titulo: "Convocatoria, generación febrero 2026",
+    // generacion que inicia en febrero de 2027. La tarjeta permanece en proceso
+    // hasta contar con un PDF o enlace oficial de descarga.
+    titulo: "Convocatoria, generación febrero 2027",
     descripcion:
       "Convocatoria con requisitos, calendario y criterios de selección.",
     categoria: "Admisión",

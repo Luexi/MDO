@@ -1,6 +1,6 @@
 # Contexto Operativo del Proyecto
 
-Fecha de actualizacion: 2026-07-25
+Fecha de actualizacion: 2026-08-04
 
 ## 1. Estado funcional
 
@@ -8,10 +8,20 @@ Fecha de actualizacion: 2026-07-25
 - Publicado en **GitHub Pages** mediante GitHub Actions. Salida de Vercel completada.
 - URL temporal: `https://luexi.github.io/MDO` (base `/MDO`).
 - URL definitiva pendiente de DNS: `https://maestriadirecciondeorganizaciones.uagro.mx` (base `/`).
+- Convocatoria para la generacion febrero 2027 publicada, con pre-registro del 19 al 30 de octubre de 2026.
 - Build validado con `npm run build`, que ahora incluye un guard de enlaces.
 - Rutas principales, ruta dinamica de profesores y nueva ruta `/plan-estudios` activas.
 
-## 2. Cambios aplicados el 2026-07-25
+## 2. Cambios aplicados el 2026-08-04
+
+- **Convocatoria febrero 2027 publicada.** Se sustituyo el cartel oficial y se sincronizaron la portada, `/convocatoria` y el repositorio de documentos.
+- **Calendario actualizado.** El proceso inicia con el pre-registro del 19 al 30 de octubre de 2026 y concluye con las inscripciones del 18 al 22 de enero de 2027. A la fecha de esta actualizacion ninguna etapa esta marcada como vigente.
+- **Ponderaciones actualizadas.** EXANI-III 20%, conocimientos en metodologia de investigacion (curso propedeutico) 30%, entrevista 30% y curriculo profesional 20%.
+- **Perfil de ingreso actualizado.** Se publica en texto el perfil del nuevo cartel para mantenerlo legible en movil y accesible para lectores de pantalla.
+- **Requisitos conservados por confirmacion del responsable del sitio.** Se mantienen los nueve documentos y el promedio minimo de 8.0 aunque el cartel 2027 no los repita.
+- **Sin enlaces inventados.** El cartel esta disponible como imagen en `/convocatoria`; la tarjeta del repositorio permanece "En proceso" hasta recibir un PDF o enlace oficial.
+
+## 3. Cambios aplicados el 2026-07-25
 
 Estos cambios responden a una auditoria de diseño y accesibilidad del sitio. Se agrupan por naturaleza del problema.
 
@@ -61,11 +71,10 @@ Estos cambios responden a una auditoria de diseño y accesibilidad del sitio. Se
 - Tarjetas con `h-full` y CTA anclado con `mt-auto`: los botones de una misma fila ya no quedan a alturas distintas.
 - Rejillas de tres columnas alimentadas por listas que no son multiplo de tres, corregidas para no dejar huecos.
 
-## 3. Pendientes que dependen de la coordinacion
+## 4. Pendientes que dependen de la coordinacion
 
 Estos puntos NO se resolvieron porque requieren informacion que solo tiene el programa:
 
-- **Fechas de la proxima convocatoria. Es el pendiente mas visible.** El calendario publicado corresponde al proceso que cerro en enero de 2026, y el sitio lo declara concluido. En cuanto exista convocatoria nueva hay que sustituir `public/convocatoria.webp`, actualizar `calendarioAdmision`, marcar `activo: true` en la etapa en curso y poner `cerrada: false` en `convocatoriaVigente`.
 - **URLs reales** de convocatoria en PDF, formularios de preinscripcion, formatos y lineamientos. Mientras tanto las tarjetas dicen "En proceso".
 - **Cuotas del programa.** La pregunta frecuente existe y enruta a la coordinacion, sin cifras inventadas.
 - **Sede y horario de entrega de documentos.** Mismo tratamiento.
@@ -74,7 +83,7 @@ Estos puntos NO se resolvieron porque requieren informacion que solo tiene el pr
 - **Convenios de vinculacion.** Catorce instituciones listadas sin fuente ni fecha.
 - **Fotografia del nucleo academico.** Los retratos no comparten fondo ni encuadre; se normalizo el recorte por CSS, pero homogeneizarlos de verdad requiere volver a fotografiar.
 
-## 4. Fuentes rectoras
+## 5. Fuentes rectoras
 
 El proyecto tiene dos documentos que prevalecen sobre lo que diga el codigo:
 
@@ -85,7 +94,7 @@ El proyecto tiene dos documentos que prevalecen sobre lo que diga el codigo:
 
 Si el sitio y el documento difieren, gana el documento. Al sustituir cualquiera de los dos, actualiza el archivo de datos correspondiente en la misma tanda.
 
-## 5. Fuente de verdad para docentes
+## 6. Fuente de verdad para docentes
 
 - Documento rector: `profesores/NUCLEO ACADEMICO.pdf`
 - Complemento individual: `profesores/*.txt`
@@ -95,7 +104,7 @@ Regla de conflicto: **gana el PDF**.
 
 Nota: las semblanzas usan "SNI" y `/objetivos` usa "SNII". No se unifico porque las semblanzas reproducen el PDF rector y esa regla tiene prioridad.
 
-## 6. Orden de fichas vigente en Nucleo Academico
+## 7. Orden de fichas vigente en Nucleo Academico
 
 1. Ruben Hernandez Chavarria
 2. David Antonio Reyes Pena
@@ -114,7 +123,7 @@ Nota: las semblanzas usan "SNI" y `/objetivos` usa "SNII". No se unifico porque 
 15. Jose Hugo Vazquez Mendoza
 16. Nallely Vazquez Martinez
 
-## 7. Archivos clave para mantenimiento
+## 8. Archivos clave para mantenimiento
 
 - `src/data/navegacion.ts` (arquitectura de navegacion)
 - `src/data/contacto.ts` (fuente unica de contacto)
@@ -126,7 +135,7 @@ Nota: las semblanzas usan "SNI" y `/objetivos` usa "SNII". No se unifico porque 
 - `scripts/check-enlaces.mjs`
 - `.github/workflows/deploy.yml`
 
-## 8. Recomendaciones para siguientes cambios
+## 9. Recomendaciones para siguientes cambios
 
 - Toda ruta interna nueva se escribe con `withBase()`.
 - Si un documento no existe todavia, omite `linkDrive`; no inventes URLs.

@@ -42,56 +42,55 @@ export interface PreguntaFrecuente {
 /**
  * Estado de la convocatoria publicada en el cartel.
  *
- * El calendario del cartel corresponde a la generacion que inicio en febrero
- * de 2026, asi que a dia de hoy todas sus etapas ya concluyeron. `cerrada`
- * controla que la interfaz lo diga con claridad en vez de presentar un proceso
- * abierto que no lo esta.
+ * La convocatoria para la generacion febrero de 2027 ya esta publicada. El
+ * pre-registro comienza el 19 de octubre de 2026, por lo que todavia no hay una
+ * etapa vigente que deba destacarse en la portada.
  */
 export const convocatoriaVigente = {
-  generacion: "Generación febrero 2026",
+  generacion: "Generación febrero 2027",
   modalidad: "Escolarizada",
-  cerrada: true,
-  nota: "El calendario corresponde al proceso de selección de la generación que inició en febrero de 2026. Para conocer la fecha de la próxima convocatoria, contacta a la coordinación del programa.",
+  cerrada: false,
+  nota: "La convocatoria para la generación febrero de 2027 está publicada. El pre-registro inicia el 19 de octubre de 2026.",
 } as const;
 
 /** Perfil de aspirante al que se dirige la convocatoria, segun el cartel. */
 export const dirigidoA =
-  "Profesionistas en las áreas de ciencias sociales, económicas y administrativas, comprometidas con el desarrollo social y empresarial de la región, con alto sentido humano y responsabilidad social.";
+  "Personas egresadas en contaduría, administración, turismo, economía, mercadotecnia y áreas disciplinares afines, con disposición para el trabajo colaborativo, la investigación aplicada y la solución de problemas organizacionales, alto sentido ético y responsabilidad social.";
 
 /** Calendario tal como aparece en el cartel oficial. */
 export const calendarioAdmision: HitoCalendario[] = [
   {
-    fecha: "20 al 30 de octubre de 2025",
+    fecha: "19 al 30 de octubre de 2026",
     evento: "Pre-registro, registro electrónico y entrega de fichas",
     descripcion: "Apertura del proceso y recepción de documentación.",
     activo: false,
   },
   {
-    fecha: "15 de noviembre de 2025",
+    fecha: "14 de noviembre de 2026",
     evento: "Aplicación del examen EXANI-III",
     descripcion: "Examen nacional de ingreso al posgrado, aplicado por el Ceneval.",
     activo: false,
   },
   {
-    fecha: "22 y 29 de noviembre de 2025",
+    fecha: "21 y 28 de noviembre de 2026",
     evento: "Curso propedéutico",
     descripcion: "Sesiones de nivelación previas a la selección.",
     activo: false,
   },
   {
-    fecha: "24 al 26 de noviembre de 2025",
+    fecha: "25 al 27 de noviembre de 2026",
     evento: "Entrevistas",
     descripcion: "Entrevistas de los aspirantes con el comité de selección.",
     activo: false,
   },
   {
-    fecha: "15 de diciembre de 2025",
-    evento: "Publicación de la lista de aceptados",
+    fecha: "11 de diciembre de 2026",
+    evento: "Consulta de resultados y aspirantes aceptados",
     descripcion: "Difusión de resultados del proceso de selección.",
     activo: false,
   },
   {
-    fecha: "19 al 23 de enero de 2026",
+    fecha: "18 al 22 de enero de 2027",
     evento: "Periodo de inscripciones",
     descripcion: "Inscripción de las personas aceptadas al programa.",
     activo: false,
@@ -115,10 +114,13 @@ export const etapaVigente: HitoCalendario | undefined =
  * aspirante para saber donde jugarse el ingreso.
  */
 export const criteriosSeleccion: CriterioSeleccion[] = [
-  { criterio: "Currículo académico y profesional", ponderacion: 30 },
-  { criterio: "Entrevistas", ponderacion: 25 },
-  { criterio: "Curso propedéutico", ponderacion: 25 },
   { criterio: "Examen EXANI-III", ponderacion: 20 },
+  {
+    criterio: "Conocimientos en metodología de investigación (curso propedéutico)",
+    ponderacion: 30,
+  },
+  { criterio: "Entrevista", ponderacion: 30 },
+  { criterio: "Currículo profesional", ponderacion: 20 },
 ];
 
 export const pasosAdmision: PasoAdmision[] = [
@@ -140,7 +142,7 @@ export const pasosAdmision: PasoAdmision[] = [
     numero: 3,
     titulo: "Curso propedéutico, entrevista e inscripción",
     descripcion:
-      "La selección pondera currículo, entrevista, propedéutico y examen. Las personas aceptadas se inscriben antes del inicio de cursos.",
+      "La selección pondera el EXANI-III, los conocimientos en metodología de investigación, la entrevista y el currículo profesional. Las personas aceptadas se inscriben antes del inicio de cursos.",
     icono: "GraduationCap",
   },
 ];
@@ -161,7 +163,7 @@ export const preguntasFrecuentes: PreguntaFrecuente[] = [
   {
     pregunta: "¿Quién puede postular al programa?",
     respuesta:
-      "Profesionistas de las áreas de ciencias sociales, económicas y administrativas: administración, economía, contaduría, mercadotecnia, turismo y áreas relacionadas. La convocatoria pide un promedio mínimo de 8.0 en el certificado de calificaciones.",
+      "Personas egresadas en contaduría, administración, turismo, economía, mercadotecnia y áreas disciplinares afines. Se requiere un promedio mínimo de 8.0 en el certificado de calificaciones.",
   },
   {
     pregunta: "¿Cuál es la modalidad del programa?",
@@ -171,7 +173,7 @@ export const preguntasFrecuentes: PreguntaFrecuente[] = [
   {
     pregunta: "¿Cómo se selecciona a los aspirantes?",
     respuesta:
-      "La selección se pondera así: currículo académico y profesional 30%, entrevistas 25%, curso propedéutico 25% y examen EXANI-III 20%.",
+      "La selección se pondera así: examen EXANI-III 20%, conocimientos en metodología de investigación (curso propedéutico) 30%, entrevista 30% y currículo profesional 20%.",
   },
   {
     pregunta: "¿Qué es el EXANI-III?",
@@ -184,9 +186,9 @@ export const preguntasFrecuentes: PreguntaFrecuente[] = [
       "No. La admisión al programa y la asignación de beca son procesos distintos. Las becas las otorga SECIHTI de acuerdo con el presupuesto del ejercicio fiscal correspondiente.",
   },
   {
-    pregunta: "¿Cuándo abre la próxima convocatoria?",
+    pregunta: "¿Cuándo inicia el proceso de admisión?",
     respuesta:
-      "El calendario publicado corresponde al proceso de la generación que inició en febrero de 2026. Consulta con la coordinación del programa la fecha de apertura del siguiente proceso.",
+      "El pre-registro, registro electrónico y entrega de fichas se realizarán del 19 al 30 de octubre de 2026. El periodo de inscripción para las personas aceptadas será del 18 al 22 de enero de 2027.",
   },
   {
     pregunta: "¿Cuánto cuesta el programa?",

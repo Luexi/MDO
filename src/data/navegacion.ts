@@ -105,13 +105,11 @@ export const navGrupos: NavGrupo[] = [
 /**
  * Destino de la llamada a la accion principal, presente en toda la navegacion.
  *
- * La etiqueta no lleva ano: el proceso de la generacion de febrero de 2026 ya
- * concluyo, asi que anunciar "Convocatoria 2026" prometeria un proceso abierto
- * que no lo esta. Cuando se publique la convocatoria siguiente, aqui es donde
- * conviene volver a poner el ano.
+ * La etiqueta incluye el ano porque la convocatoria para la generacion de
+ * febrero de 2027 ya esta publicada.
  */
 export const ctaPrincipal = {
-  label: "Ver convocatoria",
+  label: "Convocatoria 2027",
   labelCorto: "Convocatoria",
   href: "/convocatoria",
 } as const;
