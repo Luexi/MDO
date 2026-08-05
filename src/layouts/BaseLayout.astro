@@ -2,7 +2,21 @@
 import Navbar from "@/components/layout/Navbar.astro";
 import Footer from "@/components/layout/Footer.astro";
 import { withBase } from "@/lib/paths";
+import { canonical, canonicalBase } from "@/lib/seo";
 import "@/styles/global.css";
+
+/*
+ * Las fuentes se auto-hospedan (ver `src/styles/fonts.css`). Vite resuelve el
+ * `?url` a la ruta final con hash y con la base de despliegue ya aplicada, asi
+ * que estas dos lineas no necesitan `withBase()` y no se rompen al cambiar de
+ * dominio.
+ *
+ * Solo se precargan los subconjuntos `latin`: son los que usa el 100% del
+ * contenido visible de arranque. `latin-ext` queda a demanda del navegador,
+ * que solo lo pedira si algun caracter lo requiere.
+ */
+import interLatin from "@/assets/fonts/inter-latin.woff2?url";
+import playfairLatin from "@/assets/fonts/playfair-display-latin.woff2?url";
 
 interface Props {
   title?: string;
@@ -21,12 +35,16 @@ const {
 } = Astro.props;
 
 const currentPath = Astro.url.pathname;
-// `Astro.site` viene de `astro.config.mjs`, que lo toma de PUBLIC_SITE_URL.
-const siteOrigin = Astro.site?.toString() ?? "http://localhost:8080";
-const canonicalUrl = new URL(currentPath, siteOrigin).toString();
-const homeUrl = new URL(withBase("/"), siteOrigin).toString();
-const logoUrl = new URL(withBase("/assets/logos/logo-uagro.webp"), siteOrigin).toString();
-const ogImageUrl = new URL(withBase("/assets/logos/logo-mdo.webp"), siteOrigin).toString();
+/*
+ * Todas las URL absolutas cuelgan del host canonico, no del que sirve la
+ * peticion. El sitio se publica a la vez en GitHub Pages y en Vercel, y antes
+ * cada destino se declaraba canonico a si mismo: contenido duplicado en dos
+ * dominios sin señal de cual indexar. Ver `src/lib/seo.ts`.
+ */
+const canonicalUrl = canonical(currentPath);
+const homeUrl = `${canonicalBase()}/`;
+const logoUrl = `${canonicalBase()}/assets/logos/logo-uagro.webp`;
+const ogImageUrl = `${canonicalBase()}/assets/logos/logo-mdo.webp`;
 
 const websiteSchema = {
   "@context": "https://schema.org",
@@ -77,20 +95,20 @@ const organizationSchema = {
     <meta name="twitter:image" content={ogImageUrl} />
     <link rel="icon" type="image/svg+xml" href={withBase("/favicon.svg")} />
     <link rel="manifest" href={withBase("/site.webmanifest")} />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap"
-      media="print"
-      onload="this.media='all'"
+      rel="preload"
+      href={interLatin}
+      as="font"
+      type="font/woff2"
+      crossorigin
     />
-    <noscript>
-      <link
-        rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap"
-      />
-    </noscript>
+    <link
+      rel="preload"
+      href={playfairLatin}
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
     {
       currentPath === withBase("/") && (
         <>
@@ -125,9 +143,11 @@ const organizationSchema = {
     <script>
       import { initNavbar } from "@/scripts/navbar";
       import { initTabs } from "@/scripts/tabs";
+      import { initFiltroTesis } from "@/scripts/filtroTesis";
 
       initNavbar();
       initTabs();
+      initFiltroTesis();
     </script>
   </body>
 </html>

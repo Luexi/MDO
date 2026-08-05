@@ -84,14 +84,19 @@ const esSingular = lineas.length === 1;
         <h2 class="mb-2 font-display text-xl font-semibold text-foreground">
           ¿Te interesa investigar con nosotros?
         </h2>
-        <p class="mx-auto max-w-2xl text-muted-foreground">
+        {/*
+          `text-foreground/80` y no `text-muted-foreground`: sobre `bg-primary/5`
+          ese token cae a 4.46:1, por debajo del minimo AA. Ver la nota de
+          `--muted-foreground` en global.css.
+        */}
+        <p class="mx-auto max-w-2xl text-foreground/80">
           El núcleo académico está conformado por investigadoras e
           investigadores activos que pueden dirigir tu proyecto de tesis en
           {esSingular ? " esta línea." : " estas líneas."}
         </p>
         <a
           href={withBase("/nucleo-academico")}
-          class="mt-4 inline-flex rounded font-medium text-accent hover:underline"
+          class="mt-4 inline-flex rounded-lg font-medium text-accent hover:underline"
         >
           Conocer al núcleo académico
         </a>

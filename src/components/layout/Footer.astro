@@ -63,7 +63,7 @@ const anio = new Date().getFullYear();
                 <li>
                   <a
                     href={withBase(item.href)}
-                    class="rounded text-sm text-primary-foreground/80 transition-colors hover:text-primary-foreground"
+                    class="rounded-lg text-sm text-primary-foreground/80 transition-colors hover:text-primary-foreground"
                   >
                     {item.label}
                   </a>
@@ -93,7 +93,7 @@ const anio = new Date().getFullYear();
               <Phone className="h-5 w-5 flex-shrink-0" aria-hidden="true" />
               <a
                 href={contacto.telefonoHref}
-                class="rounded text-sm text-primary-foreground/80 transition-colors hover:text-primary-foreground"
+                class="rounded-lg text-sm text-primary-foreground/80 transition-colors hover:text-primary-foreground"
               >
                 {contacto.telefono}
               </a>
@@ -102,7 +102,7 @@ const anio = new Date().getFullYear();
               <Mail className="h-5 w-5 flex-shrink-0" aria-hidden="true" />
               <a
                 href={`mailto:${contacto.email}`}
-                class="break-all rounded text-sm text-primary-foreground/80 transition-colors hover:text-primary-foreground"
+                class="break-all rounded-lg text-sm text-primary-foreground/80 transition-colors hover:text-primary-foreground"
               >
                 {contacto.email}
               </a>
@@ -120,6 +120,7 @@ const anio = new Date().getFullYear();
             apuntaban a las portadas genericas de esas redes, no a perfiles
             propios, asi que se retiraron.
           */}
+          {/* `p-3` sobre un icono de 20px da 44x44. Con `p-2` eran 36. */}
           <div class="flex gap-3 md:justify-end">
             {
               redesSociales.map((red) => (
@@ -127,7 +128,7 @@ const anio = new Date().getFullYear();
                   href={red.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  class="rounded-lg bg-primary-foreground/10 p-2 transition-colors hover:bg-primary-foreground/20"
+                  class="rounded-lg bg-primary-foreground/10 p-3 transition-colors hover:bg-primary-foreground/20"
                   aria-label={`${red.nombre} de la MDO UAGro, se abre en una pestaña nueva`}
                 >
                   <Facebook className="h-5 w-5" aria-hidden="true" />

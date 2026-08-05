@@ -12,3 +12,10 @@ Allow: /
 
 User-agent: *
 Allow: /
+
+# URL absoluta a proposito: este archivo lo sirven los dos destinos del sitio
+# (GitHub Pages y Vercel) y ambos deben apuntar al sitemap del host canonico,
+# el mismo que declaran las etiquetas <link rel="canonical">.
+# Al activar el dominio propio hay que cambiar esta linea junto con
+# PUBLIC_CANONICAL_URL en .github/workflows/deploy.yml y src/lib/seo.ts.
+Sitemap: https://luexi.github.io/MDO/sitemap-index.xml

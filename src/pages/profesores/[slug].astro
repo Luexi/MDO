@@ -31,7 +31,7 @@ const { profesor } = Astro.props;
     <div class="relative mx-auto max-w-5xl px-4">
       <a
         href={withBase("/nucleo-academico")}
-        class="mb-8 inline-flex items-center gap-2 rounded text-muted-foreground transition-colors hover:text-foreground"
+        class="mb-8 inline-flex items-center gap-2 rounded-lg text-muted-foreground transition-colors hover:text-foreground"
       >
         <ArrowLeft className="h-4 w-4" aria-hidden="true" />
         Volver al núcleo académico
@@ -94,7 +94,7 @@ const { profesor } = Astro.props;
             profesor.email && (
               <a
                 href={`mailto:${profesor.email}`}
-                class="mt-4 inline-flex items-center gap-2 rounded text-accent hover:underline"
+                class="mt-4 inline-flex items-center gap-2 rounded-lg text-accent hover:underline"
               >
                 <Mail className="h-4 w-4" aria-hidden="true" />
                 {profesor.email}

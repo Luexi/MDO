@@ -1,10 +1,27 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
-import type { ImagenGaleria } from "@/data/galeria";
-import { withBase } from "@/lib/paths";
+
+interface Variante {
+  src: string;
+  srcset: string;
+}
+
+export interface ImagenVista {
+  id: string;
+  alt: string;
+  titulo: string;
+  descripcion: string;
+  /** Dimensiones del original, para reservar el espacio antes de descargar. */
+  ancho: number;
+  alto: number;
+  miniatura: Variante;
+  completa: Variante;
+}
 
 interface GaleriaLightboxProps {
-  imagenes: ImagenGaleria[];
+  imagenes: ImagenVista[];
+  miniaturaSizes: string;
+  completaSizes: string;
 }
 
 /**
@@ -19,8 +36,15 @@ interface GaleriaLightboxProps {
  *    Imágenes", asi que la seccion prometia mas material del que existe.
  *  - Las miniaturas eran `div` con `cursor-pointer` y sin destino: senalaban una
  *    interaccion inexistente y eran invisibles para un lector de pantalla.
+ *
+ * Las URLs de imagen llegan ya resueltas desde `galeria.astro`: `astro:assets`
+ * no esta disponible dentro de un componente React.
  */
-export default function GaleriaLightbox({ imagenes }: GaleriaLightboxProps) {
+export default function GaleriaLightbox({
+  imagenes,
+  miniaturaSizes,
+  completaSizes,
+}: GaleriaLightboxProps) {
   const [abierta, setAbierta] = useState<number | null>(null);
   const dialogoRef = useRef<HTMLDivElement>(null);
   const disparadorRef = useRef<HTMLButtonElement | null>(null);
@@ -94,8 +118,16 @@ export default function GaleriaLightbox({ imagenes }: GaleriaLightboxProps) {
       <ul className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {imagenes.map((imagen, indice) => (
           <li key={imagen.id} className="h-full">
+            {/*
+              `aria-label` explicito: sin el, el nombre accesible del boton era
+              la concatenacion del `alt` de la foto, el titulo, la descripcion y
+              "Ampliar imagen", o sea cuatro frases seguidas para anunciar un
+              solo control. El texto interior sigue leyendose como contenido de
+              la tarjeta; lo que cambia es el nombre del boton.
+            */}
             <button
               type="button"
+              aria-label={`Ampliar: ${imagen.titulo}`}
               onClick={(evento) => {
                 disparadorRef.current = evento.currentTarget;
                 setAbierta(indice);
@@ -104,11 +136,14 @@ export default function GaleriaLightbox({ imagenes }: GaleriaLightboxProps) {
             >
               <span className="block aspect-[4/3] overflow-hidden bg-muted">
                 <img
-                  src={withBase(imagen.src)}
+                  src={imagen.miniatura.src}
+                  srcSet={imagen.miniatura.srcset}
+                  sizes={miniaturaSizes}
                   alt={imagen.alt}
-                  width={1200}
-                  height={900}
+                  width={imagen.ancho}
+                  height={imagen.alto}
                   loading="lazy"
+                  decoding="async"
                   className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
                 />
               </span>
@@ -129,12 +164,22 @@ export default function GaleriaLightbox({ imagenes }: GaleriaLightboxProps) {
       </ul>
 
       {imagenActiva && (
-        <div
-          className="fixed inset-0 z-[60] flex items-center justify-center bg-foreground/90 p-4"
-          onClick={(evento) => {
-            if (evento.target === evento.currentTarget) cerrar();
-          }}
-        >
+        <div className="fixed inset-0 z-[60] flex items-center justify-center p-4">
+          {/*
+            El fondo es una superficie de raton y nada mas: cerrarlo pulsando
+            fuera es una comodidad, no la via de salida. Va `aria-hidden` y sin
+            foco porque quien navega con teclado ya tiene Escape y el boton de
+            cerrar; anunciarlo como un control mas solo añadiria ruido.
+
+            Antes el manejador vivia en el contenedor del dialogo, o sea un
+            `div` interactivo sin equivalente de teclado.
+          */}
+          <div
+            aria-hidden="true"
+            onClick={cerrar}
+            className="absolute inset-0 bg-foreground/90"
+          />
+
           <div
             ref={dialogoRef}
             role="dialog"
@@ -149,7 +194,7 @@ export default function GaleriaLightbox({ imagenes }: GaleriaLightboxProps) {
               <button
                 type="button"
                 onClick={cerrar}
-                className="rounded-lg bg-background/10 p-2 text-background transition-colors hover:bg-background/20"
+                className="rounded-lg bg-background/10 p-3 text-background transition-colors hover:bg-background/20"
                 aria-label="Cerrar el visor de imágenes"
               >
                 <X className="h-5 w-5" aria-hidden="true" />
@@ -157,10 +202,12 @@ export default function GaleriaLightbox({ imagenes }: GaleriaLightboxProps) {
             </div>
 
             <img
-              src={withBase(imagenActiva.src)}
+              src={imagenActiva.completa.src}
+              srcSet={imagenActiva.completa.srcset}
+              sizes={completaSizes}
               alt={imagenActiva.alt}
-              width={1200}
-              height={900}
+              width={imagenActiva.ancho}
+              height={imagenActiva.alto}
               className="max-h-[70vh] w-full rounded-2xl bg-muted object-contain"
             />
 
@@ -168,7 +215,7 @@ export default function GaleriaLightbox({ imagenes }: GaleriaLightboxProps) {
               <button
                 type="button"
                 onClick={() => mover(-1)}
-                className="rounded-lg bg-background/10 p-2 text-background transition-colors hover:bg-background/20"
+                className="rounded-lg bg-background/10 p-3 text-background transition-colors hover:bg-background/20"
                 aria-label="Imagen anterior"
               >
                 <ChevronLeft className="h-5 w-5" aria-hidden="true" />
@@ -186,7 +233,7 @@ export default function GaleriaLightbox({ imagenes }: GaleriaLightboxProps) {
               <button
                 type="button"
                 onClick={() => mover(1)}
-                className="rounded-lg bg-background/10 p-2 text-background transition-colors hover:bg-background/20"
+                className="rounded-lg bg-background/10 p-3 text-background transition-colors hover:bg-background/20"
                 aria-label="Imagen siguiente"
               >
                 <ChevronRight className="h-5 w-5" aria-hidden="true" />

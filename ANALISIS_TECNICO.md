@@ -40,15 +40,21 @@ El sitio envía **HTML puro** al navegador. JavaScript solo se carga donde hace 
 
 Islas React activas:
 
-- `TesisFiltro.tsx`: filtra tesis por generación.
 - `GaleriaLightbox.tsx`: rejilla de galería con visor modal accesible.
 
 Comportamiento resuelto sin React:
 
 - `src/scripts/navbar.ts`: menús desplegables, menú móvil, foco y Escape.
 - `src/scripts/tabs.ts`: patrón WAI-ARIA de pestañas.
+- `src/scripts/filtroTesis.ts`: filtro de tesis por generación.
 
-Este reparto es deliberado: React solo entra cuando el estado lo justifica.
+Este reparto es deliberado: React solo entra cuando el estado lo justifica. El
+filtro de tesis fue isla y dejó de serlo: traía 54 KB comprimidos de framework
+para gestionar una sola cadena de estado. El visor de galería se queda porque
+un diálogo modal con contención de foco sí lo amerita.
+
+Medición: `/tesis`, `/objetivos` y el resto de páginas envían **cero** JavaScript
+de framework. Solo `/galeria` carga React.
 
 ## 3. Estructura del Proyecto
 

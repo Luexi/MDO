@@ -118,25 +118,45 @@ export const ctaPrincipal = {
 export const enlacesFooter = navGrupos;
 
 /**
- * Devuelve true si `href` corresponde a la pagina actual.
+ * Compara solo la RUTA de `href` con la pagina actual, ignorando el ancla.
  *
  * Los href se declaran sin prefijo ("/objetivos") pero `Astro.url.pathname`
  * SI incluye la base de despliegue ("/MDO/objetivos"), asi que hay que
- * prefijar el destino antes de comparar. Sin esto, `aria-current="page"` y el
- * resaltado del grupo activo no se aplicarian nunca mientras el sitio viva en
- * una subruta de GitHub Pages.
- *
- * Ignora anclas, para que "/convocatoria#preguntas-frecuentes" marque
- * /convocatoria como activa.
+ * prefijar el destino antes de comparar. Sin esto nada se marcaria como activo
+ * mientras el sitio viva en una subruta de GitHub Pages.
  */
-export function esRutaActiva(href: string, rutaActual: string): boolean {
+function mismaPagina(href: string, rutaActual: string): boolean {
   const normaliza = (ruta: string) => ruta.split("#")[0].replace(/\/+$/, "") || "/";
-  const destino = normaliza(withBase(href));
-  const actual = normaliza(rutaActual);
-  return destino === actual;
+  return normaliza(withBase(href)) === normaliza(rutaActual);
 }
 
-/** True si algun destino del grupo corresponde a la pagina actual. */
+/**
+ * Devuelve true si `href` ES la pagina actual, y por tanto merece
+ * `aria-current="page"`.
+ *
+ * Exige que el destino NO lleve ancla. Antes bastaba con que coincidiera la
+ * ruta, asi que en /convocatoria se marcaban DOS destinos distintos como
+ * pagina actual: "Convocatoria" y "Preguntas frecuentes"
+ * (/convocatoria#preguntas-frecuentes). Un lector de pantalla anunciaba
+ * "pagina actual" dos veces y el menu movil pintaba dos entradas en azul.
+ *
+ * Un enlace con ancla apunta a una SECCION de la pagina, no a la pagina. Y el
+ * fragmento no llega nunca al servidor, asi que en build no hay forma de saber
+ * si esa seccion es la posicion actual: tampoco corresponde
+ * `aria-current="location"`. La respuesta correcta es no marcarlo.
+ */
+export function esRutaActiva(href: string, rutaActual: string): boolean {
+  if (href.includes("#")) return false;
+  return mismaPagina(href, rutaActual);
+}
+
+/**
+ * True si algun destino del grupo cae en la pagina actual.
+ *
+ * Aqui SI cuentan los enlaces con ancla: estando en /convocatoria, el grupo
+ * "Admisión" debe seguir resaltado aunque se haya llegado por el enlace de
+ * preguntas frecuentes.
+ */
 export function grupoActivo(grupo: NavGrupo, rutaActual: string): boolean {
-  return grupo.items.some((item) => esRutaActiva(item.href, rutaActual));
+  return grupo.items.some((item) => mismaPagina(item.href, rutaActual));
 }

@@ -34,23 +34,28 @@ MDO/
     check-enlaces.mjs      # guard de enlaces previo al build
 
   src/
+    assets/
+      fonts/               # woff2 auto-hospedadas
+      galeria/             # fotos que Astro optimiza
     components/
       cards/               # ProfesorCard, TesisCard, DocumentoCard, InstalacionCard
-      islands/             # TesisFiltro, GaleriaLightbox (React hidratado)
+      islands/             # GaleriaLightbox (unica isla React)
       layout/              # Navbar.astro, Footer.astro
-      ui/                  # Button, PageHeader, TabGroup
+      ui/                  # Button, ButtonLink (.tsx y .astro), buttonVariants,
+                           # EstadoEnProceso, PageHeader, TabGroup
       ObjetivosTabs.astro
       PlanEstudiosTabs.astro
     data/                  # contenido editable
     layouts/               # BaseLayout.astro
     lib/
-      paths.ts             # withBase(), link(), isExternal()
+      paths.ts             # withBase(), withoutBase(), link(), isExternal()
+      seo.ts               # canonical() y host canonico
       utils.ts
     pages/
       profesores/[slug].astro
-    scripts/               # navbar.ts, tabs.ts (comportamiento vanilla)
-    styles/                # global.css (tokens y tema)
-    test/
+    scripts/               # navbar.ts, tabs.ts, filtroTesis.ts (vanilla)
+    styles/                # global.css (tokens y tema), fonts.css
+    test/                  # paths, navegacion, checkEnlaces, contenido
 
   docs/
 ```
@@ -112,8 +117,16 @@ Las URLs no cambiaron al reagrupar: solo cambio la forma de llegar a ellas, para
 
 ### Islas React (se hidratan solo donde se usan)
 
-- `islands/TesisFiltro.tsx` (`client:idle`) — filtro por generacion
 - `islands/GaleriaLightbox.tsx` (`client:idle`) — rejilla con visor modal
+
+Es la unica. `TesisFiltro.tsx` tambien lo era y se revirtio a
+`src/scripts/filtroTesis.ts`: traia 54 KB comprimidos de React a `/tesis` para
+gestionar una sola cadena de estado, incumpliendo la regla 2 de la seccion 14 de
+este mismo documento. Las tarjetas de las tres generaciones se renderizan ahora
+en el servidor y el script solo conmuta `hidden`.
+
+El visor de galeria si justifica React: dialogo modal, contencion de foco,
+navegacion por teclado y estado de indice.
 
 ### Patron de pestañas
 
@@ -135,11 +148,36 @@ Las URLs no cambiaron al reagrupar: solo cambio la forma de llegar a ellas, para
 
 ## 8. Assets y convenciones
 
-- Logos: `public/assets/logos/` (`.webp`)
-- Galeria: `public/assets/galeria/` (`.jpg` optimizadas)
-- Profesores: `public/assets/profesores/` (`.jpg`/`.webp`, max 400px ancho)
+Hay dos ubicaciones y la diferencia importa:
+
+| Carpeta | Que va aqui | Procesamiento |
+| --- | --- | --- |
+| `src/assets/` | Lo que Astro debe optimizar | Variantes, WebP, hash y base automaticos |
+| `public/` | Lo que debe conservar una URL estable | Se copia tal cual; necesita `withBase()` |
+
+- `src/assets/galeria/` — fotos de galeria. Se importan en `src/data/galeria.ts` y `galeria.astro` genera 400/800 px para la rejilla y 900/1400 para el visor.
+- `src/assets/fonts/` — las cuatro `.woff2` auto-hospedadas.
+- `public/assets/logos/` (`.webp`) — dimensionados para 2x en su mayor uso.
+- `public/assets/profesores/` (`.jpg`/`.webp`, max 400px ancho).
+- `public/convocatoria*.webp` — el cartel. Vive en `public/` porque la tarjeta enlaza al archivo completo con URL estable; las variantes de 640 y 900 px acompañan al original en un `srcset`.
 
 Toda `<img>` declara `width` y `height` para reservar espacio y evitar saltos de maquetacion. Cuando el contenedor fija la proporcion, se usan dimensiones nominales con esa misma relacion.
+
+## 8b. Tipografia
+
+Inter y Playfair Display se auto-hospedan desde `src/assets/fonts/`, en sus
+versiones variables y limitadas a los subconjuntos `latin` y `latin-ext`.
+
+Antes se pedian a `fonts.googleapis.com` de forma asincrona. Como Playfair es la
+cara de todos los encabezados, cada pagina los pintaba primero en Georgia y
+luego saltaba: reflujo en el `h1`, que es el elemento LCP.
+
+`src/styles/fonts.css` declara ademas dos familias de reserva
+("Inter Fallback" y "Playfair Display Fallback") con `size-adjust`,
+`ascent-override` y `descent-override` calculados de los archivos reales, de
+modo que la cara del sistema ocupa exactamente el mismo espacio que la webfont y
+el intercambio no mueve nada. Las pilas completas se declaran una sola vez, en
+`tailwind.config.ts`.
 
 ## 9. Estilos y design system
 
@@ -163,13 +201,37 @@ Convencion del proyecto:
 
 ### Contraste
 
-`--muted-foreground` da 4.87:1 sobre el fondo de pagina y 5.22:1 sobre tarjeta. Es el color de casi todo el cuerpo de texto, asi que cualquier cambio en ese token debe verificarse contra ambas superficies, no solo contra una.
+`--muted-foreground` es el color de casi todo el cuerpo de texto, asi que hay
+que verificarlo contra **todas** las superficies donde cae, no contra una:
 
-## 10. Base de despliegue
+| Superficie | Contraste | |
+| --- | --- | --- |
+| `--background` | 4.89:1 | AA |
+| `--card` | 5.29:1 | AA |
+| `--muted` | 4.82:1 | AA |
+| `bg-primary/5` | 4.46:1 | **falla** |
+
+Sobre `bg-primary/5` se usa `text-foreground/80` (8.5:1). Esa cuarta superficie
+paso inadvertida cuando se corrigio el token, y estuvo publicada en `/tesis` y
+`/lies`.
+
+### Superficies del navegador
+
+Seleccion de texto, cursor, barra de desplazamiento y separacion del subrayado
+se tematizan desde los tokens en `global.css`. Son las partes que el navegador
+dibuja por su cuenta y que, sin declararlas, llegan con los grises del sistema.
+
+## 10. Base de despliegue y canonico
 
 El sitio vive en una subruta de GitHub Pages (`/MDO`) y migrara a un dominio propio, donde la base vuelve a ser `/`. Astro prefija lo que empaqueta, pero no los `src` ni `href` escritos a mano ni lo que vive en `public/`.
 
-Por eso **toda ruta interna pasa por `withBase()`** (`src/lib/paths.ts`). Cambiar de dominio es editar dos variables en el workflow. Ver `docs/despliegue-github-pages.md`.
+Por eso **toda ruta interna pasa por `withBase()`** (`src/lib/paths.ts`).
+
+Aparte de la base esta el **host canonico**. El sitio se publica a la vez en
+GitHub Pages y en Vercel (el QR del cartel impreso apunta a Vercel), y antes
+cada destino se autodeclaraba canonico: contenido duplicado en dos dominios sin
+señal de cual indexar. `src/lib/seo.ts` hace que ambos emitan la misma URL
+canonica y el mismo sitemap. Ver `docs/despliegue-github-pages.md`.
 
 ## 11. Configuracion clave
 

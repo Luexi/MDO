@@ -1,0 +1,37 @@
+---
+/**
+ * Version Astro de `ButtonLink`. Misma semantica y mismas clases que la de
+ * React (ambas consumen `buttonVariants`), sin runtime de framework.
+ *
+ * No envuelvas un boton en un enlace: `<a>` no admite contenido interactivo y
+ * el resultado son dos controles anidados para una sola accion.
+ */
+import type { HTMLAttributes } from "astro/types";
+import { cn } from "@/lib/utils";
+import { buttonVariants, type ButtonVariantProps } from "@/components/ui/buttonVariants";
+
+interface Props extends HTMLAttributes<"a">, ButtonVariantProps {
+  href: string;
+  /** Abre en pestaña nueva y lo anuncia a los lectores de pantalla. */
+  externo?: boolean;
+}
+
+const {
+  href,
+  variant,
+  size,
+  externo = false,
+  class: clase,
+  ...resto
+} = Astro.props;
+---
+
+<a
+  href={href}
+  class={cn(buttonVariants({ variant, size }), clase)}
+  {...externo ? { target: "_blank", rel: "noopener noreferrer" } : {}}
+  {...resto}
+>
+  <slot />
+  {externo && <span class="sr-only">, se abre en una pestaña nueva</span>}
+</a>

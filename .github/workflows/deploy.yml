@@ -27,16 +27,24 @@ jobs:
       # CAMBIO DE DOMINIO
       #
       # Hoy (temporal):   https://luexi.github.io/MDO
-      #   PUBLIC_SITE_URL:  https://luexi.github.io
-      #   PUBLIC_BASE_PATH: /MDO
+      #   PUBLIC_SITE_URL:      https://luexi.github.io
+      #   PUBLIC_BASE_PATH:     /MDO
+      #   PUBLIC_CANONICAL_URL: https://luexi.github.io/MDO
       #
       # Al activar el dominio propio, sustituir por:
-      #   PUBLIC_SITE_URL:  https://maestriadirecciondeorganizaciones.uagro.mx
-      #   PUBLIC_BASE_PATH: /
+      #   PUBLIC_SITE_URL:      https://maestriadirecciondeorganizaciones.uagro.mx
+      #   PUBLIC_BASE_PATH:     /
+      #   PUBLIC_CANONICAL_URL: https://maestriadirecciondeorganizaciones.uagro.mx
       # y crear el archivo public/CNAME con el dominio dentro.
+      #
+      # Ademas hay que actualizar, en la misma tanda:
+      #   - la linea `Sitemap:` de public/robots.txt
+      #   - el valor por defecto de CANONICAL_BASE en src/lib/seo.ts
+      #     (es el que usa el despliegue de Vercel, que no lee estas variables)
       # ---------------------------------------------------------------
       PUBLIC_SITE_URL: https://luexi.github.io
       PUBLIC_BASE_PATH: /MDO
+      PUBLIC_CANONICAL_URL: https://luexi.github.io/MDO
     steps:
       - name: Descargar el repositorio
         uses: actions/checkout@v4

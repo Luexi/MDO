@@ -1,6 +1,5 @@
 import {
   BookOpen,
-  Clock,
   ExternalLink,
   FileCheck,
   FilePlus,
@@ -8,7 +7,8 @@ import {
   FileText,
 } from "lucide-react";
 import type { Documento } from "@/data/documentos";
-import { Button } from "@/components/ui/button";
+import { ButtonLink } from "@/components/ui/ButtonLink";
+import { EstadoEnProceso } from "@/components/ui/EstadoEnProceso";
 
 const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
   FileText,
@@ -53,32 +53,18 @@ export function DocumentoCard({ documento }: DocumentoCardProps) {
 
       <div className="mt-4 border-t border-border pt-4">
         {disponible ? (
-          <a
+          <ButtonLink
             href={documento.linkDrive}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="block"
-          >
-            <Button
-              variant="outline"
-              size="sm"
-              className="w-full gap-2 rounded-xl hover:bg-primary hover:text-primary-foreground"
-            >
-              <ExternalLink className="h-4 w-4" />
-              Abrir en Google Drive
-              <span className="sr-only">, se abre en una pestaña nueva</span>
-            </Button>
-          </a>
-        ) : (
-          <Button
             variant="outline"
             size="sm"
-            className="w-full gap-2 rounded-xl"
-            disabled
+            externo
+            className="w-full hover:bg-primary hover:text-primary-foreground"
           >
-            <Clock className="h-4 w-4" />
-            En proceso
-          </Button>
+            <ExternalLink className="h-4 w-4" />
+            Abrir en Google Drive
+          </ButtonLink>
+        ) : (
+          <EstadoEnProceso />
         )}
       </div>
     </div>

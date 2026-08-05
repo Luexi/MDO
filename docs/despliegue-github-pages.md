@@ -52,11 +52,29 @@ Una ruta relativa se resuelve contra la ubicacion del propio archivo, que siempr
 
 Hoy, temporal:
 
-| Variable | Valor |
-| --- | --- |
-| `PUBLIC_SITE_URL` | `https://luexi.github.io` |
-| `PUBLIC_BASE_PATH` | `/MDO` |
-| URL publica | `https://luexi.github.io/MDO` |
+| Variable | Valor | Para que sirve |
+| --- | --- | --- |
+| `PUBLIC_SITE_URL` | `https://luexi.github.io` | Desde donde se sirve ESTA compilacion |
+| `PUBLIC_BASE_PATH` | `/MDO` | Subruta de esta compilacion |
+| `PUBLIC_CANONICAL_URL` | `https://luexi.github.io/MDO` | Cual de los destinos debe indexarse |
+| URL publica | `https://luexi.github.io/MDO` | |
+
+### Por que hay una variable de canonico aparte
+
+El sitio se publica en **dos** destinos a la vez: GitHub Pages y Vercel
+(`mdo-alpha.vercel.app`), porque el QR del cartel impreso apunta a Vercel y no
+se puede reimprimir. Antes cada destino se declaraba canonico a si mismo, o sea
+el mismo contenido duplicado en dos dominios sin ninguna señal de cual indexar.
+
+Ahora los dos emiten la misma `<link rel="canonical">` y el mismo sitemap: los
+del host canonico. Vercel sigue atendiendo a quien escanee el QR, pero ya no
+compite por la indexacion. La logica esta en `src/lib/seo.ts`.
+
+Vercel no lee las variables del workflow, asi que su valor de canonico sale del
+valor por defecto que esta escrito en el codigo. Por eso hay que cambiarlo en
+los tres sitios que se listan abajo.
+
+### Cambio al dominio propio
 
 Cuando el area de sistemas apunte el DNS de `maestriadirecciondeorganizaciones.uagro.mx`:
 
@@ -65,7 +83,15 @@ Cuando el area de sistemas apunte el DNS de `maestriadirecciondeorganizaciones.u
    ```yaml
    PUBLIC_SITE_URL: https://maestriadirecciondeorganizaciones.uagro.mx
    PUBLIC_BASE_PATH: /
+   PUBLIC_CANONICAL_URL: https://maestriadirecciondeorganizaciones.uagro.mx
    ```
+
+   Y en la misma tanda, el valor por defecto en los otros dos sitios que lo
+   declaran, que son los que usa el despliegue de Vercel:
+
+   - `CANONICAL_BASE` en `src/lib/seo.ts`
+   - `canonical` en `astro.config.mjs` (lo consume el sitemap)
+   - la linea `Sitemap:` de `public/robots.txt`
 
 2. Crea `public/CNAME` con una sola linea y sin espacios:
 
@@ -106,11 +132,22 @@ npm run preview
 
 `scripts/check-enlaces.mjs` corre antes de cada build y falla la compilacion si encuentra:
 
-- URLs de marcador (`PLACEHOLDER_*`)
-- Anclas vacias (`href="#"`)
-- Referencias al dominio anterior de Vercel
+| Regla | Que detecta |
+| --- | --- |
+| `placeholder` | URLs de marcador (`PLACEHOLDER_*`) |
+| `ancla-vacia` | Anclas que no llevan a ninguna parte (`href="#"`) |
+| `host-cableado` | Un host escrito a mano dentro de `href`, `src` o `srcset` |
+| `boton-en-enlace` | Un `<a>` envolviendo un boton |
 
-Para expresar "este documento todavia no existe", **omite el campo `linkDrive`** en `src/data/*`. La tarjeta se renderiza sola en estado "En proceso" con el boton inhabilitado. Nunca apuntes a una URL inventada.
+Si una linea menciona uno de esos patrones a proposito (documentacion, la
+declaracion del host canonico), marcala con el comentario `check-enlaces-ok` y
+el guard la ignora. `src/test/` esta excluido por completo: sus fixtures son
+justamente ejemplos de lo prohibido.
+
+Las reglas tienen pruebas en `src/test/checkEnlaces.test.ts`, para que el guard
+no se rompa en silencio.
+
+Para expresar "este documento todavia no existe", **omite el campo `linkDrive`** en `src/data/*`. La tarjeta se renderiza sola con la insignia "En proceso". Nunca apuntes a una URL inventada.
 
 Ejecutarlo suelto:
 

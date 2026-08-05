@@ -14,7 +14,7 @@ import {
 } from "lucide-react";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { PageHeader } from "@/components/ui/PageHeader";
-import { Button } from "@/components/ui/button";
+import ButtonLink from "@/components/ui/ButtonLink.astro";
 import {
   calendarioAdmision,
   convocatoriaVigente,
@@ -260,30 +260,43 @@ import { withBase } from "@/lib/paths";
 
         <aside class="space-y-6 lg:sticky lg:top-28 lg:self-start">
           <div class="overflow-hidden rounded-2xl border border-border bg-card shadow-sm">
+            {/*
+              En escritorio esta barra lateral es la columna derecha del grid,
+              o sea que el cartel esta DENTRO del viewport al cargar. Con
+              `loading="lazy"` el navegador retrasaba su descarga hasta despues
+              del layout: el antipatron clasico de LCP. Ahora carga de inmediato.
+
+              Y se sirve a la medida. El archivo original son 1241x1600 y 285 KB
+              para una columna de 320 px: cuatro veces mas de lo necesario y el
+              asset mas pesado del sitio. Las variantes de 640 y 900 px cubren
+              escritorio (320 px a 2x) y movil (100vw a 2x) respectivamente; el
+              original queda solo para quien abra el cartel completo.
+            */}
             <img
-              src={withBase("/convocatoria.webp")}
+              src={withBase("/convocatoria-900.webp")}
+              srcset={`${withBase("/convocatoria-640.webp")} 640w, ${withBase("/convocatoria-900.webp")} 900w, ${withBase("/convocatoria.webp")} 1241w`}
+              sizes="(min-width: 1024px) 20rem, 100vw"
               alt="Cartel oficial de la convocatoria de la Maestría en Dirección de Organizaciones, generación febrero 2027"
               width="1241"
               height="1600"
-              loading="lazy"
+              loading="eager"
+              decoding="async"
               class="w-full"
             />
             <div class="space-y-3 p-4">
               <p class="text-xs text-muted-foreground">
                 Documento oficial. Los datos de esta página se toman de él.
               </p>
-              <a
+              <ButtonLink
                 href={withBase("/convocatoria.webp")}
-                target="_blank"
-                rel="noopener noreferrer"
-                class="block"
+                variant="outline"
+                size="sm"
+                externo
+                class="w-full"
               >
-                <Button variant="outline" size="sm" className="w-full gap-2 rounded-xl">
-                  <FileText className="h-4 w-4" />
-                  Ver cartel completo
-                  <span class="sr-only">, se abre en una pestaña nueva</span>
-                </Button>
-              </a>
+                <FileText className="h-4 w-4" />
+                Ver cartel completo
+              </ButtonLink>
             </div>
           </div>
 

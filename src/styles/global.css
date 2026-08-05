@@ -1,3 +1,5 @@
+@import "./fonts.css";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -9,11 +11,6 @@
 
 @layer base {
   :root {
-    /* Colores institucionales UAGro (HSL) */
-    --uagro-blue: 216 79% 20%; /* #0B2D5C - Azul institucional oscuro */
-    --uagro-blue-light: 224 60% 33%; /* #1F3A8A - Azul para botones y acentos */
-    --uagro-red: 0 73% 50%; /* #D72626 - Rojo institucional */
-
     /* Fondo y superficies */
     --background: 228 33% 97%; /* #F6F7FB */
     --foreground: 222 47% 11%; /* #0F172A */
@@ -24,7 +21,7 @@
     --popover: 0 0% 100%;
     --popover-foreground: 222 47% 11%;
 
-    /* Primary = azul UAGro */
+    /* Primary = azul institucional UAGro (#0B2D5C) */
     --primary: 216 79% 20%;
     --primary-foreground: 0 0% 100%;
 
@@ -33,21 +30,29 @@
 
     --muted: 220 14% 96%;
     /*
-     * Contraste: 4.87:1 sobre --background y 5.22:1 sobre --card, ambos por
-     * encima del minimo AA de 4.5:1 para texto normal.
+     * Contraste verificado sobre las TRES superficies donde cae este color:
      *
-     * El valor anterior (215 16% 47%) daba 4.35:1 sobre el fondo de pagina y
-     * 4.70:1 sobre tarjeta, asi que el mismo token fallaba o pasaba segun la
-     * superficie donde cayera. Es el color de practicamente todo el cuerpo de
-     * texto del sitio, por lo que el fallo afectaba a todas las paginas.
+     *   --background        4.89:1
+     *   --card              5.29:1
+     *   --muted             4.82:1
+     *
+     * Todas por encima del minimo AA de 4.5:1 para texto normal.
+     *
+     * El valor anterior (215 16% 47%) daba 4.35:1 sobre el fondo de pagina, de
+     * modo que el mismo token fallaba o pasaba segun donde cayera. Es el color
+     * de practicamente todo el cuerpo de texto del sitio.
+     *
+     * OJO: `bg-primary/5` es una CUARTA superficie y con ella este token da
+     * 4.46:1, por debajo del minimo. No combines `text-muted-foreground` con
+     * `bg-primary/5`; usa `text-foreground/80` en esos bloques.
      */
     --muted-foreground: 215 18% 44%;
 
-    /* Accent = azul UAGro claro */
+    /* Accent = azul UAGro claro (#1F3A8A) */
     --accent: 224 60% 33%;
     --accent-foreground: 0 0% 100%;
 
-    /* Destructive = rojo UAGro */
+    /* Destructive = rojo institucional UAGro (#D72626) */
     --destructive: 0 73% 50%;
     --destructive-foreground: 0 0% 100%;
 
@@ -58,7 +63,7 @@
     /* Degradados de superficie */
     --gradient-spotlight: radial-gradient(
       ellipse 80% 50% at 50% -20%,
-      hsl(224 60% 33% / 0.15),
+      hsl(var(--accent) / 0.15),
       transparent
     );
     --gradient-hero: linear-gradient(
@@ -77,11 +82,21 @@
 
   html {
     scroll-behavior: smooth;
+    /*
+     * Superficies que dibuja el navegador, no nosotros. Sin esto la barra de
+     * desplazamiento, el cursor de texto y los controles nativos llegan con los
+     * grises por defecto del sistema, que no pertenecen a ningun sistema de
+     * diseño. Son propiedades estandar; donde no se soportan, el navegador
+     * simplemente conserva su valor por defecto.
+     */
+    scrollbar-color: hsl(var(--muted-foreground) / 0.45) hsl(var(--muted));
+    scrollbar-width: thin;
+    accent-color: hsl(var(--primary));
+    caret-color: hsl(var(--primary));
   }
 
   body {
     @apply bg-background text-foreground font-sans antialiased;
-    font-family: "Inter", system-ui, sans-serif;
   }
 
   h1,
@@ -90,7 +105,27 @@
   h4,
   h5,
   h6 {
-    font-family: "Playfair Display", Georgia, serif;
+    @apply font-display;
+  }
+
+  /*
+   * Las familias, incluidas las de reserva con metricas ajustadas, se declaran
+   * una sola vez en `tailwind.config.ts`. Antes se repetian aqui y alli, de
+   * modo que cambiar la pila exigia recordar los dos sitios.
+   */
+
+  ::selection {
+    background-color: hsl(var(--primary) / 0.16);
+    color: hsl(var(--foreground));
+  }
+
+  /*
+   * Subrayado de enlaces separado de la linea base y con el grosor que declara
+   * la propia fuente, en vez del subrayado pegado por defecto.
+   */
+  a {
+    text-underline-offset: 0.2em;
+    text-decoration-thickness: from-font;
   }
 
   /*
@@ -130,14 +165,6 @@
 }
 
 @layer utilities {
-  .font-display {
-    font-family: "Playfair Display", Georgia, serif;
-  }
-
-  .font-sans {
-    font-family: "Inter", system-ui, sans-serif;
-  }
-
   .bg-spotlight {
     background: var(--gradient-spotlight);
   }
@@ -146,16 +173,21 @@
     background: var(--gradient-hero);
   }
 
+  /* Cifras de igual ancho para columnas de datos comparables. */
+  .tabular-figures {
+    font-variant-numeric: tabular-nums;
+  }
+
   .card-shadow {
     box-shadow:
-      0 4px 6px -1px hsl(216 79% 20% / 0.05),
-      0 2px 4px -2px hsl(216 79% 20% / 0.05);
+      0 4px 6px -1px hsl(var(--primary) / 0.05),
+      0 2px 4px -2px hsl(var(--primary) / 0.05);
   }
 
   .card-shadow-hover {
     box-shadow:
-      0 10px 15px -3px hsl(216 79% 20% / 0.08),
-      0 4px 6px -4px hsl(216 79% 20% / 0.05);
+      0 10px 15px -3px hsl(var(--primary) / 0.08),
+      0 4px 6px -4px hsl(var(--primary) / 0.05);
   }
 
   /* Accesible para lectores de pantalla, invisible en pantalla. */

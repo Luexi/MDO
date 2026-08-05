@@ -14,7 +14,7 @@ Guia operativa para editar contenido, imagenes, secciones y componentes sin romp
    <a href={withBase("/convocatoria")}>Convocatoria</a>
    ```
 
-2. **Si un documento no existe, omite el campo `linkDrive`.** No inventes una URL ni apuntes a un archivo que aun no subes. La tarjeta se renderiza sola en estado "En proceso" con el boton inhabilitado, y `npm run build` falla si detecta marcadores.
+2. **Si un documento no existe, omite el campo `linkDrive`.** No inventes una URL ni apuntes a un archivo que aun no subes. La tarjeta se renderiza sola con la insignia "En proceso" (`src/components/ui/EstadoEnProceso.tsx`), y `npm run build` falla si detecta marcadores.
 
 3. **Los datos de contacto salen de un unico archivo**, `src/data/contacto.ts`. No escribas correos ni telefonos sueltos en las paginas.
 
@@ -78,14 +78,30 @@ Archivo: `src/data/instalaciones.ts`
 
 ### Galeria
 
-Datos: `src/data/galeria.ts` · Imagenes: `public/assets/galeria/`
+Datos: `src/data/galeria.ts` · Imagenes: **`src/assets/galeria/`**
+
+Ojo: estas imagenes NO van en `public/`. Al vivir en `src/assets/` pasan por el
+pipeline de Astro, que genera las variantes de tamaño y las convierte a WebP.
+Antes estaban en `public/` y se servian los JPEG originales tal cual: 800 KB
+para pintar cinco miniaturas de 400 px.
 
 Reglas:
 
-- Sube la imagen primero a `public/assets/galeria/`.
-- Referenciala en `src/data/galeria.ts` con ruta que empiece por `/assets/`. El componente aplica `withBase()` por ti.
+- Sube la imagen a `src/assets/galeria/`.
+- **Importala** en `src/data/galeria.ts` y pon la importacion en `src`, no una
+  cadena de ruta:
+
+  ```ts
+  import evento6 from "@/assets/galeria/evento-6.jpg";
+  // ...
+  { id: "6", src: evento6, alt: "...", titulo: "...", descripcion: "..." }
+  ```
+
+  Nada de `withBase()` aqui: de las URLs finales se encarga Astro.
 - El campo `alt` debe **describir la imagen**, no numerarla. "Imagen 3" no sirve a nadie.
 - `titulo` y `descripcion` se muestran en la tarjeta y en el visor: que sean distintos entre fotos.
+- No hace falta redimensionar antes de subir: `src/pages/galeria.astro` genera
+  400/800 px para la rejilla y 900/1400 px para el visor.
 
 ### Vinculacion
 
@@ -133,9 +149,12 @@ Declara siempre `width` y `height` reales del archivo.
 
 Convenciones vigentes:
 
-- Radios: `rounded-lg` para elementos pequeños, `rounded-xl` para controles, `rounded-2xl` para contenedores, `rounded-full` para pastillas.
+- Radios: `rounded-lg` para elementos pequeños, `rounded-xl` para controles, `rounded-2xl` para contenedores, `rounded-full` para pastillas. No uses `rounded` a secas: queda fuera de la escala.
+- Botones y enlaces con apariencia de boton: `src/components/ui/`. `Button` para acciones, `ButtonLink` (`.tsx` y `.astro`) para navegar. **Nunca envuelvas un `Button` en un `<a>`**: `<a>` no admite contenido interactivo, y el guard de build lo rechaza.
+- Ningun control baja de 44 px de alto o de lado. Los tamaños de `buttonVariants` ya lo garantizan; si escribes un control a mano, comprueba el `p-*` contra el tamaño del icono.
 - Tarjetas en rejilla: `h-full` en la tarjeta, `auto-rows-fr` en la rejilla y `mt-auto` en el bloque de CTA. Sin esto los botones de una misma fila quedan a alturas distintas.
-- Texto secundario: usa `text-muted-foreground`. Si cambias ese token, verifica contraste contra el fondo de pagina **y** contra tarjeta blanca.
+- Texto secundario: usa `text-muted-foreground`. Cumple AA sobre `--background`, `--card` y `--muted`. **Sobre `bg-primary/5` no llega** (4.46:1): ahi usa `text-foreground/80`. Si cambias el token, verifica contra las cuatro superficies.
+- Tipografia: las dos familias se auto-hospedan desde `src/assets/fonts/` y se declaran en `src/styles/fonts.css`. La pila, incluidas las caras de reserva con metricas corregidas, vive solo en `tailwind.config.ts`.
 
 ## 6. Cambios de rutas o paginas
 
@@ -156,7 +175,7 @@ Si el estado es simple:
 2. Inicializalo desde el `<script>` de `BaseLayout.astro`.
 3. Marca el marcado con atributos `data-*` y deja que el script los busque.
 
-Ejemplos: `src/scripts/navbar.ts` y `src/scripts/tabs.ts`.
+Ejemplos: `src/scripts/navbar.ts`, `src/scripts/tabs.ts` y `src/scripts/filtroTesis.ts`.
 
 ### Opcion 2: isla React (solo si hace falta)
 
@@ -165,6 +184,15 @@ Si necesitas estado complejo o manejadores de React:
 1. Crea el `.tsx` en `src/components/islands/`.
 2. Importalo en la pagina `.astro`.
 3. Hidrata con `client:idle` por defecto; `client:load` solo si debe estar disponible de inmediato.
+
+**El listón es alto:** una isla añade ~44 KB comprimidos del runtime de React a
+esa pagina. El filtro de tesis fue isla y se revirtio a script vanilla justo por
+esto: gestionaba una sola cadena de estado. Hoy la unica isla del sitio es
+`GaleriaLightbox`, que si lo justifica (dialogo modal, contencion de foco,
+navegacion por teclado).
+
+Regla practica: si el estado cabe en uno o dos `data-*` y la interaccion es
+mostrar/ocultar, es un script.
 
 ### Pestañas
 

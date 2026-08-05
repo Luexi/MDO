@@ -51,15 +51,18 @@ npm run check:enlaces
 - `src/pages/`: rutas del sitio en Astro.
 - `src/layouts/BaseLayout.astro`: layout global (head, navbar, footer, skip link).
 - `src/components/layout/`: layout visual reusable.
-- `src/components/islands/`: React hidratado para interaccion.
+- `src/components/islands/`: React hidratado para interaccion. Hoy solo el visor de galeria.
 - `src/components/cards/`: tarjetas reutilizables por seccion.
 - `src/components/ui/`: primitives de UI usadas por cards e islas.
 - `src/data/`: contenido editable del sitio (fuente principal).
+- `src/assets/`: imagenes y fuentes que Astro optimiza en el build.
 - `src/lib/paths.ts`: helper `withBase()` para rutas con base de despliegue.
-- `src/scripts/`: comportamiento vanilla compartido (navbar, tabs).
-- `src/styles/global.css`: tokens y estilos globales.
-- `public/assets/`: imagenes y recursos publicos.
-- `scripts/check-enlaces.mjs`: guard de enlaces previo al build.
+- `src/lib/seo.ts`: host canonico compartido por los dos destinos de despliegue.
+- `src/scripts/`: comportamiento vanilla compartido (navbar, tabs, filtro de tesis).
+- `src/styles/`: `global.css` (tokens y tema) y `fonts.css` (tipografia).
+- `src/test/`: pruebas de rutas, navegacion, guard de enlaces y datos.
+- `public/assets/`: recursos que necesitan una URL estable (logos, fotos de profesores, cartel).
+- `scripts/check-enlaces.mjs`: guard de enlaces y marcado previo al build.
 - `.github/workflows/deploy.yml`: despliegue a GitHub Pages.
 - `docs/`: documentacion tecnica del proyecto.
 
@@ -90,8 +93,34 @@ Escribir `/assets/...` directo funciona en local y se rompe en produccion.
 ### Enlaces a documentos
 
 Si un documento todavia no tiene URL publica, **omite el campo `linkDrive`**. La
-tarjeta se renderiza en estado "En proceso" con el boton inhabilitado. No
-inventes URLs: `npm run build` falla si detecta marcadores.
+tarjeta se renderiza con la insignia "En proceso". No inventes URLs:
+`npm run build` falla si detecta marcadores.
+
+### Enlaces con apariencia de boton
+
+Usa `ButtonLink` (`src/components/ui/`, hay version `.tsx` y `.astro`). **Nunca
+envuelvas un `Button` en un `<a>`**: `<a>` no admite contenido interactivo, y el
+guard de build rechaza ese patron.
+
+```astro
+---
+import ButtonLink from "@/components/ui/ButtonLink.astro";
+import { withBase } from "@/lib/paths";
+---
+<ButtonLink href={withBase("/convocatoria")} size="lg">Ver convocatoria</ButtonLink>
+<ButtonLink href={documento.linkDrive} variant="outline" externo>Abrir en Drive</ButtonLink>
+```
+
+`externo` se encarga de `target`, `rel` y del aviso "se abre en una pestaña
+nueva" para lectores de pantalla.
+
+### Imagenes
+
+- Fotos de galeria: `src/assets/galeria/`, **importadas** en `src/data/galeria.ts`.
+  Astro genera las variantes y el WebP.
+- Logos, retratos y el cartel: `public/assets/` con `withBase()`, porque
+  necesitan una URL estable.
+- Toda `<img>` declara `width` y `height`.
 
 ### Datos del Nucleo Academico
 

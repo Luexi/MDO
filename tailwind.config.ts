@@ -23,9 +23,23 @@ export default {
   prefix: "",
   theme: {
     extend: {
+      /*
+       * Unica declaracion de las pilas tipograficas del sitio.
+       *
+       * "Inter Fallback" y "Playfair Display Fallback" son las caras del
+       * sistema con las metricas corregidas en `src/styles/fonts.css`, para que
+       * el intercambio de `font-display: swap` no mueva la maquetacion. Van
+       * antes que las genericas: si la webfont tarda, el texto se pinta ya con
+       * el ancho y la altura definitivos.
+       */
       fontFamily: {
-        sans: ["Inter", "system-ui", "sans-serif"],
-        display: ["Playfair Display", "Georgia", "serif"],
+        sans: ["Inter", "Inter Fallback", "system-ui", "sans-serif"],
+        display: [
+          "Playfair Display",
+          "Playfair Display Fallback",
+          "Georgia",
+          "serif",
+        ],
       },
       colors: {
         border: "hsl(var(--border))",

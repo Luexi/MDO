@@ -126,18 +126,23 @@ const inicioActivo = esRutaActiva("/", currentPath);
         */}
         <a
           href={withBase(ctaPrincipal.href)}
-          class="inline-flex h-10 items-center justify-center whitespace-nowrap rounded-xl bg-destructive px-4 text-sm font-semibold text-destructive-foreground transition-colors hover:bg-destructive/90"
+          class="inline-flex h-11 items-center justify-center whitespace-nowrap rounded-xl bg-destructive px-4 text-sm font-semibold text-destructive-foreground transition-colors hover:bg-destructive/90"
         >
           {ctaPrincipal.label}
         </a>
 
+        {/*
+          `p-2.5` sobre un icono de 24px da 44x44, el objetivo tactil comodo.
+          Con `p-2` quedaba en 40px, y en movil este boton es la unica puerta a
+          los doce destinos del sitio.
+        */}
         <button
           type="button"
           data-menu-boton
           aria-expanded="false"
           aria-controls="menu-movil"
           aria-label="Abrir o cerrar el menú de navegación"
-          class="rounded-lg p-2 transition-colors hover:bg-muted lg:hidden"
+          class="rounded-lg p-2.5 transition-colors hover:bg-muted lg:hidden"
         >
           <span data-icono-menu>
             <Menu className="h-6 w-6" aria-hidden="true" />

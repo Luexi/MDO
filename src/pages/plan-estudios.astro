@@ -3,7 +3,7 @@ import { ArrowLeft, ExternalLink } from "lucide-react";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { PageHeader } from "@/components/ui/PageHeader";
 import PlanEstudiosTabs from "@/components/PlanEstudiosTabs.astro";
-import { Button } from "@/components/ui/button";
+import ButtonLink from "@/components/ui/ButtonLink.astro";
 import { documentos } from "@/data/documentos";
 import {
   planOptativas,
@@ -50,25 +50,22 @@ const planPdf = documentos.find((documento) => documento.id === "plan-estudios")
                 institucional.
               </p>
             </div>
-            <a
+            <ButtonLink
               href={planPdf.linkDrive}
-              target="_blank"
-              rel="noopener noreferrer"
+              variant="outline"
+              externo
               class="flex-shrink-0"
             >
-              <Button variant="outline" className="gap-2 rounded-xl">
-                <ExternalLink className="h-4 w-4" />
-                Abrir en Google Drive
-                <span class="sr-only">, se abre en una pestaña nueva</span>
-              </Button>
-            </a>
+              <ExternalLink className="h-4 w-4" />
+              Abrir en Google Drive
+            </ButtonLink>
           </div>
         )
       }
 
       <a
         href={withBase("/objetivos")}
-        class="inline-flex items-center gap-2 rounded font-medium text-accent hover:underline"
+        class="inline-flex items-center gap-2 rounded-lg font-medium text-accent hover:underline"
       >
         <ArrowLeft className="h-4 w-4" aria-hidden="true" />
         Volver a objetivos y perfiles

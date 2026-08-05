@@ -1,6 +1,7 @@
-import { Clock, ExternalLink, FileText } from "lucide-react";
+import { ExternalLink, FileText } from "lucide-react";
 import type { Tesis } from "@/data/tesis";
-import { Button } from "@/components/ui/button";
+import { ButtonLink } from "@/components/ui/ButtonLink";
+import { EstadoEnProceso } from "@/components/ui/EstadoEnProceso";
 
 interface TesisCardProps {
   tesis: Tesis;
@@ -35,32 +36,18 @@ export function TesisCard({ tesis }: TesisCardProps) {
 
       <div className="mt-4 border-t border-border pt-4">
         {disponible ? (
-          <a
+          <ButtonLink
             href={tesis.linkDrive}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="block"
-          >
-            <Button
-              variant="outline"
-              size="sm"
-              className="w-full gap-2 rounded-xl"
-            >
-              <ExternalLink className="h-4 w-4" />
-              Ver o descargar
-              <span className="sr-only">, se abre en una pestaña nueva</span>
-            </Button>
-          </a>
-        ) : (
-          <Button
             variant="outline"
             size="sm"
-            className="w-full gap-2 rounded-xl"
-            disabled
+            externo
+            className="w-full"
           >
-            <Clock className="h-4 w-4" />
-            En proceso
-          </Button>
+            <ExternalLink className="h-4 w-4" />
+            Ver o descargar
+          </ButtonLink>
+        ) : (
+          <EstadoEnProceso />
         )}
       </div>
     </div>

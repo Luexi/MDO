@@ -1,8 +1,57 @@
 ---
+import { getImage } from "astro:assets";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { PageHeader } from "@/components/ui/PageHeader";
 import GaleriaLightbox from "@/components/islands/GaleriaLightbox";
 import { imagenesGaleria } from "@/data/galeria";
+
+/*
+ * Las variantes se generan aqui, en el servidor, y a la isla solo le llegan
+ * URLs ya resueltas. `astro:assets` no existe dentro de un componente React,
+ * asi que este es el punto correcto para pasar por el pipeline de imagen.
+ *
+ * Antes la galeria servia los cinco JPEG originales de 1200x900 (~800 KB en
+ * total) tanto para las miniaturas de la rejilla, de unos 400 px, como para el
+ * visor. Ahora la rejilla recibe 400/800 px en WebP y el visor 900/1400,
+ * tambien en WebP, asi que cada superficie descarga lo que de verdad muestra.
+ */
+const MINIATURA_SIZES = "(min-width: 1024px) 22rem, (min-width: 640px) 45vw, 92vw";
+const COMPLETA_SIZES = "(min-width: 1024px) 56rem, 92vw";
+
+const imagenes = await Promise.all(
+  imagenesGaleria.map(async (imagen) => {
+    /*
+     * `width` fija la variante que va en `src`. Sin el, `getImage` deja ahi el
+     * original a 1200 px (~120 KB): el respaldo para un navegador sin `srcset`
+     * salia mas caro que la propia imagen que se quiere mostrar.
+     */
+    const miniatura = await getImage({
+      src: imagen.src,
+      width: 800,
+      widths: [400, 800],
+      sizes: MINIATURA_SIZES,
+      format: "webp",
+    });
+    const completa = await getImage({
+      src: imagen.src,
+      width: 1400,
+      widths: [900, 1400],
+      sizes: COMPLETA_SIZES,
+      format: "webp",
+    });
+
+    return {
+      id: imagen.id,
+      alt: imagen.alt,
+      titulo: imagen.titulo,
+      descripcion: imagen.descripcion,
+      ancho: imagen.src.width,
+      alto: imagen.src.height,
+      miniatura: { src: miniatura.src, srcset: miniatura.srcSet.attribute },
+      completa: { src: completa.src, srcset: completa.srcSet.attribute },
+    };
+  }),
+);
 ---
 
 <BaseLayout
@@ -16,7 +65,12 @@ import { imagenesGaleria } from "@/data/galeria";
 
   <section class="py-12">
     <div class="mx-auto max-w-6xl px-4">
-      <GaleriaLightbox imagenes={imagenesGaleria} client:idle />
+      <GaleriaLightbox
+        imagenes={imagenes}
+        miniaturaSizes={MINIATURA_SIZES}
+        completaSizes={COMPLETA_SIZES}
+        client:idle
+      />
 
       <p class="mt-10 rounded-2xl border border-border bg-muted/50 p-6 text-sm text-muted-foreground">
         Esta galería se actualiza periódicamente con imágenes de eventos,

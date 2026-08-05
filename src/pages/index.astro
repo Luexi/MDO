@@ -11,7 +11,7 @@ import {
   Users,
 } from "lucide-react";
 import BaseLayout from "@/layouts/BaseLayout.astro";
-import { Button } from "@/components/ui/button";
+import ButtonLink from "@/components/ui/ButtonLink.astro";
 import { etapaVigente, pasosAdmision } from "@/data/admision";
 import { withBase } from "@/lib/paths";
 
@@ -116,32 +116,32 @@ const logosInstitucionales = [
       </p>
 
       {/*
-        Una sola accion principal. Antes competian dos botones de igual peso, uno
-        azul y otro rojo, y el azul (Plan de Estudios) ademas sacaba al usuario
-        del sitio hacia un PDF de Drive sin avisarlo.
+        Una accion principal y una secundaria, jerarquizadas por peso visual: el
+        rojo solido lleva a la convocatoria, el contorno al plan de estudios.
+        Antes eran dos botones del mismo peso, uno azul y otro rojo, y el azul
+        (Plan de Estudios) ademas sacaba al usuario del sitio hacia un PDF de
+        Drive sin avisarlo. Hoy los dos destinos son paginas propias.
       */}
       <div
         class="animate-fade-in flex flex-col items-center justify-center gap-4 sm:flex-row"
       >
-        <a href={withBase("/convocatoria")}>
-          <Button
-            size="lg"
-            className="gap-2 rounded-xl bg-destructive px-8 py-6 text-lg text-destructive-foreground hover:bg-destructive/90"
-          >
-            Ver convocatoria 2027
-            <ArrowRight className="h-5 w-5" aria-hidden="true" />
-          </Button>
-        </a>
-        <a href={withBase("/plan-estudios")}>
-          <Button
-            size="lg"
-            variant="outline"
-            className="gap-2 rounded-xl px-8 py-6 text-lg"
-          >
-            <BookOpen className="h-5 w-5" aria-hidden="true" />
-            Plan de estudios
-          </Button>
-        </a>
+        <ButtonLink
+          href={withBase("/convocatoria")}
+          size="lg"
+          class="bg-destructive text-lg text-destructive-foreground hover:bg-destructive/90"
+        >
+          Ver convocatoria 2027
+          <ArrowRight className="h-5 w-5" aria-hidden="true" />
+        </ButtonLink>
+        <ButtonLink
+          href={withBase("/plan-estudios")}
+          size="lg"
+          variant="outline"
+          class="text-lg"
+        >
+          <BookOpen className="h-5 w-5" aria-hidden="true" />
+          Plan de estudios
+        </ButtonLink>
       </div>
     </div>
   </section>
@@ -182,7 +182,12 @@ const logosInstitucionales = [
               <div>
                 <p class="text-sm font-semibold text-primary">Etapa vigente</p>
                 <p class="text-sm text-foreground">{etapaVigente.fecha}</p>
-                <p class="text-sm text-muted-foreground">{etapaVigente.evento}</p>
+                {/*
+                  `text-foreground/80` y no `text-muted-foreground`: sobre
+                  `bg-primary/5` ese token cae a 4.46:1, por debajo del minimo
+                  AA. Ver la nota de `--muted-foreground` en global.css.
+                */}
+                <p class="text-sm text-foreground/80">{etapaVigente.evento}</p>
               </div>
             </div>
           )
@@ -219,14 +224,14 @@ const logosInstitucionales = [
       <div class="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3">
         <a
           href={withBase("/convocatoria")}
-          class="inline-flex items-center gap-2 rounded font-medium text-accent hover:underline"
+          class="inline-flex items-center gap-2 rounded-lg font-medium text-accent hover:underline"
         >
           Ver requisitos y calendario completo
           <ArrowRight className="h-4 w-4" aria-hidden="true" />
         </a>
         <a
           href={withBase("/convocatoria#preguntas-frecuentes")}
-          class="inline-flex items-center gap-2 rounded font-medium text-accent hover:underline"
+          class="inline-flex items-center gap-2 rounded-lg font-medium text-accent hover:underline"
         >
           Preguntas frecuentes
           <ArrowRight className="h-4 w-4" aria-hidden="true" />

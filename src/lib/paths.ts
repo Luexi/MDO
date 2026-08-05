@@ -19,6 +19,21 @@ export function withBase(path: string): string {
   return `${base}${clean}`;
 }
 
+/**
+ * Inversa de `withBase()`: quita la base de despliegue de una ruta ya servida.
+ *
+ * `Astro.url.pathname` llega con la base incluida ("/MDO/convocatoria"). Para
+ * construir la URL canonica hace falta la ruta desnuda ("/convocatoria"),
+ * porque el host canonico puede tener una base distinta.
+ */
+export function withoutBase(pathname: string): string {
+  const base = RAW_BASE.endsWith("/") ? RAW_BASE.slice(0, -1) : RAW_BASE;
+  if (base && pathname.startsWith(base)) {
+    return pathname.slice(base.length) || "/";
+  }
+  return pathname;
+}
+
 /** True si `href` apunta fuera del sitio y por tanto no debe prefijarse. */
 export function isExternal(href: string): boolean {
   return /^(https?:)?\/\//.test(href) || href.startsWith("mailto:") || href.startsWith("tel:");
