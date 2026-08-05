@@ -30,12 +30,13 @@ const base = process.env.PUBLIC_BASE_PATH ?? "/";
 
 /*
  * Debe coincidir con el valor por defecto de `CANONICAL_BASE` en
- * `src/lib/seo.ts`. Se repite porque este archivo corre en Node antes de que
+ * `src/lib/seo.ts`, que es donde esta explicado por que el canonico es Vercel
+ * y no GitHub Pages. Se repite porque este archivo corre en Node antes de que
  * exista el alias `@/`, y duplicar una cadena es preferible a un import que
  * complique la configuracion.
  */
 const canonical = (
-  process.env.PUBLIC_CANONICAL_URL ?? "https://luexi.github.io/MDO"
+  process.env.PUBLIC_CANONICAL_URL ?? "https://mdo-alpha.vercel.app"
 ).replace(/\/+$/, "");
 
 export default defineConfig({

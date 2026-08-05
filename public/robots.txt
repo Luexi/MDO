@@ -14,8 +14,14 @@ User-agent: *
 Allow: /
 
 # URL absoluta a proposito: este archivo lo sirven los dos destinos del sitio
-# (GitHub Pages y Vercel) y ambos deben apuntar al sitemap del host canonico,
+# (Vercel y GitHub Pages) y ambos deben apuntar al sitemap del host canonico,
 # el mismo que declaran las etiquetas <link rel="canonical">.
-# Al activar el dominio propio hay que cambiar esta linea junto con
-# PUBLIC_CANONICAL_URL en .github/workflows/deploy.yml y src/lib/seo.ts.
-Sitemap: https://luexi.github.io/MDO/sitemap-index.xml
+#
+# El canonico es Vercel porque es donde apunta el QR del cartel impreso y a
+# donde redirige maestriadirecciondeorganizaciones.uagro.mx. La explicacion
+# completa esta en src/lib/seo.ts.
+#
+# Si el dominio de la UAGro pasa a servir el sitio en vez de redirigir, hay que
+# cambiar esta linea junto con PUBLIC_CANONICAL_URL en
+# .github/workflows/deploy.yml, src/lib/seo.ts y astro.config.mjs.
+Sitemap: https://mdo-alpha.vercel.app/sitemap-index.xml

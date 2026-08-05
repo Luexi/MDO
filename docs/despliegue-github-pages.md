@@ -1,12 +1,52 @@
-# Despliegue en GitHub Pages
+# Despliegue
 
-Fecha: 2026-07-25
+Fecha: 2026-08-05
 
-El sitio se publica con GitHub Actions en GitHub Pages. Antes estaba en Vercel; `vercel.json` se elimino y las cabeceras de cache que definia ahora las gestiona Pages por su cuenta.
+## 0. Los tres destinos, y cual es el que importa
 
-## 1. Como funciona
+| Direccion | Que es hoy | Quien la despliega |
+| --- | --- | --- |
+| `https://mdo-alpha.vercel.app` | **El sitio publico** | Vercel, desde `main` |
+| `https://maestriadirecciondeorganizaciones.uagro.mx` | **Redirige** a Vercel. Resuelve a `200.4.142.12`, servidor de la Universidad | Area de sistemas de la UAGro |
+| `https://luexi.github.io/MDO` | Mismo sitio, sin enlaces entrantes. Respaldo | GitHub Actions, desde `main` |
 
-`.github/workflows/deploy.yml` se dispara en cada `push` a `main` y tambien a mano desde la pestaña **Actions**. El workflow:
+Vercel es el destino real por dos razones que no dependen del codigo:
+
+1. **El QR del cartel impreso de la convocatoria apunta ahi.** Ya se distribuyo.
+2. **El dominio de la UAGro reenvia ahi**, en lugar de servir el sitio.
+
+Por eso el canonico de los dos despliegues es Vercel. Ver `src/lib/seo.ts`.
+
+> **Este documento describio un tiempo GitHub Pages como produccion.** Era
+> cierto durante la migracion y dejo de serlo cuando Vercel volvio por el QR.
+> Esa descripcion desactualizada ya provoco dos veces que se configurara el
+> dominio equivocado. Antes de tocar dominios: escanea el QR y abre el dominio
+> de la UAGro.
+
+### Lo que conviene pedirle a sistemas
+
+Que `maestriadirecciondeorganizaciones.uagro.mx` **sirva** el sitio en vez de
+redirigir. Hoy la barra de direcciones acaba mostrando `mdo-alpha.vercel.app`,
+incluido para los evaluadores del SNP, y el programa depende de una cuenta
+gratuita de un tercero. Dos formas de resolverlo:
+
+- Apuntar un `CNAME` del subdominio a `cname.vercel-dns.com` y darlo de alta
+  como dominio en el proyecto de Vercel. La redireccion desaparece y el dominio
+  propio pasa a servir. Es el cambio mas pequeño.
+- O apuntarlo a `luexi.github.io` y usar GitHub Pages con `public/CNAME`, como
+  se describe en la seccion 4.
+
+En cualquiera de los dos casos, el QR sigue funcionando: Vercel puede quedarse
+redirigiendo al dominio propio.
+
+## 1. Como funciona cada despliegue
+
+**Vercel** compila desde `main` por su cuenta en cada push, con los valores por
+defecto de `astro.config.mjs` (base `/`). No lee las variables del workflow: su
+canonico sale del valor escrito en el codigo.
+
+**GitHub Pages** usa `.github/workflows/deploy.yml`, que se dispara en cada
+`push` a `main` y tambien a mano desde la pestaña **Actions**. El workflow:
 
 1. Instala dependencias con `npm ci`.
 2. Corre `npm run lint` y `npm test`.
@@ -50,33 +90,48 @@ Una ruta relativa se resuelve contra la ubicacion del propio archivo, que siempr
 
 ## 4. Estado actual y cambio al dominio propio
 
-Hoy, temporal:
+Variables del workflow de GitHub Pages:
 
 | Variable | Valor | Para que sirve |
 | --- | --- | --- |
 | `PUBLIC_SITE_URL` | `https://luexi.github.io` | Desde donde se sirve ESTA compilacion |
 | `PUBLIC_BASE_PATH` | `/MDO` | Subruta de esta compilacion |
-| `PUBLIC_CANONICAL_URL` | `https://luexi.github.io/MDO` | Cual de los destinos debe indexarse |
-| URL publica | `https://luexi.github.io/MDO` | |
+| `PUBLIC_CANONICAL_URL` | `https://mdo-alpha.vercel.app` | Cual de los destinos debe indexarse |
+
+Fijate en que el canonico **no** es la propia direccion: GitHub Pages se
+autodeclara secundario a proposito.
 
 ### Por que hay una variable de canonico aparte
 
-El sitio se publica en **dos** destinos a la vez: GitHub Pages y Vercel
-(`mdo-alpha.vercel.app`), porque el QR del cartel impreso apunta a Vercel y no
-se puede reimprimir. Antes cada destino se declaraba canonico a si mismo, o sea
-el mismo contenido duplicado en dos dominios sin ninguna señal de cual indexar.
+`PUBLIC_SITE_URL` responde "¿desde donde sirvo yo?". `PUBLIC_CANONICAL_URL`
+responde "¿cual de los destinos debe salir en Google?". Son preguntas
+distintas y aqui tienen respuestas distintas.
 
-Ahora los dos emiten la misma `<link rel="canonical">` y el mismo sitemap: los
-del host canonico. Vercel sigue atendiendo a quien escanee el QR, pero ya no
-compite por la indexacion. La logica esta en `src/lib/seo.ts`.
+Antes cada destino se declaraba canonico a si mismo: el mismo contenido
+duplicado en dos dominios sin ninguna señal de cual indexar. Ahora los dos
+emiten la misma `<link rel="canonical">` y el mismo sitemap, los de Vercel,
+que es donde aterriza la gente. La logica esta en `src/lib/seo.ts`.
 
-Vercel no lee las variables del workflow, asi que su valor de canonico sale del
-valor por defecto que esta escrito en el codigo. Por eso hay que cambiarlo en
-los tres sitios que se listan abajo.
+El canonico esta escrito en **cuatro** sitios y tienen que coincidir. Vercel no
+lee las variables del workflow, asi que su valor sale del codigo:
+
+| Archivo | Lo usa |
+| --- | --- |
+| `.github/workflows/deploy.yml` | La compilacion de GitHub Pages |
+| `src/lib/seo.ts` | La compilacion de Vercel (etiquetas canonical y Open Graph) |
+| `astro.config.mjs` | El sitemap de las dos |
+| `public/robots.txt` | La directiva `Sitemap:` que sirven las dos |
 
 ### Cambio al dominio propio
 
-Cuando el area de sistemas apunte el DNS de `maestriadirecciondeorganizaciones.uagro.mx`:
+El dominio ya resuelve (`200.4.142.12`), pero **redirige** a Vercel en lugar de
+servir el sitio. Estos pasos son para cuando sistemas lo apunte de verdad a
+GitHub Pages. Si en cambio se decide dejarlo en Vercel, basta con darlo de alta
+como dominio del proyecto de Vercel y apuntar el `CNAME` a
+`cname.vercel-dns.com`; entonces solo hay que cambiar el canonico de los cuatro
+sitios de la tabla de arriba, sin tocar `PUBLIC_BASE_PATH`.
+
+Para pasarlo a GitHub Pages:
 
 1. Edita el bloque `env` de `.github/workflows/deploy.yml`:
 
@@ -86,8 +141,7 @@ Cuando el area de sistemas apunte el DNS de `maestriadirecciondeorganizaciones.u
    PUBLIC_CANONICAL_URL: https://maestriadirecciondeorganizaciones.uagro.mx
    ```
 
-   Y en la misma tanda, el valor por defecto en los otros dos sitios que lo
-   declaran, que son los que usa el despliegue de Vercel:
+   Y en la misma tanda, los otros tres sitios que declaran el canonico:
 
    - `CANONICAL_BASE` en `src/lib/seo.ts`
    - `canonical` en `astro.config.mjs` (lo consume el sitemap)

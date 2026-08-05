@@ -2,8 +2,26 @@
 
 Sitio web estatico de la **Maestria en Direccion de Organizaciones (MDO)** de la Universidad Autonoma de Guerrero.
 
-- Produccion (temporal): <https://luexi.github.io/MDO>
-- Produccion (definitiva, pendiente de DNS): <https://maestriadirecciondeorganizaciones.uagro.mx>
+## 0) Donde vive el sitio (leer antes de tocar dominios)
+
+| Direccion | Que es hoy |
+| --- | --- |
+| <https://mdo-alpha.vercel.app> | **El sitio publico.** Aqui apunta el QR del cartel impreso de la convocatoria y aqui aterriza el dominio de la UAGro |
+| <https://maestriadirecciondeorganizaciones.uagro.mx> | Existe y **redirige** a Vercel. No sirve contenido propio: resuelve a un servidor de la Universidad que reenvia |
+| <https://luexi.github.io/MDO> | Compila el mismo sitio, pero **nadie lo enlaza**. Se conserva como respaldo |
+
+El **canonico es Vercel**: es lo que declaran las etiquetas `<link rel="canonical">`
+de los dos despliegues y el `sitemap`. La logica esta en `src/lib/seo.ts`.
+
+> Este README describio durante un tiempo GitHub Pages como "produccion" y
+> Vercel como algo temporal. No es lo que ocurre en la practica, y esa
+> descripcion ya llevo dos veces a apuntar la configuracion al sitio
+> equivocado. Si vas a cambiar algo de dominios, comprueba primero a donde
+> lleva el QR y a donde redirige el dominio de la UAGro.
+
+**Estado deseable:** que `maestriadirecciondeorganizaciones.uagro.mx` sirva el
+sitio en vez de redirigir, y pase a ser el canonico. Depende del area de
+sistemas. Ver `docs/despliegue-github-pages.md`.
 
 ## 1) Stack y enfoque
 

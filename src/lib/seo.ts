@@ -3,23 +3,36 @@ import { withoutBase } from "@/lib/paths";
 /**
  * Host canonico del sitio.
  *
- * El sitio se publica hoy en DOS destinos a la vez:
+ * El sitio se compila hacia DOS destinos:
  *
+ *   - Vercel, en `https://mdo-alpha.vercel.app`
  *   - GitHub Pages, en `https://luexi.github.io/MDO`
- *   - Vercel, en `https://mdo-alpha.vercel.app`, porque el QR del cartel
- *     impreso de la convocatoria apunta ahi y no se puede reimprimir.
  *
- * Cada destino se autodeclaraba canonico, asi que los buscadores veian el mismo
- * contenido duplicado en dos dominios sin ninguna señal de cual indexar. Ahora
- * los dos emiten la misma URL canonica: la de GitHub Pages. Vercel sigue
- * sirviendo a quien escanee el QR, pero ya no compite por la indexacion.
+ * El canonico es **Vercel**, y no por preferencia tecnica sino porque es donde
+ * aterriza la gente:
  *
- * Al activar el dominio propio basta cambiar `PUBLIC_CANONICAL_URL` en
- * `.github/workflows/deploy.yml` y el valor por defecto de aqui abajo.
- * Ver `docs/despliegue-github-pages.md`.
+ *   1. El QR del cartel IMPRESO de la convocatoria apunta ahi. Ya se
+ *      distribuyo; no se puede reimprimir.
+ *   2. `maestriadirecciondeorganizaciones.uagro.mx` redirige ahi. El dominio
+ *      resuelve a un servidor de la Universidad (200.4.142.12) que reenvia a
+ *      Vercel, o sea que no sirve contenido propio.
+ *
+ * GitHub Pages compila el mismo sitio, pero nadie enlaza a esa direccion. Emite
+ * este mismo canonico para no competir por la indexacion.
+ *
+ * CUIDADO: la documentacion del repositorio describio un tiempo GitHub Pages
+ * como "produccion" y Vercel como algo temporal. No es lo que pasa en la
+ * practica, y esa confusion ya provoco una vez que el canonico apuntara al
+ * sitio equivocado: la pagina del QR pedia a los buscadores que indexaran otra.
+ * Antes de tocar este valor, comprueba a donde va el QR y a donde redirige el
+ * dominio de la UAGro.
+ *
+ * ESTADO DESEABLE: que `maestriadirecciondeorganizaciones.uagro.mx` sirva el
+ * sitio en vez de redirigir, y pase a ser el canonico. Depende del area de
+ * sistemas. Ver `docs/despliegue-github-pages.md`.
  */
 const CANONICAL_BASE = (
-  import.meta.env.PUBLIC_CANONICAL_URL ?? "https://luexi.github.io/MDO"
+  import.meta.env.PUBLIC_CANONICAL_URL ?? "https://mdo-alpha.vercel.app"
 ).replace(/\/+$/, "");
 
 /**

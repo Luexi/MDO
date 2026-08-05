@@ -32,7 +32,7 @@ El proyecto utiliza una arquitectura **JAMstack** moderna centrada en la generac
   - **Scripts vanilla (`src/scripts/`)**: comportamiento compartido (navegación, pestañas) sin costo de framework.
 - **Estilos**: [Tailwind CSS](https://tailwindcss.com/) sobre tokens CSS propios en HSL.
 - **Iconos**: Lucide React.
-- **Hosting**: GitHub Pages, desplegado por GitHub Actions.
+- **Hosting**: el sitio publico es **Vercel** (`mdo-alpha.vercel.app`), que es a donde apunta el QR del cartel impreso y a donde redirige `maestriadirecciondeorganizaciones.uagro.mx`. GitHub Actions publica en paralelo una copia en GitHub Pages, sin enlaces entrantes, como respaldo. Los dos declaran el canonico de Vercel. Ver `docs/despliegue-github-pages.md`.
 
 ### Enfoque de "Islas" (Islands Architecture)
 

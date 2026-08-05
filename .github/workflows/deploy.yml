@@ -26,25 +26,34 @@ jobs:
       # ---------------------------------------------------------------
       # CAMBIO DE DOMINIO
       #
-      # Hoy (temporal):   https://luexi.github.io/MDO
-      #   PUBLIC_SITE_URL:      https://luexi.github.io
-      #   PUBLIC_BASE_PATH:     /MDO
-      #   PUBLIC_CANONICAL_URL: https://luexi.github.io/MDO
+      # SITE_URL y BASE_PATH dicen desde donde sirve ESTA compilacion.
+      # CANONICAL_URL dice cual de los destinos deben indexar los buscadores,
+      # y NO es este: es Vercel.
       #
-      # Al activar el dominio propio, sustituir por:
+      # El sitio publico de verdad es https://mdo-alpha.vercel.app, porque el QR
+      # del cartel impreso apunta ahi y porque
+      # maestriadirecciondeorganizaciones.uagro.mx redirige ahi. Esta
+      # compilacion de GitHub Pages existe pero nadie la enlaza, asi que declara
+      # el canonico de Vercel para no competir por la indexacion.
+      # La explicacion completa esta en src/lib/seo.ts.
+      #
+      # Cuando el area de sistemas haga que el dominio de la UAGro SIRVA el
+      # sitio en vez de redirigir, sustituir por:
       #   PUBLIC_SITE_URL:      https://maestriadirecciondeorganizaciones.uagro.mx
       #   PUBLIC_BASE_PATH:     /
       #   PUBLIC_CANONICAL_URL: https://maestriadirecciondeorganizaciones.uagro.mx
       # y crear el archivo public/CNAME con el dominio dentro.
       #
-      # Ademas hay que actualizar, en la misma tanda:
+      # Ademas hay que actualizar, en la misma tanda, los otros tres sitios que
+      # declaran el canonico (los usa el despliegue de Vercel, que no lee estas
+      # variables):
+      #   - src/lib/seo.ts
+      #   - astro.config.mjs
       #   - la linea `Sitemap:` de public/robots.txt
-      #   - el valor por defecto de CANONICAL_BASE en src/lib/seo.ts
-      #     (es el que usa el despliegue de Vercel, que no lee estas variables)
       # ---------------------------------------------------------------
       PUBLIC_SITE_URL: https://luexi.github.io
       PUBLIC_BASE_PATH: /MDO
-      PUBLIC_CANONICAL_URL: https://luexi.github.io/MDO
+      PUBLIC_CANONICAL_URL: https://mdo-alpha.vercel.app
     steps:
       - name: Descargar el repositorio
         uses: actions/checkout@v4

@@ -5,13 +5,32 @@ Fecha de actualizacion: 2026-08-05
 ## 1. Estado funcional
 
 - Sitio estatico en Astro. Una sola isla React (`GaleriaLightbox`); el resto del comportamiento es JavaScript vanilla en `src/scripts/`.
-- Publicado en **GitHub Pages** mediante GitHub Actions.
-- URL temporal: `https://luexi.github.io/MDO` (base `/MDO`).
-- URL definitiva pendiente de DNS: `https://maestriadirecciondeorganizaciones.uagro.mx` (base `/`).
-- Convocatoria para la generacion febrero 2027 publicada, con pre-registro del 19 al 30 de octubre de 2026.
-- Vercel reactivado temporalmente porque el QR del cartel apunta a `https://mdo-alpha.vercel.app`; la rama de produccion vuelve a ser `main` y el despliegue usa base `/`. **Los dos destinos declaran la misma URL canonica** (la de GitHub Pages), asi que solo uno compite por la indexacion. Ver `src/lib/seo.ts`.
 - Build validado con `npm run build`: guard de enlaces, `astro check` y compilacion.
 - Rutas principales, ruta dinamica de profesores y `/plan-estudios` activas, con sitemap generado.
+- Convocatoria para la generacion febrero 2027 publicada, con pre-registro del 19 al 30 de octubre de 2026.
+
+### Donde vive el sitio
+
+| Direccion | Que es hoy | Base |
+| --- | --- | --- |
+| `https://mdo-alpha.vercel.app` | **El sitio publico.** Destino del QR del cartel impreso y del dominio de la UAGro | `/` |
+| `https://maestriadirecciondeorganizaciones.uagro.mx` | Existe y **redirige** a Vercel. Resuelve a `200.4.142.12`, un servidor de la Universidad que reenvia; no sirve contenido propio | — |
+| `https://luexi.github.io/MDO` | Compila lo mismo, pero nadie lo enlaza. Respaldo | `/MDO` |
+
+Los dos despliegues declaran el mismo canonico, **el de Vercel**, asi que solo
+una direccion compite por la indexacion. Ver `src/lib/seo.ts`.
+
+> **Aviso para quien retome el proyecto.** La documentacion describio un tiempo
+> GitHub Pages como "produccion" y Vercel como algo temporal. Es falso en la
+> practica y ya provoco dos veces que se configurara el dominio equivocado, una
+> de ellas dejando la pagina del QR pidiendo a los buscadores que indexaran
+> otra. Verifica el QR y la redireccion del dominio antes de tocar nada de
+> dominios.
+
+**Pendiente con sistemas:** que el dominio de la UAGro sirva el sitio en lugar
+de redirigir, y pase a ser el canonico. Es lo que corresponde a un programa
+institucional: hoy la barra de direcciones muestra `mdo-alpha.vercel.app`,
+incluido para los evaluadores del SNP.
 
 ## 2. Cambios aplicados el 2026-08-05
 
@@ -63,10 +82,17 @@ contenido academico salvo donde el texto contradecia a la propia pagina.
 ### SEO
 
 - **Canonico unico.** GitHub Pages y Vercel se autodeclaraban canonicos cada
-  uno: el mismo contenido duplicado en dos dominios. Ahora los dos emiten la
-  misma URL canonica y el mismo sitemap, los del host canonico. Vercel sigue
-  sirviendo el QR del cartel. Ver `src/lib/seo.ts`.
+  uno: el mismo contenido duplicado en dos dominios sin señal de cual indexar.
+  Ahora los dos emiten la misma URL canonica y el mismo sitemap, **los de
+  Vercel**, que es donde apunta el QR del cartel y a donde redirige el dominio
+  de la UAGro. Ver `src/lib/seo.ts`.
 - **Sitemap** (`@astrojs/sitemap`) y directiva `Sitemap:` en `robots.txt`.
+
+> Correccion del mismo dia: la primera version de este cambio apunto el canonico
+> a GitHub Pages, siguiendo lo que decia la documentacion del repositorio. Era
+> el sitio equivocado: dejaba la pagina del QR pidiendo que se indexara una
+> direccion que nadie enlaza. Se corrigio en cuanto se verifico a donde va el QR
+> y a donde redirige el dominio de la UAGro.
 
 ### Puerta de calidad
 
