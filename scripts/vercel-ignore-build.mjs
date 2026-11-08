@@ -1,13 +1,14 @@
 // Ignored Build Step de Vercel (`ignoreCommand` en vercel.json): exit 0 salta
 // el deploy y exit 1 construye. Corre antes de `npm install`, asi que solo usa
 // Node y git. Salta unicamente si TODO lo cambiado desde el ultimo deploy es
-// documentacion (`*.md`/`*.MD` en cualquier carpeta o archivos bajo `docs/`);
+// documentacion (`*.md`/`*.MD` de la raiz o archivos bajo `docs/`; un `.md` en
+// otra carpeta, como `src/`, puede ser contenido publicado y se construye);
 // ante cualquier duda (sin deploy previo, historia corta, error de git)
 // construye.
 import { execFileSync } from "node:child_process";
 import { pathToFileURL } from "node:url";
 
-const DOCS_ONLY = [/^docs\//u, /\.md$/iu];
+const DOCS_ONLY = [/^docs\//u, /^[^/]+\.md$/iu];
 
 export function isDocsPath(path) {
     return DOCS_ONLY.some((pattern) => pattern.test(path));

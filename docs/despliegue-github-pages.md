@@ -53,7 +53,7 @@ canonico sale del valor escrito en el codigo.
 3. Compila con `npm run build`, que incluye el guard de enlaces y `astro check`.
 4. Sube `dist/` como artefacto y lo publica en Pages.
 
-**Cambios solo de documentacion.** Un push que solo toca archivos `*.md`/`*.MD` o `docs/**` no dispara el workflow (`paths-ignore` en `deploy.yml`) y Vercel omite el build con `ignoreCommand` en `vercel.json` (`scripts/vercel-ignore-build.mjs`: compara contra `VERCEL_GIT_PREVIOUS_SHA` y, ante cualquier duda, construye). El despliegue a mano desde **Actions** sigue disponible.
+**Cambios solo de documentacion.** Un push que solo toca archivos `*.md`/`*.MD` de la raiz o `docs/**` no dispara el workflow (`paths-ignore` en `deploy.yml`) y Vercel omite el build con `ignoreCommand` en `vercel.json` (`scripts/vercel-ignore-build.mjs`: compara contra `VERCEL_GIT_PREVIOUS_SHA` y, ante cualquier duda, construye). El despliegue a mano desde **Actions** sigue disponible.
 
 Si el lint, las pruebas o el guard fallan, **no se publica nada**. Es intencional: evita repetir el episodio de tener enlaces de marcador en produccion.
 

@@ -3,10 +3,12 @@ name: Desplegar en GitHub Pages
 on:
   push:
     branches: [main]
-    # Un push que solo toca documentacion no cambia el sitio.
+    # Un push que solo toca documentacion no cambia el sitio. Solo se omite el
+    # Markdown de la raiz y docs/ (en los filtros de GitHub, * no cruza /): un
+    # .md futuro en src/ (paginas o colecciones de Astro) si se despliega.
     paths-ignore:
-      - '**.md'
-      - '**.MD'
+      - '*.md'
+      - '*.MD'
       - 'docs/**'
   # Permite lanzar el despliegue a mano desde la pestaña Actions.
   workflow_dispatch:
